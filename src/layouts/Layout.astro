@@ -1,0 +1,64 @@
+---
+import GA4 from '../components/GA4.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  jsonLd?: string;
+  bodyClass?: string;
+}
+
+const {
+  title,
+  description,
+  path,
+  ogTitle,
+  ogDescription,
+  ogImage = 'https://www.edupath.co.ke/og-image.png',
+  jsonLd,
+  bodyClass = '',
+} = Astro.props;
+
+const site = 'https://www.edupath.co.ke';
+const canonical = path.startsWith('http') ? path : `${site}${path}`;
+const ogTitleFinal = ogTitle ?? title;
+const ogDescFinal = ogDescription ?? description;
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={ogTitleFinal} />
+  <meta property="og:description" content={ogDescFinal} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:url" content={canonical} />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="theme-color" content="#0D9488" />
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230D9488'/%3E%3Cpath d='M16 5L6 10l10 5 10-5-10-5zM6 20l10 5 10-5M6 15l10 5 10-5' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230D9488'/%3E%3Cpath d='M16 5L6 10l10 5 10-5-10-5zM6 20l10 5 10-5M6 15l10 5 10-5' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
+  <GA4 />
+</head>
+<body class={bodyClass}>
+  <slot />
+</body>
+</html>

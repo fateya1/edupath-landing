@@ -1,0 +1,106 @@
+---
+import FeaturePage from '../layouts/FeaturePage.astro';
+
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'School Attendance Tracking Kenya',
+  description:
+    'Real-time attendance tracking for Kenyan schools. Teachers mark attendance in 2 minutes, parents get WhatsApp alerts instantly.',
+  url: 'https://www.edupath.co.ke/school-attendance',
+});
+---
+
+<FeaturePage
+  title="School Attendance Tracking System Kenya | Edupath SMS"
+  description="Teachers mark attendance in under 2 minutes from any device. Real-time parent WhatsApp alerts, school-wide analytics, and attendance reports for Kenyan schools."
+  path="/school-attendance"
+  ogTitle="School Attendance Tracking Kenya | Edupath SMS"
+  ogDescription="Mark Present, Absent, Late or Excused in under 2 minutes. Parents get WhatsApp alerts instantly. Built for Kenyan schools."
+  jsonLd={jsonLd}
+  badge="Real-Time · Under 2 Minutes"
+  heading={"Attendance tracking that <span>takes 2 minutes</span>"}
+  lead="Teachers mark attendance from any device in under 2 minutes. Parents receive instant WhatsApp alerts for absences. School-wide analytics available to admin in real time."
+  active="/school-attendance"
+  ctaHeading="Eliminate the paper register today."
+  ctaText="Free plan available. Your school is live in under 5 minutes."
+  ctaLabel="Create Free Account →"
+>
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">Attendance Statuses</div>
+      <h2>Four statuses. One tap each.</h2>
+      <p class="fs-section-intro">Teachers mark each student with a single tap. No paper registers, no manual data entry later.</p>
+      <div class="fs-status-row">
+        <span class="fs-status-pill fs-status-pill--positive">✓ Present</span>
+        <span class="fs-status-pill fs-status-pill--negative">✗ Absent</span>
+        <span class="fs-status-pill fs-status-pill--caution">⏰ Late</span>
+        <span class="fs-status-pill fs-status-pill--neutral">📋 Excused</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">Features</div>
+      <h2>Complete attendance management.</h2>
+      <div class="fs-grid">
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(62.7% 0.194 149.214 / 0.12)">📱</div>
+          <h3>Any Device, Any Browser</h3>
+          <p>Teachers mark attendance from a smartphone, tablet, or desktop. No app install required — works on any browser including Chrome on Android.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(60% 0.118 184.704 / 0.15)">💬</div>
+          <h3>Instant WhatsApp Alerts</h3>
+          <p>Parents receive a WhatsApp message the moment their child is marked absent or late — with the child's name, date, and school name included.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(76.9% 0.188 70.08 / 0.18)">📊</div>
+          <h3>School-Wide Analytics</h3>
+          <p>Admin dashboard shows daily, weekly, and term attendance rates per class and school-wide. Identify chronic absentees instantly.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(63.7% 0.237 25.331 / 0.12)">📋</div>
+          <h3>Attendance Reports</h3>
+          <p>Generate attendance reports per student, per class, or school-wide for any date range. Useful for NEMIS compliance and parent meetings.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(60% 0.118 184.704 / 0.15)">🔌</div>
+          <h3>Offline Mode</h3>
+          <p>The Android app supports offline attendance marking. Teachers can mark registers without internet — data syncs automatically when connectivity returns.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(62.7% 0.194 149.214 / 0.12)">👤</div>
+          <h3>Student Portal Access</h3>
+          <p>Students can view their own attendance record from the Student Portal — including a breakdown of present, absent, late, and excused days per term.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">FAQ</div>
+      <h2>Attendance tracking questions</h2>
+      <div class="fs-faq">
+        <div class="fs-faq-item">
+          <h3>Can teachers mark attendance from their phones?</h3>
+          <p>Yes. The teacher portal is fully responsive and works on any smartphone browser. Teachers can also use the Edupath Android app with offline support for areas with poor connectivity.</p>
+        </div>
+        <div class="fs-faq-item">
+          <h3>How quickly do parents receive absence alerts?</h3>
+          <p>Parents receive a WhatsApp alert within seconds of a teacher marking a student absent. The message includes the student's name, date, and the school's name.</p>
+        </div>
+        <div class="fs-faq-item">
+          <h3>Can I generate attendance reports for NEMIS?</h3>
+          <p>Yes. Edupath generates attendance reports per student and per class for any date range. These can be exported and used for NEMIS reporting and compliance purposes.</p>
+        </div>
+        <div class="fs-faq-item">
+          <h3>What happens if there's no internet when marking attendance?</h3>
+          <p>The Edupath Android app supports offline attendance marking. Teachers mark the register without internet, and all records sync automatically when the device reconnects.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</FeaturePage>

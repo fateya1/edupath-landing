@@ -1,0 +1,119 @@
+---
+import FeaturePage from '../layouts/FeaturePage.astro';
+
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'School Parent Portal Kenya',
+  description:
+    'Real-time parent portal with attendance alerts, M-Pesa fee payments, results and teacher messaging for Kenyan schools.',
+  url: 'https://www.edupath.co.ke/parent-portal',
+});
+---
+
+<FeaturePage
+  title="School Parent Portal Kenya — Real-Time Access | Edupath SMS"
+  description="Give parents real-time access to their child's attendance, results, fee balance and M-Pesa payments. WhatsApp alerts, push notifications, and direct teacher messaging — all in one portal."
+  path="/parent-portal"
+  ogTitle="School Parent Portal Kenya | Edupath SMS"
+  ogDescription="Real-time parent portal for Kenyan schools. Attendance alerts, fee payments via M-Pesa, academic results, and direct teacher messaging."
+  jsonLd={jsonLd}
+  badge="Real-Time Parent Access"
+  heading={"Keep parents <span>informed and involved</span> in real time"}
+  lead="Give every parent a dedicated portal to track attendance, view results, pay fees via M-Pesa, and message teachers directly — from any device, anywhere in Kenya."
+  active="/parent-portal"
+  ctaHeading="Give your parents the portal they deserve."
+  ctaText="Set up your school in under 5 minutes. Free plan available — no credit card required."
+  ctaLabel="Create Free Account →"
+>
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">Parent Portal Features</div>
+      <h2>Everything a parent needs in one place.</h2>
+      <div class="fs-grid">
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(60% 0.118 184.704 / 0.15)">📅</div>
+          <h3>Real-Time Attendance</h3>
+          <p>Parents see their child's daily attendance record instantly. WhatsApp alerts are sent the moment a child is marked absent, late, or excused.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(62.7% 0.194 149.214 / 0.12)">💳</div>
+          <h3>M-Pesa Fee Payments</h3>
+          <p>View outstanding fee balance and pay directly via M-Pesa STK push — no paybill memorization, no queues, no manual receipts.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(76.9% 0.188 70.08 / 0.18)">📊</div>
+          <h3>Academic Results</h3>
+          <p>View CAT1, CAT2, and End-Term results as soon as they're published. Download the child's PDF report card directly from the portal.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(63.7% 0.237 25.331 / 0.12)">💬</div>
+          <h3>Direct Teacher Messaging</h3>
+          <p>Parents message subject teachers or the class teacher directly within the portal. All communication is logged and school-monitored.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(60% 0.118 184.704 / 0.15)">👨‍👩‍👧‍👦</div>
+          <h3>Multiple Children</h3>
+          <p>Parents with more than one child at the school can manage all children from a single parent account — no separate logins needed.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(62.7% 0.194 149.214 / 0.12)">🔔</div>
+          <h3>Push Notifications</h3>
+          <p>School announcements, exam schedules, results publication, and fee reminders delivered instantly via WhatsApp and Expo push notifications.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">Communication</div>
+      <h2>Parents are always in the loop.</h2>
+      <p class="fs-section-intro">
+        Edupath connects to WhatsApp via Twilio, Africa's Talking SMS, and Expo Push Notifications. Every critical event — an absence, a fee payment, a published result — reaches parents instantly without any manual action from the school.
+      </p>
+      <div class="fs-grid">
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(62.7% 0.194 149.214 / 0.12)">📱</div>
+          <h3>WhatsApp Alerts (Twilio)</h3>
+          <p>Attendance alerts, fee receipts, results notifications, and school announcements sent directly to parents via WhatsApp Business API.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(60% 0.118 184.704 / 0.15)">📲</div>
+          <h3>Android Mobile App</h3>
+          <p>Parents access the portal via the Edupath Android app with biometric login, offline mode, and real-time push notifications.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(76.9% 0.188 70.08 / 0.18)">⏰</div>
+          <h3>Automated Reminders</h3>
+          <p>Daily 8 AM fee reminders, term-end result notifications, and upcoming event alerts — all automated and running in East Africa Time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">FAQ</div>
+      <h2>Parent portal questions</h2>
+      <div class="fs-faq">
+        <div class="fs-faq-item">
+          <h3>Do parents need to download an app?</h3>
+          <p>No. The parent portal is a fully responsive web app that works on any smartphone browser. An Android app is also available for parents who prefer a native experience with push notifications.</p>
+        </div>
+        <div class="fs-faq-item">
+          <h3>How do parents get their login credentials?</h3>
+          <p>When you add a parent's contact to a student profile, Edupath automatically sends their login credentials via WhatsApp or SMS. No manual onboarding required.</p>
+        </div>
+        <div class="fs-faq-item">
+          <h3>Can one parent account manage multiple children?</h3>
+          <p>Yes. A parent with multiple children at the same school can manage all of them from a single login. Each child's attendance, results, and fees are displayed separately.</p>
+        </div>
+        <div class="fs-faq-item">
+          <h3>Is parent communication monitored by the school?</h3>
+          <p>Yes. All parent-teacher messages sent through the portal are logged and visible to school administrators. This ensures accountability and appropriate communication standards.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</FeaturePage>

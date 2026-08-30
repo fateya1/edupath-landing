@@ -1,0 +1,85 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import PostCard from '../../components/PostCard.astro';
+import '../../styles/tokens.css';
+import '../../styles/base.css';
+import '../../styles/chrome.css';
+
+const posts = (await getCollection('posts')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+
+const title = 'Blog — Practical Guides for Kenyan Schools | Edupath SMS';
+const description =
+  'Practical guides on CBE management, M-Pesa fee collection, attendance, parent engagement and school operations — written for Kenyan school leaders.';
+---
+
+<Layout title={title} description={description} path="/blog/" bodyClass="blog-index">
+  <Nav active="/blog" />
+
+  <main class="blog-wrap">
+    <header class="catalogue-header">
+      <p class="catalogue-count tnum">{posts.length} articles · updated regularly</p>
+      <h1 class="catalogue-eyebrow">Edupath Blog</h1>
+      <p class="catalogue-sub">
+        Practical, no-fluff guides for running a modern, compliant Kenyan school —
+        from CBE report cards to M-Pesa fee collection.
+      </p>
+    </header>
+
+    <ul class="catalogue-grid">
+      {posts.map((post) => (
+        <li>
+          <PostCard post={post} />
+        </li>
+      ))}
+    </ul>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* Hallmark · macrostructure: Catalogue · genre: modern-minimal */
+  .blog-wrap {
+    padding-top: 7rem;
+    padding-bottom: var(--space-3xl);
+  }
+  .catalogue-header {
+    max-width: 42rem;
+    margin-bottom: var(--space-2xl);
+  }
+  .catalogue-count {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: var(--space-md);
+  }
+  .catalogue-eyebrow {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    color: var(--color-ink);
+    margin-bottom: var(--space-md);
+  }
+  .catalogue-sub {
+    font-size: var(--text-md);
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+  .catalogue-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
+    gap: var(--space-lg);
+    padding: 0;
+  }
+  .catalogue-grid li { min-width: 0; display: flex; }
+  .catalogue-grid :global(.post-card) { width: 100%; }
+</style>
