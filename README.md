@@ -4,9 +4,6 @@ Marketing landing site for **Edupath SMS** — an all-in-one school management
 platform for Kenyan schools. CBE-ready, with M-Pesa fee collection and
 WhatsApp notifications built in.
 
-Built with [Astro](https://astro.build), statically generated, and deployed
-on Vercel.
-
 ## Tech stack
 
 - **Astro 6** — static site generator, `output: 'static'`
