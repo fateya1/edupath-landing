@@ -1,0 +1,138 @@
+---
+import Layout from './Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/tokens.css';
+import '../styles/base.css';
+import '../styles/chrome.css';
+import '../styles/feature.css';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  jsonLd?: string;
+  badge: string;
+  heading: string;
+  lead: string;
+  active: string;
+  ctaHeading: string;
+  ctaText: string;
+  ctaLabel: string;
+}
+const {
+  title,
+  description,
+  path,
+  ogTitle,
+  ogDescription,
+  jsonLd,
+  badge,
+  heading,
+  lead,
+  active,
+  ctaHeading,
+  ctaText,
+  ctaLabel,
+} = Astro.props;
+---
+
+<Layout title={title} description={description} path={path} ogTitle={ogTitle} ogDescription={ogDescription} jsonLd={jsonLd} bodyClass="feature-page">
+  <Nav active={active} />
+
+  <main id="main">
+    <section class="fs-hero">
+      <div class="fs-hero-inner">
+        <span class="tag fs-badge">{badge}</span>
+        <h1 class="fs-hero-title" set:html={heading} />
+        <p class="fs-hero-lead">{lead}</p>
+        <div class="fs-hero-cta">
+          <a class="btn btn--primary" href="/#register">Start Free — No Card Required</a>
+          <a class="chip" href="https://app.edupath.co.ke/portal" target="_blank">View Live Demo →</a>
+        </div>
+      </div>
+    </section>
+
+    <slot />
+
+    <section class="fs-cta">
+      <div class="fs-cta-inner">
+        <h2 class="fs-cta-title">{ctaHeading}</h2>
+        <p class="fs-cta-text">{ctaText}</p>
+        <a class="btn btn--primary" href="/#register">{ctaLabel}</a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* Hallmark · macrostructure: Split Studio · genre: modern-minimal */
+  .fs-hero {
+    padding: 9.5rem var(--space-xl) var(--space-2xl);
+    text-align: center;
+  }
+  .fs-hero-inner {
+    max-width: 46rem;
+    margin-inline: auto;
+    display: grid;
+    justify-items: center;
+    gap: var(--space-lg);
+  }
+  .fs-badge { text-transform: uppercase; }
+  .fs-hero-title {
+    font-family: var(--font-display);
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+    color: var(--color-ink);
+  }
+  .fs-hero-title :global(span) { color: var(--color-focus); }
+  .fs-hero-lead {
+    max-width: 40rem;
+    font-size: var(--text-md);
+    color: var(--color-muted);
+    line-height: 1.65;
+  }
+  .fs-hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    justify-content: center;
+    margin-top: var(--space-sm);
+  }
+
+  .fs-cta {
+    padding: var(--space-3xl) var(--space-xl);
+  }
+  .fs-cta-inner {
+    max-width: 46rem;
+    margin-inline: auto;
+    border: 1px solid var(--color-rule-2);
+    border-radius: var(--radius-card);
+    background: var(--color-paper-2);
+    padding: var(--space-3xl) var(--space-2xl);
+    text-align: center;
+  }
+  .fs-cta-title {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+    margin-bottom: var(--space-md);
+  }
+  .fs-cta-text {
+    font-size: var(--text-base);
+    color: var(--color-muted);
+    margin-bottom: var(--space-xl);
+  }
+  @media (max-width: 48rem) {
+    .fs-hero { padding-inline: var(--space-lg); }
+    .fs-cta-inner { padding: var(--space-2xl) var(--space-lg); }
+  }
+</style>

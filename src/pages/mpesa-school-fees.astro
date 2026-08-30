@@ -1,0 +1,154 @@
+---
+import FeaturePage from '../layouts/FeaturePage.astro';
+
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'M-Pesa School Fee Collection Kenya',
+  description:
+    'Collect school fees via M-Pesa STK push. Built for Kenyan schools with automatic receipts and WhatsApp reminders.',
+  url: 'https://www.edupath.co.ke/mpesa-school-fees',
+});
+---
+
+<FeaturePage
+  title="M-Pesa School Fee Collection System Kenya | Edupath SMS"
+  description="Collect school fees via M-Pesa STK push directly from the parent portal. Automatic receipts, fee statements, balance tracking and WhatsApp reminders. Built for Kenyan schools."
+  path="/mpesa-school-fees"
+  ogTitle="M-Pesa School Fee Collection Kenya | Edupath SMS"
+  ogDescription="Parents pay school fees via M-Pesa STK push from the parent portal. Automatic receipts, real-time balance updates and WhatsApp fee reminders."
+  jsonLd={jsonLd}
+  badge="M-Pesa Built-in · Daraja API"
+  heading={"Collect school fees via <span>M-Pesa STK push</span>"}
+  lead="Parents pay directly from the Parent Portal with one tap. Automatic receipts, real-time balance updates, and WhatsApp fee reminders — no manual follow-up needed."
+  active="/mpesa-school-fees"
+  ctaHeading="Start collecting fees via M-Pesa today."
+  ctaText="Free plan available. Set up in under 5 minutes. No credit card required."
+  ctaLabel="Create Free Account →"
+>
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">Impact</div>
+      <h2>The numbers speak for themselves.</h2>
+      <div class="fs-stats">
+        <div class="fs-stat">
+          <div class="fs-stat-val tnum">3x</div>
+          <div class="fs-stat-lbl">Faster fee collection cycle</div>
+        </div>
+        <div class="fs-stat">
+          <div class="fs-stat-val tnum">60%</div>
+          <div class="fs-stat-lbl">Reduction in outstanding balances</div>
+        </div>
+        <div class="fs-stat">
+          <div class="fs-stat-val tnum">85%</div>
+          <div class="fs-stat-lbl">Less admin paperwork</div>
+        </div>
+        <div class="fs-stat">
+          <div class="fs-stat-val tnum">0</div>
+          <div class="fs-stat-lbl">Manual payment follow-ups needed</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">How It Works</div>
+      <h2>M-Pesa fee payment in 4 steps.</h2>
+      <div class="fs-steps">
+        <div class="fs-step">
+          <div class="fs-step-num">1</div>
+          <div>
+            <h3>Parent opens the Parent Portal</h3>
+            <p>Parents log in to their dedicated portal and view their child's outstanding fee balance for the current term.</p>
+          </div>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-num">2</div>
+          <div>
+            <h3>Clicks "Pay via M-Pesa"</h3>
+            <p>A single tap triggers an M-Pesa STK push to the parent's registered phone number via Safaricom's official Daraja API.</p>
+          </div>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-num">3</div>
+          <div>
+            <h3>Parent enters M-Pesa PIN</h3>
+            <p>The parent confirms the payment on their phone using their M-Pesa PIN. No app download or manual paybill needed.</p>
+          </div>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-num">4</div>
+          <div>
+            <h3>Fee record updates instantly</h3>
+            <p>The balance updates in real time, a digital receipt is generated, and the admin receives an instant notification. A WhatsApp receipt is sent to the parent automatically.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">Features</div>
+      <h2>Complete fee management built in.</h2>
+      <div class="fs-grid">
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(62.7% 0.194 149.214 / 0.12)">💳</div>
+          <h3>M-Pesa STK Push</h3>
+          <p>Powered by Safaricom's official Daraja API. No third-party integrations, no extra costs — M-Pesa is built directly into the platform.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(60% 0.118 184.704 / 0.15)">🧾</div>
+          <h3>Digital Receipts</h3>
+          <p>Every payment generates an automatic digital receipt sent to the parent via WhatsApp and available in the Parent Portal instantly.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(76.9% 0.188 70.08 / 0.18)">📋</div>
+          <h3>Fee Statements</h3>
+          <p>Automated fee statements per student showing all payments, outstanding balances, and due dates. Downloadable as PDF.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(63.7% 0.237 25.331 / 0.12)">🔔</div>
+          <h3>Automated Reminders</h3>
+          <p>Daily 8 AM WhatsApp fee reminders to parents with outstanding balances. Configurable per term with due date awareness.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(60% 0.118 184.704 / 0.15)">📊</div>
+          <h3>Fee Analytics</h3>
+          <p>School-wide fee collection dashboard showing total collected, outstanding, and collection rate per class and term.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(62.7% 0.194 149.214 / 0.12)">🏨</div>
+          <h3>Hostel &amp; Transport Fees</h3>
+          <p>Manage boarding and transport fees separately. Each fee type has its own balance, payment history, and M-Pesa collection flow.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">FAQ</div>
+      <h2>M-Pesa fee payment questions</h2>
+      <div class="fs-faq">
+        <div class="fs-faq-item">
+          <h3>Does Edupath use the official Safaricom Daraja API?</h3>
+          <p>Yes. Edupath SMS is integrated directly with Safaricom's official Daraja API for M-Pesa STK push payments. All transactions are secure, real-time, and compliant with Safaricom's standards.</p>
+        </div>
+        <div class="fs-faq-item">
+          <h3>Do parents need to download an app to pay?</h3>
+          <p>No. Parents pay via M-Pesa STK push triggered from the Parent Portal web app. The STK push appears directly on their phone — no app download required.</p>
+        </div>
+        <div class="fs-faq-item">
+          <h3>What happens if a payment fails?</h3>
+          <p>If an STK push times out or is cancelled, the fee record is not updated and the parent can retry. Failed transactions are logged in the admin dashboard for follow-up.</p>
+        </div>
+        <div class="fs-faq-item">
+          <h3>Can I track which students have outstanding balances?</h3>
+          <p>Yes. The fee management dashboard shows real-time outstanding balances per student, per class, and school-wide. You can filter by term, class, or fee type.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</FeaturePage>

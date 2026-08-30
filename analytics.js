@@ -112,10 +112,10 @@
     sectionObs.observe(pricing);
 
     // Per-card hover attention
-    pricing.querySelectorAll('.prcard').forEach(card => {
-      const plan = (card.querySelector('.pplan') || card.querySelector('[class*="plan"]'))?.textContent?.trim() || 'unknown';
-      const price = card.querySelector('.pprice')?.textContent?.replace(/\s+/g, ' ').trim() || '';
-      const isBest = card.classList.contains('best');
+    pricing.querySelectorAll('.pr-card').forEach(card => {
+      const plan = (card.querySelector('.pr-plan') || card.querySelector('[class*="plan"]'))?.textContent?.trim() || 'unknown';
+      const price = card.querySelector('.pr-price')?.textContent?.replace(/\s+/g, ' ').trim() || '';
+      const isBest = card.classList.contains('pr-card--best');
       let hoverStart = null;
 
       card.addEventListener('mouseenter', () => { hoverStart = Date.now(); });
@@ -127,7 +127,7 @@
       });
 
       // Pricing CTA clicks
-      const btn = card.querySelector('.pbtn');
+      const btn = card.querySelector('.btn');
       if (btn) {
         btn.addEventListener('click', () => {
           gtagEvent('pricing_cta_click', {
@@ -144,20 +144,22 @@
 
   // ── 5. Hero & Nav CTA Clicks ──────────────────────────────────────────────
   (function trackCTAs() {
-    document.querySelectorAll('.btnhero, .btnheroo').forEach(btn => {
+    document.querySelectorAll('.hero .btn--primary, .hero .chip').forEach(btn => {
+      const label = btn.textContent.trim();
+      const btnType = btn.classList.contains('btn--primary') ? 'primary' : 'secondary';
       btn.addEventListener('click', () => {
         gtagEvent('hero_cta_click', {
-          button_text: btn.textContent.trim(),
-          button_type: btn.classList.contains('btnhero') ? 'primary' : 'secondary',
+          button_text: label,
+          button_type: btnType,
           ...getUTM()
         });
       });
     });
-    document.querySelectorAll('#nav .btnp, #nav .btng').forEach(btn => {
+    document.querySelectorAll('.nav a.btn').forEach(btn => {
       btn.addEventListener('click', () => {
         gtagEvent('nav_cta_click', {
           button_text: btn.textContent.trim(),
-          button_type: btn.classList.contains('btnp') ? 'primary' : 'ghost'
+          button_type: btn.classList.contains('btn--primary') ? 'primary' : 'ghost'
         });
       });
     });
@@ -208,7 +210,7 @@
     });
 
     // Submit = conversion
-    const submitBtn = form.querySelector('.btnsub') || form.querySelector('[type="submit"]');
+    const submitBtn = form.querySelector('.btn[type="submit"]') || form.querySelector('.btnsub') || form.querySelector('[type="submit"]');
     if (submitBtn) {
       submitBtn.addEventListener('click', () => {
         if (submitted) return;

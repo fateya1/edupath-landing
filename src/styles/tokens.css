@@ -1,0 +1,80 @@
+/* Hallmark · genre: modern-minimal · macrostructure: system (Stat-Led | Split Studio | Catalogue | Long Document) · theme: custom
+ * theme: custom · vibe: "polished enterprise, teal, minimal" · paper: oklch(100% 0 0) · accent: oklch(60% 0.118 184.704)
+ * display: Fraunces · body: Plus Jakarta Sans · axes: light / roman-serif / cool
+ * studied: no · context: inferred · v0.8.1
+ */
+/* Hallmark · pre-emit critique: P5 H4 E5 S4 R5 V5 */
+
+:root {
+  /* Colour — light slate paper, teal primary (user #0D9488) on white */
+  --color-paper:        oklch(100% 0 0);            /* background  #FFFFFF */
+  --color-paper-2:      oklch(98.4% 0.003 247.858); /* surface     #F8FAFC */
+  --color-paper-3:      oklch(95.2% 0.01 248);      /* raised card */
+  --color-ink:          oklch(20.8% 0.042 265.755); /* heading     #0F172A */
+  --color-ink-2:        oklch(27.9% 0.041 260.031); /* text        #1E293B */
+  --color-rule:         oklch(92.9% 0.013 255.508); /* hairline    (slate-200) */
+  --color-rule-2:       oklch(86.9% 0.022 252.894); /* border      #CBD5E1 */
+  --color-muted:        oklch(55.4% 0.046 257.417); /* muted       #64748B */
+  --color-neutral:      oklch(70.4% 0.04 256.788);  /* neutral     (slate-400) */
+  --color-accent:       oklch(60% 0.118 184.704);   /* primary     #0D9488 */
+  --color-accent-ink:   oklch(98.4% 0.014 180.72);  /* on-teal     (teal-50) */
+  --color-focus:        oklch(70.4% 0.14 182.503);  /* teal-500 highlights */
+  --color-positive:     oklch(62.7% 0.194 149.214); /* success     #16A34A */
+  --color-caution:      oklch(76.9% 0.188 70.08);   /* warning     #F59E0B */
+  --color-negative:     oklch(63.7% 0.237 25.331);  /* error       #EF4444 */
+
+  /* Typography */
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-body: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+  /* Type scale — 1.25 major-third from 16px */
+  --text-xs:    0.75rem;   /* 12px */
+  --text-sm:    0.875rem;  /* 14px */
+  --text-base:  1rem;      /* 16px */
+  --text-md:    1.25rem;   /* 20px */
+  --text-lg:    1.5625rem; /* 25px */
+  --text-xl:    1.9531rem; /* 31.25px */
+  --text-2xl:   2.4414rem; /* 39.06px */
+  --text-3xl:   3.0518rem; /* 48.83px */
+  --text-4xl:   3.8147rem; /* 61.04px */
+  --text-display: clamp(2.5rem, 5vw + 0.5rem, 4.75rem);
+  --text-display-s: clamp(1.875rem, 3vw + 0.5rem, 3rem);
+
+  /* Spacing — 4-pt scale, named by role */
+  --space-3xs: 0.125rem;
+  --space-2xs: 0.25rem;
+  --space-xs:  0.5rem;
+  --space-sm:  0.75rem;
+  --space-md:  1rem;
+  --space-lg:  1.5rem;
+  --space-xl:  2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+  --space-4xl: 9rem;
+
+  /* Motion */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 180ms;
+  --dur-base: 240ms;
+  --dur-slow: 320ms;
+
+  /* Shape */
+  --radius-card: 8px;
+  --radius-pill: 999px;
+  --radius-input: 8px;
+
+  /* Depth — whisper only */
+  --shadow-whisper: 0 1px 2px oklch(20.8% 0.042 265.755 / 0.08);
+
+  /* Z-index scale */
+  --z-base: 1;
+  --z-raised: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-nav: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+  --z-tooltip: 600;
+}

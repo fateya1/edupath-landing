@@ -1,0 +1,112 @@
+---
+import FeaturePage from '../layouts/FeaturePage.astro';
+
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'CBE School Management System Kenya',
+  description:
+    "Kenya's only purpose-built CBE school management system with native support for the three CBE senior school pathways.",
+  url: 'https://www.edupath.co.ke/cbe-school-management',
+});
+---
+
+<FeaturePage
+  title="CBE School Management System Kenya | Edupath SMS"
+  description="Kenya's only purpose-built CBE school management system. Native support for the three CBE pathways — STEM, Arts & Sports Science, Social Sciences. Free to start."
+  path="/cbe-school-management"
+  ogTitle="CBE School Management System Kenya | Edupath SMS"
+  ogDescription="Manage CBE assessments, report cards, and pathway assignments natively. Built from the ground up for Kenya's Competency Based Education."
+  jsonLd={jsonLd}
+  badge="CBE-Native Platform"
+  heading={"Kenya's only <span>CBE-ready</span> school management system"}
+  lead="Built from the ground up for Kenya's Competency Based Education — with native support for the three CBE senior school pathways, assessments, and report cards."
+  active="/cbe-school-management"
+  ctaHeading="Ready to go CBE-compliant today?"
+  ctaText="Register your school in under 5 minutes. Free plan available — no credit card required."
+  ctaLabel="Create Free Account →"
+>
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">CBE Pathway Support</div>
+      <h2>Three CBE pathways. Natively supported.</h2>
+      <p class="fs-section-intro">
+        Edupath SMS is the only school management platform in Kenya with built-in support for every CBE senior school pathway. No workarounds, no manual overrides — just accurate grading and reporting out of the box.
+      </p>
+      <div class="fs-grid">
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(60% 0.118 184.704 / 0.15)">🔬</div>
+          <h3>STEM</h3>
+          <p>Science, Technology, Engineering &amp; Mathematics pathway with full subject and assessment support.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(76.9% 0.188 70.08 / 0.18)">🎨</div>
+          <h3>Arts &amp; Sports Science</h3>
+          <p>Creative arts, performing arts, and sports science with CBE-compliant grading.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(63.7% 0.237 25.331 / 0.12)">🌍</div>
+          <h3>Social Sciences</h3>
+          <p>Business studies, Economics and related subjects mapped to CBE competency levels.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">Assessment &amp; Grading</div>
+      <h2>CBE grading that just works.</h2>
+      <p class="fs-section-intro">
+        Track CAT1, CAT2 and End-Term assessments. Edupath automatically applies the correct CBE competency grade (EE / ME / AE / BE) and generates ranked, paginated PDF report cards in one click.
+      </p>
+      <div class="fs-grid">
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(60% 0.118 184.704 / 0.15)">📝</div>
+          <h3>CAT1, CAT2 &amp; End-Term</h3>
+          <p>Enter marks for all assessment types. Edupath calculates averages, ranks students, and maps scores to CBE competency levels automatically.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(62.7% 0.194 149.214 / 0.12)">📊</div>
+          <h3>EE / ME / AE / BE Grading</h3>
+          <p>Exceeds Expectation, Meets Expectation, Approaches Expectation, Below Expectation — automatically assigned based on score thresholds.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(76.9% 0.188 70.08 / 0.18)">📄</div>
+          <h3>One-Click PDF Report Cards</h3>
+          <p>Generate PDF report cards for every student in your school in seconds. Parents can also download their child's report card from the Parent Portal.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(63.7% 0.237 25.331 / 0.12)">🏆</div>
+          <h3>Class Rankings</h3>
+          <p>Paginated ranked results per class with total marks, average, and position. Print-ready for end-of-term distribution.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">FAQ</div>
+      <h2>Common questions about CBE management</h2>
+      <div class="fs-faq">
+        <div class="fs-faq-item">
+          <h3>Does Edupath support both CBE and 8-4-4?</h3>
+          <p>Yes. Edupath SMS fully supports both Kenya's CBE curriculum and the legacy 8-4-4 system. You can run both in the same school, and report cards are generated correctly for either system.</p>
+        </div>
+        <div class="fs-faq-item">
+          <h3>Which CBE pathways are supported?</h3>
+          <p>All three senior school pathways are natively supported: STEM, Arts &amp; Sports Science, and Social Sciences. Students are assigned a pathway during admission and all assessments are mapped accordingly.</p>
+        </div>
+        <div class="fs-faq-item">
+          <h3>How are CBE grades calculated?</h3>
+          <p>Edupath automatically maps scores to the four CBE competency levels: EE (Exceeds Expectation), ME (Meets Expectation), AE (Approaches Expectation), and BE (Below Expectation) based on configurable score thresholds.</p>
+        </div>
+        <div class="fs-faq-item">
+          <h3>Can I generate report cards for the whole school at once?</h3>
+          <p>Yes. Edupath generates PDF report cards for all students in your school in seconds — whether you have 50 or 800 students. Report cards include CBE grades, rankings, attendance summary, and teacher comments.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</FeaturePage>

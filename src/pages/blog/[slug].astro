@@ -1,0 +1,195 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import '../../styles/tokens.css';
+import '../../styles/base.css';
+import '../../styles/chrome.css';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+import type { CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { title, description, tag, dateDisplay, readTime, body } = post.data;
+const path = `/blog/${post.id}/`;
+
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  datePublished: post.data.date.toISOString(),
+  url: `https://www.edupath.co.ke${path}`,
+  publisher: { '@type': 'Organization', name: 'Edupath SMS' },
+});
+---
+
+<Layout
+  title={`${title} | Edupath SMS`}
+  description={description}
+  path={path}
+  jsonLd={jsonLd}
+  bodyClass="blog-article"
+>
+  <Nav active="/blog" />
+
+  <main class="article-wrap">
+    <article class="article">
+      <a class="back-link" href="/blog/">← All articles</a>
+      <span class="article-tag">{tag}</span>
+      <h1 class="article-title">{title}</h1>
+      <div class="article-meta">
+        <span>{dateDisplay}</span>
+        <span aria-hidden="true">·</span>
+        <span>{readTime}</span>
+      </div>
+      <div class="article-body prose" set:html={body} />
+    </article>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* Hallmark · macrostructure: Long Document · genre: modern-minimal */
+  .article-wrap {
+    padding-top: 7.5rem;
+    padding-bottom: var(--space-3xl);
+  }
+  .article {
+    max-width: 44rem;
+    margin-inline: auto;
+    padding-inline: var(--space-xl);
+  }
+  @media (max-width: 48rem) {
+    .article { padding-inline: var(--space-lg); }
+  }
+  .back-link {
+    display: inline-block;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-ink-2);
+    margin-bottom: var(--space-xl);
+  }
+  .back-link:hover { color: var(--color-focus); }
+  .article-tag {
+    display: inline-block;
+    margin-bottom: var(--space-md);
+  }
+  .article-title {
+    font-family: var(--font-display);
+    font-size: var(--text-display-s);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+    color: var(--color-ink);
+    margin-bottom: var(--space-lg);
+  }
+  .article-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    padding-bottom: var(--space-lg);
+    border-bottom: 1px solid var(--color-rule);
+    margin-bottom: var(--space-2xl);
+  }
+
+  /* Prose — Long Document */
+  .prose :global(p) {
+    font-size: var(--text-base);
+    line-height: 1.75;
+    color: var(--color-ink-2);
+    margin-bottom: var(--space-lg);
+  }
+  .prose :global(h2) {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+    margin: var(--space-2xl) 0 var(--space-md);
+    line-height: 1.15;
+  }
+  .prose :global(h3) {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-ink);
+    margin: var(--space-xl) 0 var(--space-sm);
+    line-height: 1.2;
+  }
+  .prose :global(ul), .prose :global(ol) {
+    margin: 0 0 var(--space-lg);
+    padding-left: var(--space-xl);
+    color: var(--color-ink-2);
+  }
+  .prose :global(ul) { list-style: disc; }
+  .prose :global(ol) { list-style: decimal; }
+  .prose :global(li) { margin-bottom: var(--space-xs); }
+  .prose :global(strong) { color: var(--color-ink); font-weight: 600; }
+  .prose :global(a) {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--color-rule-2);
+    text-underline-offset: 4px;
+  }
+  .prose :global(a:hover) { text-decoration-color: var(--color-accent); }
+
+  /* Callout */
+  .prose :global(.callout) {
+    border: 1px solid var(--color-rule-2);
+    border-left: 3px solid var(--color-accent);
+    border-radius: var(--radius-card);
+    background: var(--color-paper-2);
+    padding: var(--space-lg);
+    margin: var(--space-xl) 0;
+  }
+  .prose :global(.callout p) { margin-bottom: 0; }
+
+  /* Inline CTA block */
+  .prose :global(.cta-inline) {
+    border: 1px solid var(--color-rule-2);
+    border-radius: var(--radius-card);
+    background: var(--color-paper-2);
+    padding: var(--space-xl);
+    margin: var(--space-2xl) 0 0;
+    text-align: center;
+  }
+  .prose :global(.cta-inline h3) {
+    font-family: var(--font-display);
+    font-size: var(--text-md);
+    margin: 0 0 var(--space-sm);
+  }
+  .prose :global(.cta-inline p) { margin-bottom: var(--space-lg); color: var(--color-muted); }
+  .prose :global(.cta-inline .btn) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    line-height: 1;
+    padding: var(--space-md) var(--space-xl);
+    border-radius: var(--radius-pill);
+    border: 1px solid transparent;
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+    white-space: nowrap;
+  }
+  .prose :global(.cta-inline .btn:hover) { background: oklch(55% 0.12 185); }
+</style>

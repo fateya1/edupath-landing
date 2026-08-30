@@ -1,0 +1,381 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/tokens.css';
+import '../styles/base.css';
+import '../styles/chrome.css';
+import '../styles/home.css';
+
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Edupath SMS',
+  url: 'https://www.edupath.co.ke',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: 'https://www.edupath.co.ke/?q={search_term_string}',
+    'query-input': 'required name=search_term_string',
+  },
+});
+
+const features = [
+  { title: 'Student Management & Admissions', text: 'Profiles, CBE pathway assignment, classes and one-click Excel import.', href: null },
+  { title: 'Assessments & Report Cards', text: 'CBE (EE/ME/AE/BE) and 8-4-4 grading with one-click PDF report cards.', href: '/cbe-school-management' },
+  { title: 'Attendance Tracking', text: 'Mark in under two minutes from any device, with real-time parent alerts.', href: '/school-attendance' },
+  { title: 'Fee Management & M-Pesa', text: 'STK push payments, balances and automatic receipts and statements.', href: '/mpesa-school-fees' },
+  { title: 'Teacher & Staff Management', text: 'Profiles, TSC numbers, assignments and results integration.', href: null },
+  { title: 'Timetable Builder', text: 'Assign periods, bulk import from Excel, personalised weekly schedules.', href: null },
+  { title: 'Hostel Management', text: 'Room allocations, capacity and check-in/out for boarding schools.', href: null },
+  { title: 'Transport Management', text: 'Routes, bus assignments, drivers and parent pickup points.', href: null },
+  { title: 'HR & Payroll', text: 'Contracts, pay runs, SHA/NSSF/PAYE, payslips and leave.', href: null },
+  { title: 'Announcements & Messaging', text: 'Broadcasts, parent-teacher chat and WhatsApp blasts.', href: null },
+  { title: 'School Calendar & Events', text: 'Term calendars and events that auto-trigger notifications.', href: null },
+  { title: 'Migration Hub', text: 'Bulk Excel import for students, fees, timetables and more.', href: null },
+  { title: 'Library System', text: 'Catalogue, issue/return and overdue tracking.', href: null },
+  { title: 'Assets & Facilities', text: 'Catalogue assets, maintenance history and assignments.', href: null },
+  { title: 'Discipline Records', text: 'Incident logs and per-student history with admin oversight.', href: null },
+];
+
+const portals = [
+  { name: 'Admin Portal', text: 'Admissions, fees, staff, analytics and settings.' },
+  { name: 'Teacher Portal', text: 'Attendance, marks, timetable and messages.' },
+  { name: 'Student Portal', text: 'Attendance, results, fees and schedule.' },
+  { name: 'Parent Portal', text: 'Real-time updates, results and M-Pesa payments.', href: '/parent-portal' },
+  { name: 'Regulator Portal', text: 'CDE, SCDE, CD-TSC and SCD-TSC read-access to compliance data.', href: null },
+];
+
+const plans = [
+  { name: 'Free', price: 'KES 0', target: 'Up to 200 students', line: 'Admissions, attendance and parent portal.', features: ['Up to 200 students', 'Unlimited teachers', 'Admissions & attendance', 'Parent portal'], cta: 'Get Started Free', href: '/#register', featured: false },
+  { name: 'Starter', price: 'KES 5,999', target: '200–400 students', line: 'Everything in Free, plus M-Pesa and WhatsApp.', features: ['All Free features', 'M-Pesa STK push', 'WhatsApp notifications', 'Custom branding', 'Full fee management', 'Library & assets'], cta: 'Register Your School', href: '/#register', featured: true, badge: 'Most popular' },
+  { name: 'Pro', price: 'KES 12,999', target: '400–1,000 students', line: 'Everything in Starter, plus analytics and results.', features: ['All Starter features', 'Advanced analytics', 'Full timetable management', 'Hostel & transport modules', 'School calendar & events', 'Priority support'], cta: 'Get Pro', href: '/#register', featured: false },
+  { name: 'Enterprise', price: 'Custom', target: '1,000+ students', line: 'Everything in Pro, plus onboarding and API access.', features: ['All Pro features', 'HR & Payroll module', 'API access', 'Multi-campus support', 'County-level reporting', 'Dedicated onboarding'], cta: 'Contact Sales', href: 'mailto:admin@edupath.co.ke', featured: false, custom: true },
+];
+
+const testimonials = [
+  { quote: 'We generate PDF report cards for 247 students in minutes. The CBE grading is accurate and parents love real-time access to results.', name: 'Juma Omar', role: 'Principal, Nairobi County', initials: 'JO' },
+  { quote: 'Setup took under 10 minutes. We imported all our students from Excel and were live the same afternoon.', name: 'Amina Wanjiku', role: 'Deputy Principal, Mombasa County', initials: 'AW' },
+  { quote: 'Fee tracking alone has saved us hours weekly. Parents pay via M-Pesa without calling us.', name: 'Moses Kamau', role: 'Bursar, Kisumu County', initials: 'MK' },
+];
+
+const campus = [
+  'One school or a group — Edupath manages multiple campuses from a single login.',
+  'Central oversight with per-campus settings, staff and reports.',
+  'County-level and regulator reporting across all your campuses.',
+];
+
+const faqs = [
+  ['How long does setup take?', 'Most schools are fully set up within 5–15 minutes. Register, receive your school code, then import students and teachers via the Excel bulk upload. Your dashboard is live immediately.'],
+  ['Does Edupath support both CBE and 8-4-4?', 'Yes. Edupath was built from the ground up for Kenya\'s CBE curriculum with native support for all four senior-school pathways, and it also supports 8-4-4. Report cards generate correctly for either system.'],
+  ['Can parents access information in real time?', 'Yes. Parents get a dedicated portal for attendance, results and fee balances, and can pay via M-Pesa STK push. They also receive WhatsApp and push alerts automatically.'],
+  ['Is our school data secure and private?', 'Yes. Edupath is multi-tenant — every school\'s data is isolated by a unique School ID. All connections use HTTPS/TLS (256-bit), compliant with Kenya\'s Data Protection Act (2019).'],
+  ['Is there a portal for the Ministry of Education or TSC?', 'Yes. The Regulator Portal gives County & Sub-County Directors of Education (CDE, SCDE) and TSC officials (CD-TSC, SCD-TSC) read-access to enrollment, staffing and compliance data — without exposing sensitive financial or student records.'],
+  ['How does M-Pesa fee payment work?', 'Parents view the balance in the Parent Portal and click "Pay via M-Pesa." An STK push is sent to their phone, they confirm with their PIN, and the fee record updates automatically.'],
+  ['Can I import our existing data?', 'Yes. The Migration Hub provides Excel templates for students, teachers, parents, assessments, timetables, fees, library books and assets — migrate your whole school in an afternoon.'],
+  ['Does Edupath work on smartphones and offline?', 'Yes. The web app is fully responsive, and the Android app adds Swahili/English, biometric login, dark & light themes and offline mode.'],
+];
+
+const faqJsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
+});
+---
+
+<Layout
+  title="Edupath SMS — School management for Kenya's CBE"
+  description="Edupath SMS is an all-in-one school management platform for Kenyan schools — CBE-ready, with M-Pesa fee collection and WhatsApp notifications built in."
+  path="/"
+  ogTitle="Edupath SMS — School management for Kenya's CBE"
+  ogDescription="Admissions, attendance, academics, fees and communication in one platform — built for Kenya's CBE curriculum, powered by M-Pesa."
+  jsonLd={`[${jsonLd},${faqJsonLd}]`}
+  bodyClass="home"
+>
+  <Nav active="/" />
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <div class="hero-grid">
+        <h1 class="hero-title">The paperless way to run your school.</h1>
+        <div class="hero-side">
+          <p class="hero-lead">Edupath SMS brings admissions, attendance, academics and fees into one all-in-one platform — built for Kenya's CBE curriculum, with M-Pesa and WhatsApp built in.</p>
+          <div class="hero-cta">
+            <a class="btn btn--primary" href="/#register">Start Free — No Card Required</a>
+            <a class="chip" href="https://app.edupath.co.ke/portal" target="_blank">View Live Demo →</a>
+          </div>
+          <p class="hero-trust">Built for Kenya's CBE · M-Pesa built in · Live in about 5 minutes</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUST LINE -->
+    <div class="trust">
+      <div class="trust-inner">
+        <span class="trust-label">Why schools choose us</span>
+        <span class="trust-items">
+          <span class="trust-item">PAY IN SECONDS</span>
+          <span class="trust-item">NO NEW APPS</span>
+          <span class="trust-item">SAVE 20+ HRS/WEEK</span>
+          <span class="trust-item">LIVE IN 5 MINUTES</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- SHOW, DON'T TELL — familiar real notifications -->
+    <section class="demo" id="demo">
+      <div class="demo-inner">
+        <h2 class="demo-title">The moments your parents already know.</h2>
+        <p class="demo-lead">No new apps to download. Edupath works through M-Pesa and WhatsApp — the things every parent already uses every day.</p>
+        <div class="demo-cards">
+          <div class="phone-card" aria-hidden="true">
+            <span class="pc-header">
+              <span class="pc-brand"><span class="pc-dot pc-dot--m"></span>M-PESA</span>
+              <span class="pc-now">now</span>
+            </span>
+            <span class="pc-amount">KES 5,999.00</span>
+            <span class="pc-line">sent to <strong>Edupath School Ltd</strong></span>
+            <span class="pc-line pc-ref">Ref: QFJ2H4K · Term 3 · 10 Aug 8:02 AM</span>
+            <span class="pc-status">Payment received</span>
+          </div>
+          <div class="phone-card" aria-hidden="true">
+            <span class="pc-header">
+              <span class="pc-brand"><span class="pc-dot pc-dot--w"></span>WhatsApp</span>
+              <span class="pc-now">now</span>
+            </span>
+            <span class="pc-to"><strong>Edupath SMS</strong> · Attendance alert</span>
+            <span class="pc-line">Kevin Kamau was marked <strong class="pc-ok">Present</strong> today at 8:02 AM.</span>
+            <span class="pc-line pc-ref">Term 3 · Week 1 · Greenfield Secondary School</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES — the full product, as a simple index -->
+    <section class="sec" id="features">
+      <div class="sec-inner">
+        <h2 class="sec-title">Everything your school needs, in one place.</h2>
+        <div class="idx-list">
+          {features.map((f) => (
+            <a class="idx-row" href={f.href ?? '/#features'} aria-label={f.title}>
+              <span class="idx-name">{f.title}</span>
+              <span class="idx-text">{f.text}</span>
+              {f.href && <span class="idx-arrow" aria-hidden="true">→</span>}
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTALS -->
+    <section class="sec sec--tint" id="portals">
+      <div class="sec-inner">
+        <h2 class="sec-title">A portal for every role.</h2>
+        <div class="idx-list">
+          {portals.map((p) => (
+            <a class="idx-row" href={p.href ?? '/#portals'}>
+              <span class="idx-name">{p.name}</span>
+              <span class="idx-text">{p.text}</span>
+              {p.href && <span class="idx-arrow" aria-hidden="true">→</span>}
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="sec" id="pricing">
+      <div class="sec-inner">
+        <h2 class="sec-title">Simple, transparent pricing.</h2>
+        <p class="sec-note">Billed per term in Kenyan Shillings · Annual billing saves one term.</p>
+        <div class="pr-grid">
+          {plans.map((p) => (
+            <div class={`pr-card${p.featured ? ' pr-card--best' : ''}`}>
+              {p.badge && <span class="pr-badge">{p.badge}</span>}
+              <div class="pr-plan">{p.name}</div>
+              <div class={`pr-price${p.custom ? ' pr-price--custom' : ''}`}>{p.price}<span class="pr-cycle"> / term</span></div>
+              <div class="pr-target">{p.target}</div>
+              <p class="pr-line">{p.line}</p>
+              <ul class="pr-feats">
+                {p.features.map((f) => (<li>{f}</li>))}
+              </ul>
+              <a class={`btn ${p.featured ? 'btn--primary' : 'btn--secondary'}`} href={p.href}>{p.cta}</a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="sec sec--tint" id="testimonials">
+      <div class="sec-inner">
+        <h2 class="sec-title">Trusted by school leaders.</h2>
+        <div class="quotes">
+          {testimonials.map((t) => (
+            <figure class="quote">
+              <blockquote>{t.quote}</blockquote>
+              <figcaption>
+                <span class="avatar" aria-hidden="true">{t.initials}</span>
+                <span class="quote-by"><strong>{t.name}</strong> · {t.role}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CAMPUS -->
+    <section class="sec" id="campus">
+      <div class="sec-inner campus-grid">
+        <h2 class="sec-title">Built for campuses and groups.</h2>
+        <ul class="campus-list">
+          {campus.map((c) => (<li>{c}</li>))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="sec" id="faq">
+      <div class="sec-inner">
+        <h2 class="sec-title">Questions, answered.</h2>
+        <div class="faq-list">
+          {faqs.map(([q, a], i) => (
+            <div class="faq-item">
+              <button class="faq-q" type="button" aria-expanded="false" aria-controls={`faqa-${i}`}>
+                {q}
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="faq-a" id={`faqa-${i}`}><div class="faq-a-inner">{a}</div></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- REGISTER -->
+    <section class="sec sec--tint" id="register">
+      <div class="sec-inner close-grid">
+        <div class="close-copy">
+          <h2 class="sec-title">Start running your school on Edupath.</h2>
+          <p class="close-lead">Free plan, no credit card. Your admin dashboard is live immediately — no approvals, no waiting.</p>
+        </div>
+        <div class="reg-wrap">
+          <div class="reg-card">
+            <h3 class="reg-title">Create your school account</h3>
+            <div class="form-ok" id="regOk">
+              <h4>School registered!</h4>
+              <p>Check your email for your login credentials and School Code. Your dashboard is ready.</p>
+            </div>
+            <form class="reg-form" id="regForm" novalidate>
+              <div class="field"><label class="field-label" for="rSchool">School name *</label><input class="field-input" id="rSchool" name="schoolName" placeholder="e.g. Greenfield Secondary School" required /></div>
+              <div class="close-f2">
+                <div class="field"><label class="field-label" for="rFirst">First name *</label><input class="field-input" id="rFirst" name="firstName" placeholder="John" required /></div>
+                <div class="field"><label class="field-label" for="rLast">Last name *</label><input class="field-input" id="rLast" name="lastName" placeholder="Kamau" required /></div>
+              </div>
+              <div class="field"><label class="field-label" for="rEmail">Admin email *</label><input class="field-input" id="rEmail" name="email" type="email" placeholder="admin@yourschool.com" required /></div>
+              <div class="close-f2">
+                <div class="field">
+                  <label class="field-label" for="rCounty">County *</label>
+                  <select class="field-select" id="rCounty" name="county">
+                    <option value="">Select county</option>
+                    <option>Nairobi</option><option>Mombasa</option><option>Kisumu</option><option>Nakuru</option>
+                    <option>Uasin Gishu</option><option>Kiambu</option><option>Machakos</option><option>Meru</option>
+                    <option>Nyeri</option><option>Kakamega</option><option>Kisii</option><option>Kilifi</option>
+                    <option>Murang'a</option><option>Embu</option><option>Other</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label class="field-label" for="rCurriculum">Curriculum *</label>
+                  <select class="field-select" id="rCurriculum" name="curriculum">
+                    <option value="">Select</option>
+                    <option value="CBE">CBE</option>
+                    <option value="844">8-4-4</option>
+                    <option value="BOTH">Both</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field"><label class="field-label" for="rPass">Password *</label><input class="field-input" id="rPass" name="password" type="password" placeholder="Minimum 8 characters" required /></div>
+              <div class="form-err" id="regErr"></div>
+              <button type="submit" class="btn btn--primary" id="regBtn">Create Free Account</button>
+              <p class="form-note">No credit card required. Your data is private and encrypted.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="sec" id="contact">
+      <div class="sec-inner">
+        <h2 class="sec-title">Talk to us.</h2>
+        <div class="contact-list">
+          <div class="contact-item"><span class="contact-label">Email</span><a class="tlink" href="mailto:admin@edupath.co.ke">admin@edupath.co.ke</a></div>
+          <div class="contact-item"><span class="contact-label">Phone / WhatsApp</span><span>+254 711 606 968</span></div>
+          <div class="contact-item"><span class="contact-label">Hours</span><span>Monday – Friday · 8 AM – 6 PM EAT</span></div>
+          <div class="contact-item"><span class="contact-label">Location</span><span>Nairobi, Kenya</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  // Register form
+  const regForm = document.getElementById('regForm');
+  if (regForm) {
+    regForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('regBtn');
+      const err = document.getElementById('regErr');
+      const school = document.getElementById('rSchool').value.trim();
+      const first = document.getElementById('rFirst').value.trim();
+      const last = document.getElementById('rLast').value.trim();
+      const email = document.getElementById('rEmail').value.trim().toLowerCase();
+      const county = document.getElementById('rCounty').value;
+      const curriculum = document.getElementById('rCurriculum').value;
+      const pass = document.getElementById('rPass').value;
+      if (!school || !first || !last || !email || !county || !curriculum || !pass) {
+        err.textContent = 'Please fill in all required fields.';
+        err.style.display = 'block';
+        return;
+      }
+      if (pass.length < 8) {
+        err.textContent = 'Password must be at least 8 characters.';
+        err.style.display = 'block';
+        return;
+      }
+      err.style.display = 'none';
+      btn.disabled = true;
+      btn.textContent = 'Registering...';
+      try {
+        const res = await fetch('https://edupath-sms.onrender.com/auth/register-school', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ schoolName: school, firstName: first, lastName: last, email, password: pass, county, curriculum }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Registration failed');
+        regForm.style.display = 'none';
+        document.getElementById('regOk').style.display = 'block';
+      } catch (ex) {
+        err.textContent = ex.message || 'Something went wrong. Please try again.';
+        err.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Create Free Account';
+      }
+    });
+  }
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach((item) => {
+    const btn = item.querySelector('.faq-q');
+    const a = item.querySelector('.faq-a');
+    btn.addEventListener('click', () => {
+      const open = item.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', String(open));
+      a.style.maxHeight = open ? a.scrollHeight + 'px' : '0px';
+    });
+  });
+</script>
