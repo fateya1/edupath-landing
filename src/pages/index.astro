@@ -350,7 +350,7 @@ const faqJsonLd = JSON.stringify({
       btn.disabled = true;
       btn.textContent = 'Registering...';
       try {
-        const res = await fetch('https://edupath-sms.onrender.com/auth/register-school', {
+        const res = await fetch('https://api.edupath.co.ke/auth/register-school', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ schoolName: school, firstName: first, lastName: last, email, password: pass, county, curriculum }),
