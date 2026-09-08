@@ -273,6 +273,7 @@ const faqJsonLd = JSON.stringify({
                 <div class="field"><label class="field-label" for="rLast">Last name *</label><input class="field-input" id="rLast" name="lastName" placeholder="Kamau" required /></div>
               </div>
               <div class="field"><label class="field-label" for="rEmail">Admin email *</label><input class="field-input" id="rEmail" name="email" type="email" placeholder="admin@yourschool.com" required /></div>
+              <div class="field"><label class="field-label" for="rPhone">Phone number *</label><input class="field-input" id="rPhone" name="phone" type="tel" placeholder="0712345678" required /></div>
               <div class="close-f2">
                 <div class="field">
                   <label class="field-label" for="rCounty">County *</label>
@@ -333,10 +334,11 @@ const faqJsonLd = JSON.stringify({
       const first = document.getElementById('rFirst').value.trim();
       const last = document.getElementById('rLast').value.trim();
       const email = document.getElementById('rEmail').value.trim().toLowerCase();
+      const phone = document.getElementById('rPhone').value.trim();
       const county = document.getElementById('rCounty').value;
       const curriculum = document.getElementById('rCurriculum').value;
       const pass = document.getElementById('rPass').value;
-      if (!school || !first || !last || !email || !county || !curriculum || !pass) {
+      if (!school || !first || !last || !email || !phone || !county || !curriculum || !pass) {
         err.textContent = 'Please fill in all required fields.';
         err.style.display = 'block';
         return;
@@ -350,10 +352,21 @@ const faqJsonLd = JSON.stringify({
       btn.disabled = true;
       btn.textContent = 'Registering...';
       try {
+        const subdomain = school.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').slice(0, 40) || 'school';
         const res = await fetch('https://api.edupath.co.ke/auth/register-school', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ schoolName: school, firstName: first, lastName: last, email, password: pass, county, curriculum }),
+          body: JSON.stringify({
+            schoolName: school,
+            subdomain,
+            adminFirstName: first,
+            adminLastName: last,
+            adminEmail: email,
+            adminPhone: phone,
+            adminPassword: pass,
+            county,
+            schoolType: curriculum,
+          }),
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.message || 'Registration failed');
