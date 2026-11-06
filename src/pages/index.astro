@@ -161,67 +161,151 @@ const faqJsonLd = JSON.stringify({
 
     <!-- FEATURES — the full product, as a simple index -->
     <!-- EP:STYLE:START -->
-<style is:global>#ep-solve,#ep-faq-new{--t:#0D9488;--td:#0F766E;--tdd:#134E4A;--tt:#F0FDFA;--tb:#CCE7E3;--ink:#0F2F2C;--mut:#4B6B67;--bad:#B91C1C;--badbg:#FEE2E2;
-  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);box-sizing:border-box}
+<style is:global>#ep-solve,#ep-faq-new{--t:#0D9488;--td:#0F766E;--tdd:#134E4A;--tt:#F0FDFA;--tb:#CCE7E3;--ink:#0F2F2C;--mut:#4B6B67;--bad:#B91C1C;--badbg:#FEE2E2;--ind:#5A55E0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);box-sizing:border-box}
 #ep-solve *,#ep-faq-new *{box-sizing:border-box}
 #ep-solve{background:var(--tt);padding:72px 20px}
-.eps-wrap{max-width:1120px;margin:0 auto;display:grid;gap:36px;grid-template-columns:1fr;align-items:start}
-@media(min-width:960px){.eps-wrap{grid-template-columns:5fr 7fr;gap:48px}}
+#ep-solve [hidden]{display:none!important}
+.eps-wrap{max-width:1120px;margin:0 auto;display:grid;gap:36px;grid-template-columns:1fr;align-items:center}
+@media(min-width:1000px){.eps-wrap{grid-template-columns:4fr 8fr;gap:44px}}
 .eps-copy h2{font-size:clamp(1.7rem,3.2vw,2.35rem);line-height:1.15;margin:0 0 14px;color:var(--tdd);letter-spacing:-.01em}
 .eps-copy p{margin:0 0 18px;line-height:1.6;color:var(--mut);max-width:46ch}
-.eps-rules{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:10px}
-.eps-rules li{display:flex;gap:10px;align-items:flex-start;line-height:1.45;font-size:.95rem}
-.eps-tag{flex:none;font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:99px;margin-top:2px;background:var(--tdd);color:#fff}
-.eps-tag.soft{background:#fff;color:var(--td);border:1px solid var(--t)}
+.eps-pts{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:10px}
+.eps-pts li{display:flex;gap:10px;line-height:1.45;font-size:.95rem}
+.eps-pts li::before{content:"\2713";flex:none;width:20px;height:20px;border-radius:50%;background:var(--t);color:#fff;font-size:.72rem;display:grid;place-items:center;margin-top:1px}
 .eps-btn{appearance:none;border:0;background:var(--t);color:#fff;font:inherit;font-weight:600;padding:13px 22px;border-radius:10px;cursor:pointer;min-height:46px}
 .eps-btn:hover:not(:disabled){background:var(--td)}
 .eps-btn:disabled{opacity:.6;cursor:progress}
 #ep-solve :focus-visible,#ep-faq-new :focus-visible{outline:3px solid var(--tdd);outline-offset:3px}
-.eps-stats{display:flex;gap:26px;flex-wrap:wrap;margin-top:26px}
-.eps-stat b{display:block;font-size:1.9rem;line-height:1;color:var(--tdd);font-variant-numeric:tabular-nums}
-.eps-stat span{font-size:.82rem;color:var(--mut)}
-.eps-stat.ok b{color:var(--td)}
-.eps-panel{background:#fff;border:1px solid var(--tb);border-radius:14px;padding:16px;box-shadow:0 10px 30px rgba(19,78,74,.08)}
-.eps-bar{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px;font-size:.9rem}
-.eps-bar strong{color:var(--tdd)}
-.eps-bar span{color:var(--mut)}
+.eps-panel{position:relative;overflow:hidden;background:#fff;border:1px solid var(--tb);border-radius:14px;padding:14px;box-shadow:0 10px 30px rgba(19,78,74,.08)}
+.eps-hd{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.eps-hd b{display:block;font-size:1.05rem;color:#111}
+.eps-hd span{font-size:.72rem;color:#6B7A99}
+.eps-hd .yr{text-align:right}
+.eps-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.eps-sc{border-radius:12px;padding:10px 12px;border:1px solid}
+.eps-sc b{display:block;font-size:1.35rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.eps-sc span{font-size:.68rem;color:#4B5563}
+.eps-sc.a{background:#E8F0FE;border-color:#C7D8F8}.eps-sc.a b{color:#3B6FE0}
+.eps-sc.b{background:#EFEAFB;border-color:#D8CCF5}.eps-sc.b b{color:#7C5CE0}
+.eps-sc.c{background:#E3F6F1;border-color:#BDE6DA}.eps-sc.c b{color:#16A394}
+.eps-sc.d{background:#FDF1E3;border-color:#F3D9B4}.eps-sc.d b{color:#E8912D}
+.eps-view{display:flex;align-items:center;gap:8px;font-size:.74rem;margin-bottom:8px}
+.eps-tbar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.eps-tb{font-size:.7rem;padding:7px 10px;border-radius:9px;border:1px solid #E1E4F2;background:#fff;color:#2B2F52;transition:transform .15s}
+.eps-tb.mv{background:#3B6FE0;color:#fff;border-color:#3B6FE0}
+.eps-tb.gn{background:#0FA67E;color:#fff;border-color:#0FA67E}
+.eps-hint{font-size:.66rem;color:#8A94A6;margin:0 0 10px}
+.press{transform:scale(.95)}
 .eps-scroll{overflow-x:auto;overflow-y:hidden}
-.eps-s{display:none}
-.eps-grid{display:grid;grid-template-columns:104px repeat(5,minmax(0,1fr));gap:6px;min-width:700px}
+.eps-grid{display:grid;grid-template-columns:104px repeat(5,minmax(0,1fr));gap:6px;min-width:640px}
 .eps-h{font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:6px 4px;display:flex;align-items:center}
 .eps-per{display:flex;flex-direction:column;justify-content:center;padding-left:4px}
 .eps-per b{font-size:.78rem}
 .eps-per .eps-t{font-size:.68rem;color:var(--mut)}
 .eps-brk{display:flex;align-items:center;font-size:.68rem;color:var(--mut);padding-left:4px;letter-spacing:.04em;text-transform:uppercase}
-.eps-brkt{grid-column:2/-1;text-align:center;font-size:.72rem;color:var(--mut);background:#F3F8F7;border-radius:6px;padding:7px}
-.eps-cell{position:relative;min-height:50px;border:1px dashed var(--tb);border-radius:8px;padding:6px 18px 6px 8px;display:flex;flex-direction:column;justify-content:center;gap:1px;background:#fff;overflow:hidden}
+.eps-brkt{grid-column:2/-1;text-align:center;font-size:.72rem;color:var(--mut);background:#F3F8F7;border-radius:6px;padding:6px}
+.eps-cell{position:relative;min-height:46px;border:1px dashed var(--tb);border-radius:8px;padding:5px 18px 5px 8px;display:flex;flex-direction:column;justify-content:center;gap:1px;background:#fff;overflow:hidden}
 .eps-cell b{font-size:.74rem;line-height:1.2;font-weight:600;color:var(--c)}
 .eps-cell i{font-size:.66rem;font-style:normal;color:var(--c);opacity:.75}
 .eps-cell.on{border:1.5px solid var(--c);animation:epsPop .22s ease-out}
 .eps-cell.on::after{content:"\00d7";position:absolute;top:3px;right:7px;font-size:.72rem;color:var(--c)}
 .eps-cell.bad{background:var(--badbg);border:1.5px solid var(--bad);animation:epsShake .3s}
-@keyframes epsPop{from{transform:scale(.9);opacity:.3}to{transform:none;opacity:1}}
-@keyframes epsShake{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
-.eps-log{margin-top:12px;min-height:2.6em;font-size:.88rem;line-height:1.4;color:var(--mut)}
+.eps-s{display:none}
+.eps-log{margin-top:10px;min-height:2.4em;font-size:.82rem;line-height:1.4;color:var(--mut)}
 .eps-log.bad{color:var(--bad)}
+.eps-modal{position:absolute;inset:0;z-index:6;background:rgba(15,23,42,.45);display:none;align-items:flex-start;justify-content:center;padding:56px 14px 14px}
+.eps-modal.on{display:flex;animation:epsFade .2s ease-out}
+.eps-dlg{width:min(100%,540px);max-height:100%;overflow:hidden;background:#fff;border-radius:14px;padding:16px;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.eps-d{display:none}
+.eps-d.on{display:block;animation:epsIn .25s ease-out}
+.eps-d h4{margin:0 0 4px;font-size:1rem;color:#111}
+.eps-dd{margin:0 0 10px;font-size:.68rem;color:#8A94A6;line-height:1.5}
+.eps-ft{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;margin-top:12px}
+.eps-b2{display:inline-block;font-size:.7rem;padding:7px 12px;border-radius:8px;border:1px solid #E1E4F2;background:#fff;color:#2B2F52;transition:transform .15s,background .3s}
+.eps-b2.dk{background:#6B7280;color:#fff;border-color:#6B7280}
+.eps-b2.gr{background:#0FA67E;color:#fff;border-color:#0FA67E}
+.eps-b2.ok{background:#DCFCE7;border-color:#86D9A5;color:#15803D}
+.eps-inp{min-height:30px;padding:6px 9px;border:1px solid #E1E4F2;border-radius:8px;font-size:.74rem;background:#fff;display:flex;align-items:center;color:#111}
+.eps-inp:empty::before{content:attr(data-ph);color:#9AA3B2}
+.eps-inp.typing::after{content:"";width:1px;height:1em;background:#111;margin-left:1px;animation:epsBlink 1s steps(1) infinite}
+.eps-tb2{width:100%;border-collapse:collapse;font-size:.7rem}
+.eps-tb2 th{text-align:left;padding:5px;color:#8A94A6;font-weight:600;font-size:.62rem}
+.eps-tb2 td{padding:6px 5px;border-top:1px solid #EEF0F8}
+.eps-tb2 tr.hl td{background:#FFF7DB}
+.eps-add{display:grid;grid-template-columns:2fr 1.3fr 1fr auto;gap:6px;margin-bottom:8px}
+.eps-li{display:grid;grid-template-columns:2fr 1.3fr auto;gap:6px;padding:6px 0;border-top:1px solid #EEF0F8;font-size:.72rem;color:#111}
+.eps-li span:nth-child(2){color:var(--mut)}
+.eps-li.new{background:#ECFDF3;animation:epsIn .3s ease-out}
+.eps-pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;align-items:center}
+.eps-pill{font-size:.7rem;padding:6px 10px;border-radius:8px;border:1px solid #E1E4F2;background:#fff;color:#2B2F52}
+.eps-pill.on{border-color:#3B6FE0;color:#3B6FE0}
+.eps-av{display:grid;grid-template-columns:34px repeat(5,1fr);gap:4px;margin-top:8px;font-size:.62rem;color:var(--mut)}
+.eps-av div{display:flex;align-items:center;justify-content:center;min-height:20px}
+.eps-ac{background:#D9F5E6;border-radius:5px;transition:background .3s}
+.eps-ac.off{background:#E5E7EB;box-shadow:inset 0 0 0 1px #CBD5E1}
+.eps-rr{display:grid;grid-template-columns:1.4fr 1.4fr auto;gap:6px;padding:6px 0;border-top:1px solid #EEF0F8;font-size:.72rem;color:#111}
+.eps-rr span{color:var(--mut)}
+.eps-sum{margin-top:8px;font-size:.72rem;color:#15803D;font-weight:600}
+.eps-ok{background:#0B5B4F;color:#fff;border-radius:8px;padding:10px 12px;font-size:.76rem;font-weight:600;margin-bottom:10px}
+.eps-k{font-size:.62rem;letter-spacing:.06em;color:#8A94A6;margin:8px 0 3px;font-weight:600}
+.eps-ch{font-size:.76rem;color:var(--mut);padding:14px 0}
+.eps-cls{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}
+.eps-cc{position:relative;border:1px solid #E6E8F5;border-radius:10px;padding:8px 10px 8px 30px;font-size:.68rem;color:#8A94A6;transition:background .3s,border-color .3s}
+.eps-cc b{display:block;color:#111;font-size:.72rem}
+.eps-cc i{position:absolute;left:9px;top:11px;width:13px;height:13px;border:1.5px solid #9AA3B2;border-radius:3px;display:grid;place-items:center;font-style:normal;font-size:.55rem;color:#fff}
+.eps-cc.on{border-color:#3B6FE0;background:#F3F7FF}.eps-cc.on i{background:#3B6FE0;border-color:#3B6FE0}.eps-cc.on i::after{content:"\2713"}
+.eps-rad{font-size:.72rem;color:#111;display:flex;gap:7px;align-items:center;margin:3px 0}
+.eps-rad::before{content:"";width:11px;height:11px;border-radius:50%;border:1.5px solid #9AA3B2}
+.eps-rad.on::before{border-color:#3B6FE0;background:radial-gradient(#3B6FE0 45%,#fff 50%)}
+.eps-mb{display:grid;grid-template-columns:44px repeat(3,1fr);gap:5px;font-size:.62rem;color:var(--mut)}
+.eps-mb>div{min-height:40px;display:flex;align-items:center}
+.eps-mc{border:1px dashed #CBD5E1;border-radius:7px;padding:3px 6px;flex-direction:column;justify-content:center;align-items:flex-start!important;gap:0}
+.eps-mc.ml{border:1.5px solid var(--c);border-style:solid;background:#fff}
+.eps-mc.ml b{color:var(--c);font-size:.66rem}.eps-mc.ml i{color:var(--c);opacity:.75;font-style:normal;font-size:.58rem}
+.eps-mc.go{background:#D9F5E6;border-color:#7DD3A8}
+.eps-ghost{position:absolute;left:10px;top:8px;min-width:96px;border:1.5px solid var(--c);border-radius:7px;background:#fff;padding:3px 6px;box-shadow:0 6px 14px rgba(0,0,0,.25);font-size:.64rem;font-weight:600;color:var(--c);transform:rotate(-3deg)}
+.eps-bx{border:1px solid #E6E8F5;border-radius:10px;padding:10px 12px;font-size:.72rem;color:#111;margin-bottom:8px}
+.eps-bx b{display:block;margin-bottom:3px}
+.eps-bx small{display:block;color:var(--mut);font-size:.66rem;margin-top:2px}
+.eps-hr{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:7px 0;border-top:1px solid #EEF0F8;font-size:.72rem;animation:epsIn .3s ease-out}
+.eps-cur{position:absolute;left:0;top:0;z-index:9;pointer-events:none;transition:transform .55s cubic-bezier(.4,0,.2,1),opacity .4s;opacity:0}
+.eps-cur.vis{opacity:1}
+.eps-cur svg{display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
+.eps-cur i{position:absolute;left:-8px;top:-8px;width:20px;height:20px;border-radius:50%;border:2px solid var(--t);opacity:0}
+.eps-cur.click i{animation:epsRip .45s ease-out}
 .eps-note{margin:10px 0 0;font-size:.78rem;color:var(--mut)}
 .eps-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-@media(prefers-reduced-motion:reduce){.eps-cell.on,.eps-cell.bad{animation:none}}
-
+@keyframes epsPop{from{transform:scale(.9);opacity:.3}to{transform:none;opacity:1}}
+@keyframes epsShake{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+@keyframes epsFade{from{opacity:0}to{opacity:1}}
+@keyframes epsIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@keyframes epsRip{from{transform:scale(.3);opacity:.9}to{transform:scale(1.6);opacity:0}}
+@keyframes epsBlink{50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.eps-cell.on,.eps-cell.bad,.eps-modal.on,.eps-d.on,.eps-li.new,.eps-hr{animation:none}.eps-cur{display:none}}
 @media(max-width:640px){
 #ep-solve{padding:48px 16px}
 .eps-panel{padding:10px}
+.eps-stats{grid-template-columns:1fr 1fr}
+.eps-tb{font-size:.62rem;padding:6px 8px}
+.eps-hint{display:none}
 .eps-scroll{overflow:visible}
 .eps-grid{grid-template-columns:34px repeat(5,minmax(0,1fr));gap:3px;min-width:0}
 .eps-h{font-size:.56rem;letter-spacing:0;padding:4px 0;justify-content:center;overflow:hidden}
 .eps-f{display:none}.eps-s{display:inline}
 .eps-t,.eps-cell i,.eps-cell.on::after{display:none}
-.eps-cell{min-height:34px;padding:3px 2px;border-radius:6px;align-items:center;text-align:center}
-.eps-cell b{font-size:.6rem}
+.eps-cell{min-height:32px;padding:3px 2px;border-radius:6px;align-items:center;text-align:center}
+.eps-cell b{font-size:.58rem}
 .eps-per{padding-left:0;align-items:center}
-.eps-per b{font-size:.62rem}
-.eps-brk{font-size:.55rem;padding-left:0}
-.eps-brkt{font-size:.62rem;padding:4px}
+.eps-per b{font-size:.6rem}
+.eps-brk{font-size:.52rem;padding-left:0}
+.eps-brkt{font-size:.6rem;padding:3px}
+.eps-modal{padding:44px 8px 8px}
+.eps-dlg{padding:12px}
+.eps-d h4{font-size:.9rem}
+.eps-dd{font-size:.62rem;margin-bottom:8px}
+.eps-xs{display:none!important}
+.eps-add{grid-template-columns:1fr 1fr}
+.eps-cls{grid-template-columns:1fr}
 }
 #ep-fees{--ind:#5A55E0;--lav:#EEF0FB;--ink:#0F2F2C;--mut:#5B6B7A;--t:#0D9488;--tdd:#134E4A;background:#F6F7FD;padding:72px 20px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);box-sizing:border-box}
 #ep-fees *{box-sizing:border-box}
@@ -338,29 +422,88 @@ const faqJsonLd = JSON.stringify({
 <section id="ep-solve" aria-labelledby="eps-title">
   <div class="eps-wrap">
     <div class="eps-copy">
-      <h2 id="eps-title">Watch Edupath build a clash-free timetable.</h2>
-      <p>Every lesson is checked against teachers, rooms and classes as it is placed. When two things collide, Edupath moves one of them and tells you what caused it.</p>
-      <ul class="eps-rules">
-        <li><span class="eps-tag">Must</span><span>A teacher is never in two places at once.</span></li>
-        <li><span class="eps-tag">Must</span><span>Labs and the computer room go only to lessons that need them.</span></li>
-        <li><span class="eps-tag soft">Prefer</span><span>Spread heavy subjects across the week and avoid gaps in a class&rsquo;s day.</span></li>
+      <h2 id="eps-title">Timetables built around your school&rsquo;s rules.</h2>
+      <p>Follow the cursor through the same screens your timetable officer uses: bell schedule, rooms, availability and requirements, a feasibility check, then generate, adjust, repair and print.</p>
+      <ul class="eps-pts">
+        <li>Set your bell schedule, rooms, teacher availability and what each class needs.</li>
+        <li>Check feasibility first: it compares what classes and teachers need with the time they have.</li>
+        <li>Teachers and classes are never double-booked, and double lessons never span a break.</li>
+        <li>Move lessons, cover absent teachers, repair problems, and restore earlier versions.</li>
       </ul>
-      <button class="eps-btn" type="button" id="eps-go">Generate timetable</button>
-      <div class="eps-stats">
-        <div class="eps-stat"><b id="eps-n1">0</b><span>lessons placed</span></div>
-        <div class="eps-stat"><b id="eps-n2">0</b><span>clashes caught and fixed</span></div>
-        <div class="eps-stat ok"><b id="eps-n3">&ndash;</b><span>clashes in final timetable</span></div>
-      </div>
+      <button class="eps-btn" type="button" id="eps-go">Replay tour</button>
     </div>
-
-    <div class="eps-panel">
-      <div class="eps-bar"><strong>Grade 10 &ndash; Term 3</strong><span>Sample school, 9 periods a day</span></div>
-      <div class="eps-scroll">
-        <div class="eps-grid" id="eps-grid" role="img" aria-label="Animated example of a weekly timetable for Grade 10 being filled in without clashes"></div>
+    <div>
+      <div class="eps-panel" id="eps-panel" role="img" aria-label="Animated tour of the timetable screens: a cursor opens the bell schedule, rooms, availability, requirements and feasibility check, generates a clash-free timetable, then moves lessons, covers an absence, repairs, shows history and prints">
+        <div aria-hidden="true">
+          <div class="eps-hd"><div><b>Manage Timetables</b><span>Timetable Management</span></div><div class="yr"><span>2026<br>Term 2</span></div></div>
+          <div class="eps-stats">
+            <div class="eps-sc a"><b>6</b><span>Total Classes</span></div>
+            <div class="eps-sc b"><b>12</b><span>Teachers</span></div>
+            <div class="eps-sc c"><b>17</b><span>Subjects</span></div>
+            <div class="eps-sc d"><b id="eps-sl">0/45</b><span>Slots Filled</span></div>
+          </div>
+          <div class="eps-view"><span>Viewing:</span><div class="eps-inp">Grade 10 Green (Grade 10)</div></div>
+          <div class="eps-tbar" id="eps-tbar">
+            <span class="eps-tb" data-t="bell">Bell schedule</span><span class="eps-tb" data-t="rooms">Rooms</span><span class="eps-tb" data-t="avail">Availability</span><span class="eps-tb" data-t="req">Requirements</span><span class="eps-tb" data-t="feas">Check feasibility</span><span class="eps-tb mv" data-t="move">Move lessons</span><span class="eps-tb gn" data-t="gen">Generate timetable</span><span class="eps-tb" data-t="cover">Cover</span><span class="eps-tb" data-t="repair">Repair</span><span class="eps-tb" data-t="hist">History</span><span class="eps-tb" data-t="print">Print / Export</span>
+          </div>
+          <p class="eps-hint">Click any cell to add/edit - Click x to clear</p>
+          <div class="eps-scroll"><div class="eps-grid" id="eps-grid"></div></div>
+          <div class="eps-log" id="eps-log">Press Replay tour to watch it again.</div>
+        </div>
+        <div class="eps-modal" id="eps-modal" aria-hidden="true"><div class="eps-dlg">
+          <div class="eps-d" id="eps-d-bell"><h4>Bell schedule</h4><p class="eps-dd">Lesson numbers are fixed because timetable slots refer to them. Changing a lesson&rsquo;s times updates every slot in that period, for all classes.</p>
+            <table class="eps-tb2"><thead><tr><th>No.</th><th>Type</th><th>Label</th><th>Start</th><th>End</th></tr></thead><tbody>
+              <tr><td>#1</td><td>Lesson</td><td>Period 1</td><td>08:00 AM</td><td>08:40 AM</td></tr>
+              <tr><td>#2</td><td>Lesson</td><td>Period 2</td><td>08:45 AM</td><td>09:25 AM</td></tr>
+              <tr class="eps-xs"><td>#3</td><td>Lesson</td><td>Period 3</td><td>09:30 AM</td><td>10:10 AM</td></tr>
+              <tr id="eps-brkrow"><td>-</td><td>Break</td><td>Break</td><td>10:10 AM</td><td>10:30 AM</td></tr>
+              <tr><td>#5</td><td>Lesson</td><td>Period 4</td><td>10:30 AM</td><td>11:10 AM</td></tr></tbody></table>
+            <div class="eps-ft"><span class="eps-b2">+ Lesson</span><span class="eps-b2">+ Break</span></div></div>
+          <div class="eps-d" id="eps-d-rooms"><h4>Rooms</h4><p class="eps-dd">Renaming a room also renames it on every timetable slot that uses it. A room that is in use cannot be deleted.</p>
+            <div class="eps-add"><div class="eps-inp" id="eps-rn" data-ph="New room name"></div><div class="eps-inp">CLASSROOM</div><div class="eps-inp" id="eps-rs" data-ph="Seats"></div><span class="eps-b2 dk" id="eps-radd">+ Add room</span></div>
+            <div id="eps-rl"><div class="eps-li new" id="eps-rnew" hidden><span>Lab C</span><span>CLASSROOM</span><span>x</span></div>
+              <div class="eps-li"><span>Lab A</span><span>CLASSROOM</span><span>x</span></div><div class="eps-li"><span>Lab B</span><span>CLASSROOM</span><span>x</span></div><div class="eps-li eps-xs"><span>Music Room</span><span>CLASSROOM</span><span>x</span></div><div class="eps-li eps-xs"><span>Room 1</span><span>CLASSROOM</span><span>x</span></div></div></div>
+          <div class="eps-d" id="eps-d-avail"><h4>Availability</h4><p class="eps-dd">Green cells are available. Click a cell, a day or a period to mark it unavailable. Nothing is blocked until you save.</p>
+            <div class="eps-pills"><span class="eps-pill on">Teachers</span><span class="eps-pill">Classes</span><span class="eps-pill">Rooms</span><div class="eps-inp" id="eps-asel" style="flex:1;min-width:120px">-- Select --</div></div>
+            <div class="eps-av" id="eps-av" hidden></div></div>
+          <div class="eps-d" id="eps-d-req"><h4>Teaching requirements</h4><p class="eps-dd">What each class needs per week: subject, teacher, number of periods, and how many of them are double lessons (two periods back to back).</p>
+            <div class="eps-inp" id="eps-csel" data-ph="-- Select class --"></div><div id="eps-rq" hidden></div></div>
+          <div class="eps-d" id="eps-d-feas"><h4>Feasibility check</h4><p class="eps-dd">Compares what each class and teacher needs against the time they are available.</p>
+            <div class="eps-ch" id="eps-fch">Checking&hellip;</div>
+            <div id="eps-fres" hidden><div class="eps-ok">Every checked class and teacher has enough available time.</div><div class="eps-k">CLASSES (2 OF 2 FINE)</div><div style="font-size:.74rem">Nothing to flag.</div><div class="eps-k">TEACHERS (9 OF 9 FINE)</div><div style="font-size:.74rem">Nothing to flag.</div></div>
+            <div class="eps-ft"><span class="eps-b2">Show everything</span><span class="eps-b2">Run again</span></div></div>
+          <div class="eps-d" id="eps-d-gen"><h4>Generate timetable</h4><p class="eps-dd">Builds lessons from each class&rsquo;s teaching requirements. Teachers and classes are never double-booked, availability is respected, and double lessons never span a break. You review the result before anything is saved.</p>
+            <div class="eps-k" style="margin-top:0">CLASSES</div>
+            <div class="eps-cls"><div class="eps-cc" id="eps-g1"><i></i><b>Grade 10 Green</b>8 subjects, 45 of 45 periods</div><div class="eps-cc"><i></i><b>Grade 10 Blue</b>8 subjects, 45 of 45 periods</div><div class="eps-cc eps-xs"><i></i><b>Form 3 Green</b>No requirements yet</div><div class="eps-cc eps-xs"><i></i><b>Form 3 Blue</b>8 subjects, 45 of 45 periods</div></div>
+            <div class="eps-rad on">Build from scratch</div><div class="eps-rad eps-xs">Keep existing lessons and fill the gaps</div>
+            <div class="eps-ft"><span class="eps-b2 gr" id="eps-gobtn">Generate timetable</span></div></div>
+          <div class="eps-d" id="eps-d-move"><h4>Timetable board</h4>
+            <div class="eps-pills"><span class="eps-pill on">By class</span><span class="eps-pill">By teacher</span><span class="eps-pill">By room</span></div>
+            <p class="eps-dd">Drag a lesson, or click one and then click a green cell. Green cells are moves with no clashes and nobody marked unavailable.</p>
+            <div class="eps-mb" id="eps-mb"></div></div>
+          <div class="eps-d" id="eps-d-cover"><h4>Teacher cover</h4><p class="eps-dd">Record who is away, then pick a free teacher for each lesson. Teachers who teach the subject come first, then those who know the class, and anyone who has already covered a lot this week is ranked lower.</p>
+            <div class="eps-pills"><span class="eps-pill">&lt;</span><div class="eps-inp">11/06/2026</div><span class="eps-pill">&gt;</span><span class="eps-pill">Today</span><b style="font-size:.76rem">Friday 6 November 2026</b></div>
+            <div id="eps-cv0" style="font-size:.72rem;color:#8A94A6">No lessons need cover on this date. Use &ldquo;Record an absence&rdquo; when a teacher is away.</div>
+            <div class="eps-bx" id="eps-cv1" hidden><b>Physics, Period 7: Kiprop Ruto is away</b>Cover: Collins Wafula<small>A free teacher, picked from the ranked list.</small></div>
+            <div class="eps-ft"><span class="eps-b2" id="eps-recb">Record an absence</span></div></div>
+          <div class="eps-d" id="eps-d-repair"><h4>Repair timetable</h4><p class="eps-dd">Finds lessons that are now in trouble, for example after you marked a teacher unavailable, and moves only those to the nearest free periods. Everything else stays where it is.</p>
+            <div id="eps-rp0"><div class="eps-bx"><b>2 lessons are in trouble</b>The teacher is booked for two subjects at once<small>Form 4 Green, Biology, Otieno Odhiambo, Fri Period 7</small><small>Grade 10 Blue, Geography, Njeri Mwangi, Fri Period 7</small></div>
+              <div class="eps-rad on">Leave other lessons where they are</div><div class="eps-rad eps-xs">Allow small improvements</div></div>
+            <div class="eps-bx" id="eps-rp1" hidden><b>2 lessons moved</b>Moved to the nearest free periods.<small>Everything else stayed where it was.</small></div>
+            <div class="eps-ft"><span class="eps-b2 gr" id="eps-fixb">Find the smallest fix</span></div></div>
+          <div class="eps-d" id="eps-d-hist"><h4>Timetable history</h4><p class="eps-dd">A version is saved automatically every time a timetable is generated, repaired, imported from Excel or restored. Restoring one puts back what those classes had before that change. The last 20 are kept.</p>
+            <div id="eps-h0" style="font-size:.72rem;color:#8A94A6">No saved versions yet. They appear here after you generate or repair a timetable.</div>
+            <div id="eps-h1" hidden><div class="eps-hr"><span><b>Repaired</b> Grade 10 Green</span><span>Just now</span><span class="eps-b2" id="eps-rstr">Restore</span></div><div class="eps-hr"><span><b>Generated</b> Grade 10 Green</span><span>Just now</span><span class="eps-b2">Restore</span></div></div></div>
+          <div class="eps-d" id="eps-d-print"><h4>Print or export timetables</h4><p class="eps-dd">Pick classes or teachers, then print them (choose Save as PDF in the print dialog) or download an Excel file. Each class or teacher gets its own page.</p>
+            <div class="eps-pills"><span class="eps-pill on">By class</span><span class="eps-pill">By teacher</span><div class="eps-inp" style="flex:1;min-width:100px" data-ph="Search class&hellip;"></div></div>
+            <div class="eps-k" style="margin-top:0">6 OF 6 CLASSES SELECTED</div>
+            <div class="eps-li" style="grid-template-columns:1fr auto"><span>Form 3 Blue (Form 3)</span><span>45 lessons</span></div><div class="eps-li" style="grid-template-columns:1fr auto"><span>Grade 10 Green (Grade 10)</span><span>45 lessons</span></div><div class="eps-li eps-xs" style="grid-template-columns:1fr auto"><span>Grade 10 Blue (Grade 10)</span><span>45 lessons</span></div>
+            <div class="eps-ft"><span class="eps-b2">Excel</span><span class="eps-b2 dk" id="eps-pb" style="background:#3B6FE0;border-color:#3B6FE0">Print or save as PDF</span></div></div>
+        </div></div>
+        <div class="eps-cur" id="eps-cur"><i></i><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.8L9 19z" fill="#111" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg><div class="eps-ghost" id="eps-ghost" hidden></div></div>
       </div>
-      <div class="eps-log" id="eps-log">Press Generate timetable to start.</div>
-      <p class="eps-note">An illustration of how placement works, using sample data. Speed depends on the size of your school.</p>
       <div class="eps-sr" id="eps-sr" role="status"></div>
+      <p class="eps-note">An illustration using a sample school and sample figures.</p>
     </div>
   </div>
 </section>
@@ -369,15 +512,16 @@ const faqJsonLd = JSON.stringify({
 <script is:inline>(function(){
   function init(){
   var root=document.getElementById('ep-solve'); if(!root) return;
+  var $=function(i){return document.getElementById(i);};
+  var panel=$('eps-panel'), cur=$('eps-cur'), modal=$('eps-modal'), grid=$('eps-grid'), log=$('eps-log'), sl=$('eps-sl'), sr=$('eps-sr'), btn=$('eps-go'), ghost=$('eps-ghost');
   var D=['Monday','Tuesday','Wednesday','Thursday','Friday'];
   var P=[['08:00','08:40'],['08:45','09:25'],['09:30','10:10'],['10:30','11:10'],['11:15','11:55'],['12:00','12:40'],['13:20','14:00'],['14:05','14:45'],['14:50','15:30']];
-  var BR={3:'10:10 - 10:30',6:'12:40 - 13:20'}; // break shown before this period index
+  var BR={3:'10:10 - 10:30',6:'12:40 - 13:20'};
   var S={
     MAT:['Mathematics','David Kamau','#EA580C','Math'], KIS:['Kiswahili','Fatuma Hassan','#0D9488','Kisw'], PHY:['Physics','Kiprop Ruto','#DC2626','Phys'],
     BIO:['Biology','Otieno Odhiambo','#A23FE0','Bio'], CS:['Computer Studies','Beatrice Ndungu','#16A34A','CS'], ENG:['English','Grace Wanjiku','#6D5BD0','Eng'],
     PE:['Physical Education','Samuel Mwenda','#D97706','PE'], CHE:['Chemistry','Otieno Odhiambo','#0891B2','Chem']
   };
-  // final timetable: one array per day, one entry per period
   var G=[
     ['MAT','ENG','KIS','PE','PHY','CHE','BIO','CS','MAT'],
     ['KIS','PE','PHY','CHE','BIO','CS','MAT','ENG','KIS'],
@@ -385,70 +529,135 @@ const faqJsonLd = JSON.stringify({
     ['BIO','CS','MAT','ENG','KIS','PE','PHY','CHE','BIO'],
     ['CS','MAT','ENG','KIS','PE','PHY','CHE','BIO','CS']
   ];
-  var CL=[7,20,33]; // placement steps where a clash is shown
-  var grid=document.getElementById('eps-grid'), log=document.getElementById('eps-log'),
-      n1=document.getElementById('eps-n1'), n2=document.getElementById('eps-n2'), n3=document.getElementById('eps-n3'),
-      sr=document.getElementById('eps-sr'), btn=document.getElementById('eps-go');
-  var cells={}, order=[], token=0, started=false, total=0;
+  var CL=[7,20,33], cells={}, order=[], total=45, token=0, started=false, instant=false, lastMsg='';
   function el(t,c,x){var e=document.createElement(t); if(c)e.className=c; if(x!=null)e.textContent=x; return e;}
+  var tb={}; [].forEach.call(root.querySelectorAll('.eps-tb'),function(t){tb[t.getAttribute('data-t')]=t;});
 
+  // timetable grid
   grid.appendChild(el('div','eps-h','Period'));
   D.forEach(function(d){grid.appendChild(el('div','eps-h',d));});
   for(var r=0;r<9;r++){
-    if(BR[r]){ grid.appendChild(el('div','eps-brk','Break')); grid.appendChild(el('div','eps-brkt',BR[r])); }
-    var per=el('div','eps-per'); var pb=el('b'); pb.appendChild(el('span','eps-f','Period '+(r+1))); pb.appendChild(el('span','eps-s','P'+(r+1))); per.appendChild(pb); per.appendChild(el('span','eps-t',P[r][0]+' - '+P[r][1])); grid.appendChild(per);
-    for(var c=0;c<5;c++){var cell=el('div','eps-cell'); cell.setAttribute('aria-hidden','true'); cells[r+'-'+c]=cell; grid.appendChild(cell);}
+    if(BR[r]){grid.appendChild(el('div','eps-brk','Break')); grid.appendChild(el('div','eps-brkt',BR[r]));}
+    var per=el('div','eps-per'), pb=el('b'); pb.appendChild(el('span','eps-f','Period '+(r+1))); pb.appendChild(el('span','eps-s','P'+(r+1)));
+    per.appendChild(pb); per.appendChild(el('span','eps-t',P[r][0]+' - '+P[r][1])); grid.appendChild(per);
+    for(var c=0;c<5;c++){var cell=el('div','eps-cell'); cells[r+'-'+c]=cell; grid.appendChild(cell);}
   }
-  for(var i=0;i<45;i++){var k=(i*7)%45, cc=Math.floor(k/9), rr=k%9; order.push([rr,cc]); total++;}
-
+  for(var i=0;i<45;i++){var k=(i*7)%45; order.push([k%9,Math.floor(k/9)]);}
+  // availability grid
+  var av=$('eps-av'), avc=[]; av.appendChild(el('div','',''));
+  ['Mon','Tue','Wed','Thu','Fri'].forEach(function(d){av.appendChild(el('div','',d));});
+  for(var r2=0;r2<6;r2++){av.appendChild(el('div','','P'+(r2+1))); for(var c2=0;c2<5;c2++){var a=el('div','eps-ac'); avc.push(a); av.appendChild(a);}}
+  // requirement rows, counted from the timetable itself
+  var cnt={}; G.forEach(function(day){day.forEach(function(x){cnt[x]=(cnt[x]||0)+1;});});
+  var rq=$('eps-rq'); Object.keys(S).forEach(function(k,i){var row=el('div','eps-rr'+(i>3?' eps-xs':'')); row.appendChild(el('b','',S[k][0])); row.appendChild(el('span','',S[k][1])); row.appendChild(el('span','',cnt[k]+' periods')); rq.appendChild(row);});
+  rq.appendChild(el('div','eps-sum','8 subjects, 45 of 45 periods'));
+  // move-lessons board (Mon-Wed, periods 1-3)
+  var mb=$('eps-mb'), mc=[];
+  function mini(e,code){e.className='eps-mc ml'; e.style.setProperty('--c',S[code][2]); e.innerHTML=''; e.appendChild(el('b','',S[code][0])); e.appendChild(el('i','',S[code][1]));}
+  function mini0(e,go){e.className='eps-mc'+(go?' go':''); e.style.removeProperty('--c'); e.innerHTML='';}
+  function buildBoard(){
+    mb.innerHTML=''; mc=[]; mb.appendChild(el('div','',''));
+    ['Mon','Tue','Wed'].forEach(function(d){mb.appendChild(el('div','',d));});
+    for(var r=0;r<3;r++){mb.appendChild(el('div','','P'+(r+1))); mc[r]=[]; for(var c=0;c<3;c++){var e=el('div','eps-mc'); mc[r][c]=e; mb.appendChild(e); if(r===1&&c===2) mini0(e,true); else mini(e,G[c][r]);}}
+  }
   function fill(key,code,bad){
-    var s=S[code], e=cells[key]; e.innerHTML='';
-    e.style.setProperty('--c',bad?'#B91C1C':s[2]);
-    e.className='eps-cell '+(bad?'bad':'on');
+    var s=S[code], e=cells[key]; e.innerHTML=''; e.style.setProperty('--c',bad?'#B91C1C':s[2]); e.className='eps-cell '+(bad?'bad':'on');
     var nb=el('b'); nb.appendChild(el('span','eps-f',s[0])); nb.appendChild(el('span','eps-s',s[3])); e.appendChild(nb); e.appendChild(el('i','',s[1]));
   }
   function clear(key){var e=cells[key]; e.className='eps-cell'; e.innerHTML=''; e.style.removeProperty('--c');}
   function slot(o){return D[o[1]].slice(0,3)+' '+P[o[0]][0];}
-  function say(t,bad){log.textContent=t; log.className='eps-log'+(bad?' bad':'');}
-  function reset(){for(var k in cells)clear(k); n1.textContent='0'; n2.textContent='0'; n3.textContent='\u2013'; say('Placing lessons\u2026');}
-  function done(caught){
-    n3.textContent='0';
-    var msg='All '+total+' lessons placed. '+caught+' clashes caught and fixed. 0 clashes in the final timetable.';
-    say(msg); sr.textContent=msg; btn.disabled=false; btn.removeAttribute('aria-busy'); btn.textContent='Generate again';
+  function say(cls,t){log.textContent=t; log.className='eps-log'+(cls?' '+cls:'');}
+  function resetAll(){
+    for(var k in cells) clear(k); sl.textContent='0/45'; say('','Waiting for the timetable to be generated\u2026');
+    modal.classList.remove('on'); [].forEach.call(root.querySelectorAll('.eps-d'),function(d){d.classList.remove('on');});
+    $('eps-brkrow').classList.remove('hl');
+    ['eps-rn','eps-rs','eps-csel'].forEach(function(i){var e=$(i); e.textContent=''; e.classList.remove('typing');});
+    $('eps-asel').textContent='-- Select --'; $('eps-rnew').hidden=true; av.hidden=true; avc.forEach(function(a){a.classList.remove('off');});
+    rq.hidden=true; $('eps-fch').hidden=false; $('eps-fres').hidden=true; $('eps-g1').classList.remove('on');
+    buildBoard(); ghost.hidden=true; $('eps-cv0').hidden=false; $('eps-cv1').hidden=true;
+    $('eps-rp0').hidden=false; $('eps-rp1').hidden=true; $('eps-fixb').textContent='Find the smallest fix';
+    $('eps-h0').hidden=false; $('eps-h1').hidden=true; $('eps-pb').textContent='Print or save as PDF';
   }
-
-  function run(instant){
-    token++; var my=token; reset(); btn.disabled=true; btn.setAttribute('aria-busy','true');
-    if(instant){
-      order.forEach(function(o){fill(o[0]+'-'+o[1],G[o[1]][o[0]]);});
-      n1.textContent=total; n2.textContent=CL.length; done(CL.length); return;
-    }
-    var i=0, caught=0;
-    (function step(){
-      if(my!==token) return;
-      if(i>=order.length){done(caught); return;}
+  function wait(ms,my){return new Promise(function(res,rej){setTimeout(function(){my===token?res():rej('x');},ms);});}
+  function moveTo(e,my,dx){
+    var a=panel.getBoundingClientRect(), r=e.getBoundingClientRect();
+    var x=r.left-a.left+Math.min(r.width*0.55,r.width-8)+(dx||0), y=r.top-a.top+r.height*0.5;
+    cur.style.transform='translate('+x+'px,'+y+'px)'; return wait(560,my);
+  }
+  function click(e,my){
+    cur.classList.remove('click'); void cur.offsetWidth; cur.classList.add('click'); e.classList.add('press');
+    setTimeout(function(){e.classList.remove('press'); cur.classList.remove('click');},400); return wait(200,my);
+  }
+  async function type(e,text,my){e.classList.add('typing'); for(var i=1;i<=text.length;i++){e.textContent=text.slice(0,i); await wait(38,my);} e.classList.remove('typing');}
+  function open(k){[].forEach.call(root.querySelectorAll('.eps-d'),function(d){d.classList.remove('on');}); $('eps-d-'+k).classList.add('on'); modal.classList.add('on');}
+  function close(){modal.classList.remove('on');}
+  async function tool(k,my,fn){
+    await moveTo(tb[k],my); await click(tb[k],my); open(k); await wait(300,my);
+    if(fn) await fn(); await wait(200,my); close(); await wait(150,my);
+  }
+  async function generate(my){
+    var caught=0; say('','Generating timetable\u2026');
+    for(var i=0;i<order.length;i++){
       var o=order[i], key=o[0]+'-'+o[1], code=G[o[1]][o[0]], s=S[code];
       if(CL.indexOf(i)>-1){
-        var w=null; for(var j=order.length-1;j>i;j--){ if(order[j][0]+'-'+order[j][1]!==key){w=order[j];break;} }
-        var wk=w[0]+'-'+w[1],
-            why=(code==='CHE'||code==='PHY'||code==='BIO')?'the lab is booked by another class':(code==='CS')?'the computer room is booked by another class':s[1]+' is already teaching another class';
-        fill(wk,code,true); say('Clash on '+slot(w)+': '+why+'. Moving '+s[0]+'\u2026',true);
-        setTimeout(function(){
-          if(my!==token) return;
-          clear(wk); fill(key,code); caught++; n1.textContent=i+1; n2.textContent=caught;
-          say('Moved '+s[0]+' to '+slot(o)+'.'); i++; setTimeout(step,300);
-        },1100);
-      } else {
-        fill(key,code); n1.textContent=i+1; say('Placed '+s[0]+' on '+slot(o)+'.'); i++; setTimeout(step,100);
-      }
-    })();
+        var w=null; for(var j=order.length-1;j>i;j--){if(order[j][0]+'-'+order[j][1]!==key){w=order[j];break;}}
+        var wk=w[0]+'-'+w[1], why=(code==='CHE'||code==='PHY'||code==='BIO')?'the lab is booked by another class':(code==='CS')?'the computer room is booked by another class':s[1]+' is already teaching another class';
+        fill(wk,code,true); say('bad','Clash on '+slot(w)+': '+why+'. Moving '+s[0]+'\u2026'); await wait(750,my);
+        clear(wk); fill(key,code); caught++; say('','Moved '+s[0]+' to '+slot(o)+'.'); await wait(200,my);
+      } else { fill(key,code); say('','Placed '+s[0]+' on '+slot(o)+'.'); }
+      sl.textContent=(i+1)+'/45'; await wait(38,my);
+    }
+    lastMsg='All 45 lessons placed. '+caught+' clashes caught and fixed. 0 clashes in the final timetable.'; say('',lastMsg);
   }
-
+  async function tour(my){
+    cur.style.transition='none'; cur.style.transform='translate('+Math.round(panel.clientWidth*0.62)+'px,'+Math.round(panel.clientHeight*0.3)+'px)';
+    void cur.offsetWidth; cur.style.transition=''; cur.classList.add('vis'); await wait(500,my);
+    await tool('bell',my,async function(){var r=$('eps-brkrow'); await moveTo(r,my); await click(r,my); r.classList.add('hl'); await wait(350,my);});
+    await tool('rooms',my,async function(){
+      var n=$('eps-rn'), s=$('eps-rs'), a=$('eps-radd');
+      await moveTo(n,my); await click(n,my); await type(n,'Lab C',my);
+      await moveTo(s,my); await click(s,my); await type(s,'40',my);
+      await moveTo(a,my); await click(a,my); $('eps-rnew').hidden=false; await wait(350,my);
+    });
+    await tool('avail',my,async function(){
+      var sel=$('eps-asel'); await moveTo(sel,my); await click(sel,my); sel.textContent='Kiprop Ruto'; av.hidden=false; await wait(200,my);
+      var c=avc[3*5+4]; await moveTo(c,my); await click(c,my); c.classList.add('off'); await wait(350,my);
+    });
+    await tool('req',my,async function(){
+      var sel=$('eps-csel'); await moveTo(sel,my); await click(sel,my); sel.textContent='Grade 10 Green (Grade 10)'; rq.hidden=false; await wait(700,my);
+    });
+    await tool('feas',my,async function(){await wait(700,my); $('eps-fch').hidden=true; $('eps-fres').hidden=false; await wait(700,my);});
+    await tool('gen',my,async function(){
+      var c=$('eps-g1'), g=$('eps-gobtn'); await moveTo(c,my); await click(c,my); c.classList.add('on'); await wait(200,my);
+      await moveTo(g,my); await click(g,my);
+    });
+    await generate(my); await wait(500,my);
+    await tool('move',my,async function(){
+      var src=mc[0][0], dst=mc[1][2];
+      await moveTo(src,my); ghost.textContent=S.MAT[0]; ghost.style.setProperty('--c',S.MAT[2]); mini0(src,false); ghost.hidden=false; await wait(200,my);
+      await moveTo(dst,my); ghost.hidden=true; mini(dst,'MAT'); await wait(450,my);
+    });
+    await tool('cover',my,async function(){var b=$('eps-recb'); await moveTo(b,my); await click(b,my); $('eps-cv0').hidden=true; $('eps-cv1').hidden=false; await wait(600,my);});
+    await tool('repair',my,async function(){var b=$('eps-fixb'); await moveTo(b,my); await click(b,my); $('eps-rp0').hidden=true; $('eps-rp1').hidden=false; await wait(600,my);});
+    await tool('hist',my,async function(){await wait(350,my); $('eps-h0').hidden=true; $('eps-h1').hidden=false; await moveTo($('eps-rstr'),my); await wait(350,my);});
+    await tool('print',my,async function(){var b=$('eps-pb'); await moveTo(b,my); await click(b,my); b.textContent='Preparing PDF\u2026'; await wait(500,my); b.textContent='PDF ready'; await wait(250,my);});
+    await moveTo(tb.gen,my); await wait(300,my);
+  }
+  function finish(){
+    cur.classList.remove('vis'); say('',lastMsg); sr.textContent='Tour finished. '+lastMsg;
+    btn.disabled=false; btn.removeAttribute('aria-busy'); btn.textContent='Replay tour';
+  }
+  function run(inst){
+    token++; var my=token; instant=inst; resetAll(); sr.textContent=''; btn.disabled=true; btn.setAttribute('aria-busy','true');
+    if(inst){order.forEach(function(o){fill(o[0]+'-'+o[1],G[o[1]][o[0]]);}); sl.textContent='45/45'; lastMsg='All 45 lessons placed. 0 clashes in the final timetable.'; finish(); return;}
+    tour(my).then(finish,function(e){if(e!=='x') finish();});
+  }
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  resetAll();
   btn.addEventListener('click',function(){run(reduce);});
-  function auto(){ if(started) return; started=true; run(reduce); }
+  function auto(){if(started) return; started=true; run(reduce);}
   if('IntersectionObserver' in window){
-    new IntersectionObserver(function(es,ob){ if(es[0].isIntersecting){auto(); ob.disconnect();} },{threshold:.25}).observe(root);
+    new IntersectionObserver(function(es,ob){if(es[0].isIntersecting){auto(); ob.disconnect();}},{threshold:.25}).observe(root);
   } else { auto(); }
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
