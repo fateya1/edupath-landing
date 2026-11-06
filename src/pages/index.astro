@@ -161,8 +161,7 @@ const faqJsonLd = JSON.stringify({
 
     <!-- FEATURES — the full product, as a simple index -->
     <!-- EP:STYLE:START -->
-<style is:global>
-#ep-solve,#ep-faq-new{--t:#0D9488;--td:#0F766E;--tdd:#134E4A;--tt:#F0FDFA;--tb:#CCE7E3;--ink:#0F2F2C;--mut:#4B6B67;--bad:#B91C1C;--badbg:#FEE2E2;
+<style is:global>#ep-solve,#ep-faq-new{--t:#0D9488;--td:#0F766E;--tdd:#134E4A;--tt:#F0FDFA;--tb:#CCE7E3;--ink:#0F2F2C;--mut:#4B6B67;--bad:#B91C1C;--badbg:#FEE2E2;
   font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);box-sizing:border-box}
 #ep-solve *,#ep-faq-new *{box-sizing:border-box}
 #ep-solve{background:var(--tt);padding:72px 20px}
@@ -208,6 +207,50 @@ const faqJsonLd = JSON.stringify({
 .eps-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media(prefers-reduced-motion:reduce){.eps-cell.on,.eps-cell.bad{animation:none}}
 
+#ep-fees{--ind:#5A55E0;--lav:#EEF0FB;--ink:#0F2F2C;--mut:#5B6B7A;--t:#0D9488;--tdd:#134E4A;background:#F6F7FD;padding:72px 20px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);box-sizing:border-box}
+#ep-fees *{box-sizing:border-box}
+.epm-wrap{max-width:1120px;margin:0 auto;display:grid;gap:36px;grid-template-columns:1fr;align-items:center}
+@media(min-width:1000px){.epm-wrap{grid-template-columns:4fr 8fr;gap:44px}}
+.epm-copy h2{font-size:clamp(1.7rem,3.2vw,2.35rem);line-height:1.15;margin:0 0 14px;color:var(--tdd);letter-spacing:-.01em}
+.epm-copy p{margin:0 0 18px;line-height:1.6;color:var(--mut);max-width:46ch}
+.epm-pts{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:10px}
+.epm-pts li{display:flex;gap:10px;line-height:1.45;font-size:.95rem}
+.epm-pts li::before{content:"\2713";flex:none;width:20px;height:20px;border-radius:50%;background:var(--t);color:#fff;font-size:.72rem;display:grid;place-items:center;margin-top:1px}
+.epm-btn{appearance:none;border:0;background:var(--t);color:#fff;font:inherit;font-weight:600;padding:13px 22px;border-radius:10px;cursor:pointer;min-height:46px}
+.epm-btn:hover:not(:disabled){background:#0F766E}
+.epm-btn:disabled{opacity:.6;cursor:progress}
+#ep-fees :focus-visible{outline:3px solid var(--tdd);outline-offset:3px}
+.epm-app{background:#fff;border:1px solid #E3E6F6;border-radius:16px;padding:14px;box-shadow:0 12px 32px rgba(67,56,202,.10)}
+.epm-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:12px}
+.epm-card{background:#fff;border:1px solid #E6E8F5;border-radius:12px;padding:12px 14px;box-shadow:0 2px 10px rgba(90,85,224,.06)}
+.epm-card span{display:block;font-size:.75rem;color:var(--mut)}
+.epm-card b{display:block;margin-top:4px;font-size:clamp(1.05rem,2.2vw,1.55rem);font-variant-numeric:tabular-nums;white-space:nowrap}
+.epm-card .g{color:#16A34A}.epm-card .r{color:#DC2626}
+.epm-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.epm-tab{font-size:.74rem;font-weight:600;padding:7px 11px;border-radius:9px;background:var(--lav);color:#2B2F52;transition:background .3s,box-shadow .3s}
+.epm-tab.on{background:var(--ind);color:#fff}
+.epm-tab.hot{background:#C7D2FE;box-shadow:0 0 0 3px rgba(90,85,224,.35)}
+.epm-feed{display:flex;align-items:center;gap:8px;min-height:38px;padding:8px 12px;border-radius:10px;background:#F4F5FB;border:1px solid #E6E8F5;font-size:.8rem;margin-bottom:12px;transition:background .3s,border-color .3s}
+.epm-feed::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:#94A3B8}
+.epm-feed.pay{background:#ECFDF3;border-color:#A7E3BF}.epm-feed.pay::before{background:#16A34A}
+.epm-feed.sms{background:#EEF0FF;border-color:#C3C8F5}.epm-feed.sms::before{background:var(--ind)}
+.epm-feed span{animation:epmIn .3s ease-out}
+.epm-scroll{overflow-x:auto}
+.epm-tbl{width:100%;min-width:720px;border-collapse:collapse;font-size:.74rem}
+.epm-tbl th{text-align:left;font-weight:700;padding:8px 6px;color:#1E2140;background:#F6F7FC}
+.epm-tbl td{padding:9px 6px;border-top:1px solid #EEF0F8;white-space:nowrap;transition:background .4s}
+.epm-tbl tr.flash td{background:#EEF0FF}
+.epm-pd{color:#16A34A}.epm-bl{color:#DC2626}
+.epm-chip{display:inline-flex;align-items:center;gap:5px;font-size:.66rem;font-weight:700;padding:4px 9px;border-radius:7px}
+.epm-chip::before{content:"";width:8px;height:8px;border-radius:50%;border:1.5px solid currentColor}
+.epm-chip.PAID{background:#DCFCE7;color:#15803D}.epm-chip.PARTIAL{background:#FEF3C7;color:#B45309}.epm-chip.UNPAID{background:#FEE2E2;color:#B91C1C}
+.epm-chip.pop{animation:epmPop .35s ease-out}
+.epm-act{font-size:.68rem;font-weight:600;padding:4px 9px;border-radius:7px;background:#E6EAFB;color:#3730A3}
+.epm-note{margin:10px 0 0;font-size:.78rem;color:var(--mut)}
+.epm-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@keyframes epmIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@keyframes epmPop{0%{transform:scale(.8);opacity:.4}100%{transform:none;opacity:1}}
+@media(prefers-reduced-motion:reduce){.epm-feed span,.epm-chip.pop{animation:none}}
 </style>
 <!-- EP:STYLE:END -->
 <!-- EP:SOLVE:START -->
@@ -242,8 +285,7 @@ const faqJsonLd = JSON.stringify({
 </section>
 <!-- EP:SOLVE:END -->
 <!-- EP:SCRIPT:START -->
-<script is:inline>
-(function(){
+<script is:inline>(function(){
   var root=document.getElementById('ep-solve'); if(!root) return;
   var D=['Monday','Tuesday','Wednesday','Thursday','Friday'];
   var P=[['08:00','08:40'],['08:45','09:25'],['09:30','10:10'],['10:30','11:10'],['11:15','11:55'],['12:00','12:40'],['13:20','14:00'],['14:05','14:45'],['14:50','15:30']];
@@ -327,6 +369,76 @@ const faqJsonLd = JSON.stringify({
     new IntersectionObserver(function(es,ob){ if(es[0].isIntersecting){auto(); ob.disconnect();} },{threshold:.25}).observe(root);
   } else { auto(); }
 })();
+(function(){
+  var root=document.getElementById('ep-fees'); if(!root) return;
+  var $=function(i){return document.getElementById(i);};
+  var body=$('epm-body'), feed=$('epm-feed'), cCol=$('epm-col'), cOut=$('epm-out'), sr=$('epm-sr'), btn=$('epm-go'), auto=$('epm-auto');
+  var R=[['Dorothy Cynthia Mutiso','DEM237',59500,29000],['Moses Hassan Kioko','DEM238',50000,0],['Kamau David Kamau','DEM240',52000,52000],['Felicity Nafula Nzomo','DEM239',67000,67000],['Kenneth Nicholas Makau','DEM236',52000,39500]];
+  var E=[{k:'pay',i:0,amt:30500},{k:'sms',i:1},{k:'pay',i:1,amt:20000},{k:'pay',i:4,amt:12500},{k:'pay',i:1,amt:30000}];
+  var S, trs, token=0, started=false, instant=false;
+  function fmt(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+  function st(r){return r.p>=r.t?'PAID':(r.p>0?'PARTIAL':'UNPAID');}
+  function anim(el,from,to,dur){
+    if(instant||from===to){el.textContent='KES '+fmt(to);return;}
+    var t0=null,my=token;
+    requestAnimationFrame(function f(ts){
+      if(my!==token) return; if(t0===null) t0=ts;
+      var k=Math.min(1,(ts-t0)/dur), e=1-Math.pow(1-k,3);
+      el.textContent='KES '+fmt(from+(to-from)*e);
+      if(k<1) requestAnimationFrame(f);
+    });
+  }
+  function build(){
+    S={rows:R.map(function(r){return {n:r[0],a:r[1],t:r[2],p:r[3]};}),col:28480500,out:6743500};
+    body.innerHTML=''; trs=[];
+    S.rows.forEach(function(r){
+      var tr=document.createElement('tr');
+      tr.innerHTML='<td>'+r.n+'</td><td>'+r.a+'</td><td>THIRD</td><td>Tuition Fees</td><td>KES '+fmt(r.t)+'</td><td class="epm-pd">KES '+fmt(r.p)+'</td><td class="epm-bl">KES '+fmt(r.t-r.p)+'</td><td><span class="epm-chip '+st(r)+'">'+st(r)+'</span></td><td><span class="epm-act">Actions \u25BE</span></td>';
+      body.appendChild(tr); trs.push(tr);
+    });
+    cCol.textContent='KES '+fmt(S.col); cOut.textContent='KES '+fmt(S.out);
+  }
+  function chip(i,pop){var c=trs[i].querySelector('.epm-chip'),s=st(S.rows[i]); c.className='epm-chip '+s+(pop?' pop':''); c.textContent=s;}
+  function say(cls,t){feed.className='epm-feed'+(cls?' '+cls:''); feed.innerHTML=''; var s=document.createElement('span'); s.textContent=t; feed.appendChild(s);}
+  function pay(i,amt,done){
+    var r=S.rows[i], tr=trs[i], pd=tr.querySelector('.epm-pd'), bl=tr.querySelector('.epm-bl');
+    var p0=r.p, c0=S.col, o0=S.out; r.p+=amt; S.col+=amt; S.out-=amt;
+    if(instant){anim(pd,p0,r.p);anim(bl,r.t-p0,r.t-r.p);anim(cCol,c0,S.col);anim(cOut,o0,S.out);chip(i,false);return;}
+    tr.classList.add('flash');
+    anim(pd,p0,r.p,700); anim(bl,r.t-p0,r.t-r.p,700); anim(cCol,c0,S.col,900); anim(cOut,o0,S.out,900);
+    setTimeout(function(){chip(i,true);},700);
+    setTimeout(function(){tr.classList.remove('flash'); done();},1400);
+  }
+  function finish(){
+    var m='All payments applied. Balances, statuses and totals are up to date.';
+    say('',m); sr.textContent=m; btn.disabled=false; btn.removeAttribute('aria-busy'); btn.textContent='Replay';
+  }
+  function run(inst){
+    token++; var my=token; instant=inst; build(); say('','Waiting for the next payment\u2026'); sr.textContent='';
+    btn.disabled=true; btn.setAttribute('aria-busy','true');
+    if(inst){E.forEach(function(e){if(e.k==='pay') pay(e.i,e.amt);}); finish(); return;}
+    var k=0;
+    (function next(){
+      if(my!==token) return;
+      if(k>=E.length){finish(); return;}
+      var e=E[k++], r=S.rows[e.i];
+      if(e.k==='sms'){
+        say('sms','Reminder SMS sent to the parent of '+r.a+': KES '+fmt(r.t-r.p)+' outstanding'); auto.className='epm-tab hot';
+        setTimeout(function(){auto.className='epm-tab'; next();},2200);
+      } else {
+        say('pay','M-Pesa payment received: KES '+fmt(e.amt)+' for '+r.a+', '+r.n);
+        setTimeout(function(){pay(e.i,e.amt,function(){setTimeout(next,900);});},900);
+      }
+    })();
+  }
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  build();
+  btn.addEventListener('click',function(){run(reduce);});
+  function go(){if(started) return; started=true; run(reduce);}
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es,ob){if(es[0].isIntersecting){go(); ob.disconnect();}},{threshold:.3}).observe(root);
+  } else { go(); }
+})();
 </script>
 <!-- EP:SCRIPT:END -->
 <section class="sec" id="features">
@@ -361,7 +473,41 @@ const faqJsonLd = JSON.stringify({
     </section>
 
     <!-- PRICING -->
-    <section class="sec" id="pricing">
+    <!-- EP:FEES:START -->
+<section id="ep-fees" aria-labelledby="epm-title">
+  <div class="epm-wrap">
+    <div class="epm-copy">
+      <h2 id="epm-title">Watch fees update the moment parents pay.</h2>
+      <p>A parent pays by M-Pesa. The fee record, the student&rsquo;s status and the school&rsquo;s totals update on their own, and reminders go out to whoever still owes.</p>
+      <ul class="epm-pts">
+        <li>Each payment lands on the right student&rsquo;s record.</li>
+        <li>Status moves from Unpaid to Partial to Paid automatically.</li>
+        <li>SMS reminders reach parents who still have a balance.</li>
+      </ul>
+      <button class="epm-btn" type="button" id="epm-go">Replay</button>
+    </div>
+    <div>
+      <div class="epm-app" role="img" aria-label="Animated example of the fee management screen: M-Pesa payments arrive and balances, statuses and totals update automatically">
+        <div class="epm-cards" aria-hidden="true">
+          <div class="epm-card"><span>Total Fee Records</span><b id="epm-rec">720</b></div>
+          <div class="epm-card"><span>Total Collected</span><b class="g" id="epm-col">KES 28,480,500</b></div>
+          <div class="epm-card"><span>Outstanding Balance</span><b class="r" id="epm-out">KES 6,743,500</b></div>
+        </div>
+        <div class="epm-tabs" aria-hidden="true" id="epm-tabs">
+          <span class="epm-tab on">Fee Records</span><span class="epm-tab">Add Fee</span><span class="epm-tab">Fee Structure</span><span class="epm-tab">Edit Fee / Payments</span><span class="epm-tab">SMS Reminders</span><span class="epm-tab" id="epm-auto">Auto Reminders</span><span class="epm-tab">Audit Trail</span>
+        </div>
+        <div class="epm-feed" id="epm-feed" aria-hidden="true"><span>Waiting for the next payment&hellip;</span></div>
+        <div class="epm-scroll" aria-hidden="true">
+          <table class="epm-tbl"><thead><tr><th>Students</th><th>Admission No.</th><th>Term</th><th>Fee Structure</th><th>Total</th><th>Paid</th><th>Balance</th><th>Status</th><th>Action</th></tr></thead><tbody id="epm-body"></tbody></table>
+        </div>
+        <div class="epm-sr" id="epm-sr" role="status"></div>
+      </div>
+      <p class="epm-note">An illustration using sample students and figures.</p>
+    </div>
+  </div>
+</section>
+<!-- EP:FEES:END -->
+<section class="sec" id="pricing">
       <div class="sec-inner">
         <h2 class="sec-title">Simple, transparent pricing.</h2>
         <p class="sec-note">Billed per term in Kenyan Shillings · Annual billing saves one term.</p>

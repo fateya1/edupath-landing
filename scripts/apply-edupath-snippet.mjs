@@ -11,6 +11,7 @@
  *   --snippet <file>        Snippet file (default: edupath-timetable-solver-snippet.html next to this script)
  *   --solver-before <id>    Insert the solver section before the element with this id   (default: pricing)
  *   --faq-after <id>        Insert the FAQ block after the element with this id         (default: faq)
+ *   --fees-before <id>      Insert the fee-management animation before this element id (default: pricing)
  *   --dry-run               Show what would change; write nothing
  *   --revert                Remove everything this script added
  *   --faq-block             Force the old behaviour: add the FAQ as a separate styled block instead of
@@ -50,6 +51,7 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const MARK = {
   style:  ['<!-- EP:STYLE:START -->',  '<!-- EP:STYLE:END -->'],
   solve:  ['<!-- EP:SOLVE:START -->',  '<!-- EP:SOLVE:END -->'],
+  fees:   ['<!-- EP:FEES:START -->',   '<!-- EP:FEES:END -->'],
   faq:    ['<!-- EP:FAQ:START -->',    '<!-- EP:FAQ:END -->'],
   script: ['<!-- EP:SCRIPT:START -->', '<!-- EP:SCRIPT:END -->'],
 };
@@ -66,7 +68,7 @@ const stamp = () => new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14);
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 function parseArgs(argv) {
-  const o = { solverBefore: 'pricing', faqAfter: 'faq', snippet: path.join(HERE, 'edupath-timetable-solver-snippet.html') };
+  const o = { solverBefore: 'pricing', faqAfter: 'faq', feesBefore: 'pricing', snippet: path.join(HERE, 'edupath-timetable-solver-snippet.html') };
   const rest = [];
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
@@ -75,6 +77,7 @@ function parseArgs(argv) {
       case '--snippet': o.snippet = path.resolve(val()); break;
       case '--solver-before': o.solverBefore = val().replace(/^#/, ''); break;
       case '--faq-after': o.faqAfter = val().replace(/^#/, ''); break;
+      case '--fees-before': o.feesBefore = val().replace(/^#/, ''); break;
       case '--dry-run': o.dry = true; break;
       case '--revert': o.revert = true; break;
       case '--faq-block': o.faqBlock = true; break;
@@ -126,19 +129,21 @@ function stripBlock(html, [start, end], name) {
 function loadSnippet(file) {
   if (!fs.existsSync(file)) die(`Snippet file not found: ${file}`);
   const s = toLF(fs.readFileSync(file, 'utf8'));
-  const style = /<style[^>]*>([\s\S]*?)<\/style>/i.exec(s);
-  const script = /<script[^>]*>([\s\S]*?)<\/script>/i.exec(s);
+  const styles = [...s.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)].map((m) => m[1].trim());
+  const scripts = [...s.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/gi)].map((m) => m[1].trim());
   const solve = findElementRange(s, 'ep-solve');
   const faq = findElementRange(s, 'ep-faq-new');
-  if (!style) die('Snippet has no <style> block.');
-  if (!script) die('Snippet has no <script> block.');
+  const fees = findElementRange(s, 'ep-fees'); // optional
+  if (!styles.length) die('Snippet has no <style> block.');
+  if (!scripts.length) die('Snippet has no <script> block.');
   if (!solve) die('Snippet is missing the section with id="ep-solve".');
   if (!faq) die('Snippet is missing the section with id="ep-faq-new".');
   return {
-    style: `<style>${style[1].replace(/\s+$/, '')}\n</style>`,
-    script: `<script>${script[1].replace(/\s+$/, '')}\n</script>`,
+    style: `<style>${styles.join('\n')}\n</style>`,
+    script: `<script>${scripts.join('\n')}\n</script>`,
     solve: s.slice(solve.start, solve.end),
     faq: s.slice(faq.start, faq.end),
+    fees: fees ? s.slice(fees.start, fees.end) : null,
   };
 }
 
@@ -267,6 +272,11 @@ if (!opt.revert) {
   // 4) Locate anchors on the clean baseline.
   const solveAnchor = findElementRange(html, opt.solverBefore);
   if (!solveAnchor) die(`Could not find an element with id="${opt.solverBefore}" for the solver section. Use --solver-before <id>.`);
+  let feesAnchor = null;
+  if (snip.fees) {
+    feesAnchor = findElementRange(html, opt.feesBefore);
+    if (!feesAnchor) die(`Could not find an element with id="${opt.feesBefore}" for the fee animation. Use --fees-before <id>.`);
+  }
   let faqAnchor = null;
   if (!dataMode) {
     faqAnchor = findElementRange(html, opt.faqAfter);
@@ -289,6 +299,7 @@ if (!opt.revert) {
     edits.push({ at: faqAnchor.end, text: `\n${wrap('faq', snip.faq)}${hasBody ? '' : `\n${scriptB}`}`, label: `FAQ block${hasBody ? '' : ' and JS'} after #${opt.faqAfter}` });
     edits.push({ at: solveAnchor.start, text: `${hasHead ? '' : `${styleB}\n`}${solveB}\n`, label: `${hasHead ? '' : 'CSS and '}Solver section before #${opt.solverBefore}` });
   }
+  if (snip.fees) edits.push({ at: feesAnchor.start, text: `${wrap('fees', snip.fees)}\n`, label: `Fee animation before #${opt.feesBefore}` });
   if (hasHead) edits.push({ at: html.toLowerCase().indexOf('</head>'), text: `${styleB}\n`, label: 'CSS before </head>' });
   edits.sort((x, y) => y.at - x.at);
 
@@ -301,10 +312,10 @@ if (!opt.revert) {
 
   // 6) Structural sanity checks on the result.
   const after = { open: (result.match(/<section\b/gi) || []).length, close: (result.match(/<\/section>/gi) || []).length };
-  const expectNew = dataMode ? 1 : 2;
+  const expectNew = (dataMode ? 1 : 2) + (snip.fees ? 1 : 0);
   if (after.open - after.close !== before.open - before.close) die('Sanity check failed: <section> tags are unbalanced after the edit. Nothing was written.');
   if (after.open !== before.open + expectNew) die(`Sanity check failed: expected ${expectNew} new section(s), found ${after.open - before.open}. Nothing was written.`);
-  const need = dataMode ? ['style', 'solve', 'script'] : ['style', 'solve', 'faq', 'script'];
+  const need = (dataMode ? ['style', 'solve', 'script'] : ['style', 'solve', 'faq', 'script']).concat(snip.fees ? ['fees'] : []);
   for (const name of need) {
     const [ms, me] = MARK[name];
     if (result.split(ms).length !== 2 || result.split(me).length !== 2) die(`Sanity check failed: marker "${name}" is not present exactly once. Nothing was written.`);

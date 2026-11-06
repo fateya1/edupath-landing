@@ -150,3 +150,4 @@ testng-results.xml
 # 1. This template is self-contained and includes security patterns
 # 2. No need to add common/security.gitignore separately
 # 3. Test with `git status --ignored` to ensure proper coverage
+*.bak-*
