@@ -27,7 +27,8 @@
  *   inserted as a separate block after the element given by --faq-after.
  *
  * Astro support
- *   Works on .astro files too. For them the CSS is emitted as <style is:global> (so it also styles the
+ *   Works on .astro files too. Literal { } in the section markup are escaped as &#123; &#125; (Astro would
+ *   otherwise treat them as expressions and fail the build). For them the CSS is emitted as <style is:global> (so it also styles the
  *   elements the animation creates at runtime) and the JS as <script is:inline> (so Astro leaves it as is).
  *   If the file has no </head> or </body> (the page uses a Layout component), the CSS is placed right
  *   before the solver section and the JS right after the FAQ block instead.
@@ -244,6 +245,9 @@ if (!opt.revert) {
   if (isAstro) {
     snip.style = snip.style.replace(/^<style>/, '<style is:global>');
     snip.script = snip.script.replace(/^<script>/, '<script is:inline>');
+    // In Astro templates { } start an expression, so escape any literal braces in the section markup.
+    const esc = (h) => (h ? h.replace(/\{/g, '&#123;').replace(/\}/g, '&#125;') : h);
+    snip.solve = esc(snip.solve); snip.fees = esc(snip.fees); snip.faq = esc(snip.faq);
   }
   const hasHead = /<\/head>/i.test(html), hasBody = /<\/body>/i.test(html);
   const faqArr = opt.faqBlock ? null : findFaqArray(html);

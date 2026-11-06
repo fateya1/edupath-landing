@@ -185,12 +185,13 @@ const faqJsonLd = JSON.stringify({
 .eps-bar{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px;font-size:.9rem}
 .eps-bar strong{color:var(--tdd)}
 .eps-bar span{color:var(--mut)}
-.eps-scroll{overflow-x:auto}
+.eps-scroll{overflow-x:auto;overflow-y:hidden}
+.eps-s{display:none}
 .eps-grid{display:grid;grid-template-columns:104px repeat(5,minmax(0,1fr));gap:6px;min-width:700px}
 .eps-h{font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:6px 4px;display:flex;align-items:center}
 .eps-per{display:flex;flex-direction:column;justify-content:center;padding-left:4px}
 .eps-per b{font-size:.78rem}
-.eps-per span{font-size:.68rem;color:var(--mut)}
+.eps-per .eps-t{font-size:.68rem;color:var(--mut)}
 .eps-brk{display:flex;align-items:center;font-size:.68rem;color:var(--mut);padding-left:4px;letter-spacing:.04em;text-transform:uppercase}
 .eps-brkt{grid-column:2/-1;text-align:center;font-size:.72rem;color:var(--mut);background:#F3F8F7;border-radius:6px;padding:7px}
 .eps-cell{position:relative;min-height:50px;border:1px dashed var(--tb);border-radius:8px;padding:6px 18px 6px 8px;display:flex;flex-direction:column;justify-content:center;gap:1px;background:#fff;overflow:hidden}
@@ -207,6 +208,21 @@ const faqJsonLd = JSON.stringify({
 .eps-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media(prefers-reduced-motion:reduce){.eps-cell.on,.eps-cell.bad{animation:none}}
 
+@media(max-width:640px){
+#ep-solve{padding:48px 16px}
+.eps-panel{padding:10px}
+.eps-scroll{overflow:visible}
+.eps-grid{grid-template-columns:34px repeat(5,minmax(0,1fr));gap:3px;min-width:0}
+.eps-h{font-size:.56rem;letter-spacing:0;padding:4px 0;justify-content:center;overflow:hidden}
+.eps-f{display:none}.eps-s{display:inline}
+.eps-t,.eps-cell i,.eps-cell.on::after{display:none}
+.eps-cell{min-height:34px;padding:3px 2px;border-radius:6px;align-items:center;text-align:center}
+.eps-cell b{font-size:.6rem}
+.eps-per{padding-left:0;align-items:center}
+.eps-per b{font-size:.62rem}
+.eps-brk{font-size:.55rem;padding-left:0}
+.eps-brkt{font-size:.62rem;padding:4px}
+}
 #ep-fees{--ind:#5A55E0;--lav:#EEF0FB;--ink:#0F2F2C;--mut:#5B6B7A;--t:#0D9488;--tdd:#134E4A;background:#F6F7FD;padding:72px 20px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);box-sizing:border-box}
 #ep-fees *{box-sizing:border-box}
 #ep-fees [hidden]{display:none!important}
@@ -238,7 +254,7 @@ const faqJsonLd = JSON.stringify({
 .epm-feed::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:#94A3B8}
 .epm-feed.pay{background:#ECFDF3;border-color:#A7E3BF}.epm-feed.pay::before{background:#16A34A}
 .epm-feed span{animation:epmIn .3s ease-out}
-.epm-scroll{overflow-x:auto}
+.epm-scroll{overflow-x:auto;overflow-y:hidden}
 .epm-tbl{width:100%;min-width:720px;border-collapse:collapse;font-size:.74rem}
 .epm-tbl th{text-align:left;font-weight:700;padding:8px 6px;color:#1E2140;background:#F6F7FC}
 .epm-tbl td{padding:9px 6px;border-top:1px solid #EEF0F8;white-space:nowrap;transition:background .4s}
@@ -303,6 +319,19 @@ const faqJsonLd = JSON.stringify({
 @keyframes epmRip{from{transform:scale(.3);opacity:.9}to{transform:scale(1.6);opacity:0}}
 @keyframes epmBlink{50%{opacity:0}}
 @media(prefers-reduced-motion:reduce){.epm-feed span,.epm-chip.pop,.epm-v.show,.epm-at tr.epm-in{animation:none}.epm-cur{display:none}}
+@media(max-width:640px){
+#ep-fees{padding:48px 16px}
+.epm-app{padding:10px}
+.epm-scroll{overflow:visible}
+.epm-tbl,.epm-at{min-width:0}
+.epm-tbl{font-size:.68rem}
+.epm-tbl td{white-space:normal;padding:8px 4px}
+.epm-tbl th:nth-child(2),.epm-tbl td:nth-child(2),.epm-tbl th:nth-child(3),.epm-tbl td:nth-child(3),.epm-tbl th:nth-child(4),.epm-tbl td:nth-child(4),.epm-tbl th:nth-child(5),.epm-tbl td:nth-child(5),.epm-tbl th:nth-child(9),.epm-tbl td:nth-child(9){display:none}
+.epm-at th:nth-child(2),.epm-at td:nth-child(2),.epm-at th:nth-child(6),.epm-at td:nth-child(6){display:none}
+.epm-tabs{gap:5px}
+.epm-tab{font-size:.68rem;padding:6px 9px}
+.epm-views{min-height:340px}
+}
 </style>
 <!-- EP:STYLE:END -->
 <!-- EP:SOLVE:START -->
@@ -344,9 +373,9 @@ const faqJsonLd = JSON.stringify({
   var P=[['08:00','08:40'],['08:45','09:25'],['09:30','10:10'],['10:30','11:10'],['11:15','11:55'],['12:00','12:40'],['13:20','14:00'],['14:05','14:45'],['14:50','15:30']];
   var BR={3:'10:10 - 10:30',6:'12:40 - 13:20'}; // break shown before this period index
   var S={
-    MAT:['Mathematics','David Kamau','#EA580C'], KIS:['Kiswahili','Fatuma Hassan','#0D9488'], PHY:['Physics','Kiprop Ruto','#DC2626'],
-    BIO:['Biology','Otieno Odhiambo','#A23FE0'], CS:['Computer Studies','Beatrice Ndungu','#16A34A'], ENG:['English','Grace Wanjiku','#6D5BD0'],
-    PE:['Physical Education','Samuel Mwenda','#D97706'], CHE:['Chemistry','Otieno Odhiambo','#0891B2']
+    MAT:['Mathematics','David Kamau','#EA580C','Math'], KIS:['Kiswahili','Fatuma Hassan','#0D9488','Kisw'], PHY:['Physics','Kiprop Ruto','#DC2626','Phys'],
+    BIO:['Biology','Otieno Odhiambo','#A23FE0','Bio'], CS:['Computer Studies','Beatrice Ndungu','#16A34A','CS'], ENG:['English','Grace Wanjiku','#6D5BD0','Eng'],
+    PE:['Physical Education','Samuel Mwenda','#D97706','PE'], CHE:['Chemistry','Otieno Odhiambo','#0891B2','Chem']
   };
   // final timetable: one array per day, one entry per period
   var G=[
@@ -367,7 +396,7 @@ const faqJsonLd = JSON.stringify({
   D.forEach(function(d){grid.appendChild(el('div','eps-h',d));});
   for(var r=0;r<9;r++){
     if(BR[r]){ grid.appendChild(el('div','eps-brk','Break')); grid.appendChild(el('div','eps-brkt',BR[r])); }
-    var per=el('div','eps-per'); per.appendChild(el('b','','Period '+(r+1))); per.appendChild(el('span','',P[r][0]+' - '+P[r][1])); grid.appendChild(per);
+    var per=el('div','eps-per'); var pb=el('b'); pb.appendChild(el('span','eps-f','Period '+(r+1))); pb.appendChild(el('span','eps-s','P'+(r+1))); per.appendChild(pb); per.appendChild(el('span','eps-t',P[r][0]+' - '+P[r][1])); grid.appendChild(per);
     for(var c=0;c<5;c++){var cell=el('div','eps-cell'); cell.setAttribute('aria-hidden','true'); cells[r+'-'+c]=cell; grid.appendChild(cell);}
   }
   for(var i=0;i<45;i++){var k=(i*7)%45, cc=Math.floor(k/9), rr=k%9; order.push([rr,cc]); total++;}
@@ -376,7 +405,7 @@ const faqJsonLd = JSON.stringify({
     var s=S[code], e=cells[key]; e.innerHTML='';
     e.style.setProperty('--c',bad?'#B91C1C':s[2]);
     e.className='eps-cell '+(bad?'bad':'on');
-    e.appendChild(el('b','',s[0])); e.appendChild(el('i','',s[1]));
+    var nb=el('b'); nb.appendChild(el('span','eps-f',s[0])); nb.appendChild(el('span','eps-s',s[3])); e.appendChild(nb); e.appendChild(el('i','',s[1]));
   }
   function clear(key){var e=cells[key]; e.className='eps-cell'; e.innerHTML=''; e.style.removeProperty('--c');}
   function slot(o){return D[o[1]].slice(0,3)+' '+P[o[0]][0];}
@@ -650,7 +679,7 @@ const faqJsonLd = JSON.stringify({
             <div class="epm-v" id="epm-v-sms">
               <div class="epm-aud3"><div class="epm-aud o" id="epm-a1"><b>Overdue Balances</b>Send to all overdue records</div><div class="epm-aud a"><b>All Outstanding</b>Send to all with any balance</div><div class="epm-aud c"><b>Custom Selection</b>Pick specific students</div></div>
               <div class="epm-box"><h4>Compose SMS</h4><div class="epm-inp">Balance Due Reminder</div>
-                <div class="epm-ta" style="margin-top:8px">Dear Parent, {name} has an outstanding fee balance of KES {balance}. Please clear this at the earliest. - {school}</div>
+                <div class="epm-ta" style="margin-top:8px">Dear Parent, &#123;name&#125; has an outstanding fee balance of KES &#123;balance&#125;. Please clear this at the earliest. - &#123;school&#125;</div>
                 <div class="epm-foot"><span>114 chars</span><span>1 SMS</span></div>
                 <div class="epm-foot"><span>399 overdue</span><span class="epm-ind" id="epm-send">Send SMS Reminders</span></div>
               </div>
