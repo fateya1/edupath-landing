@@ -13,9 +13,17 @@
  *   --faq-after <id>        Insert the FAQ block after the element with this id         (default: faq)
  *   --dry-run               Show what would change; write nothing
  *   --revert                Remove everything this script added
+ *   --faq-block             Force the old behaviour: add the FAQ as a separate styled block instead of
+ *                           adding items to the page's own `const faqs = [...]` array
  *   --allow-placeholders    Proceed even though [bracketed] placeholders remain in the FAQ
  *   --no-backup             Skip the timestamped .bak copy
  *   -h, --help              Show this help
+ *
+ * FAQ handling
+ *   If the page defines `const faqs = [ [question, answer], ... ]` (as an Astro page that maps the array
+ *   into its accordion), the new questions are appended to that array, so they use your existing markup,
+ *   fonts, accordion JS and FAQPage JSON-LD. Answers are converted to plain text. Otherwise the FAQ is
+ *   inserted as a separate block after the element given by --faq-after.
  *
  * Astro support
  *   Works on .astro files too. For them the CSS is emitted as <style is:global> (so it also styles the
@@ -46,6 +54,8 @@ const MARK = {
   script: ['<!-- EP:SCRIPT:START -->', '<!-- EP:SCRIPT:END -->'],
 };
 
+const JSM = ['// EP:FAQITEMS:START', '// EP:FAQITEMS:END']; // markers for items added to the faqs array
+
 // ---------- tiny helpers ----------
 const die = (msg) => { console.error(`\u2716 ${msg}`); process.exit(1); };
 const warn = (msg) => console.warn(`\u26A0 ${msg}`);
@@ -67,6 +77,7 @@ function parseArgs(argv) {
       case '--faq-after': o.faqAfter = val().replace(/^#/, ''); break;
       case '--dry-run': o.dry = true; break;
       case '--revert': o.revert = true; break;
+      case '--faq-block': o.faqBlock = true; break;
       case '--allow-placeholders': o.allowPlaceholders = true; break;
       case '--no-backup': o.noBackup = true; break;
       case '-h': case '--help': o.help = true; break;
@@ -131,6 +142,68 @@ function loadSnippet(file) {
   };
 }
 
+
+/** Remove the marker block inside the faqs array (including the newline + indent we added before it). */
+function stripJsBlock(html) {
+  const [s, e] = JSM;
+  const a = html.indexOf(s), b = html.indexOf(e);
+  if (a === -1 && b === -1) return { html, found: false };
+  if (a === -1 || b === -1 || b < a) die('The FAQITEMS marker block is corrupt (one marker missing or out of order). Fix by hand, then re-run.');
+  if (html.indexOf(s, a + 1) !== -1) die('The FAQITEMS marker block appears more than once. Fix by hand, then re-run.');
+  const nl = html.lastIndexOf('\n', a);
+  if (nl === -1 || !/^[ \t]*$/.test(html.slice(nl + 1, a))) die('The FAQITEMS start marker is not at the start of a line. Fix by hand, then re-run.');
+  return { html: html.slice(0, nl) + html.slice(b + e.length), found: true };
+}
+
+/** Find `const faqs = [ ... ]` and where new items can be appended. Skips strings and comments. */
+function findFaqArray(html) {
+  const m = /\bconst\s+faqs\s*(?::[^=\n]+)?=\s*\[/.exec(html);
+  if (!m) return null;
+  const start = m.index + m[0].length, n = html.length;
+  const firstTok = /\S/.exec(html.slice(start));
+  let indent = '  ';
+  if (firstTok && firstTok[0] !== ']') {
+    const fi = start + firstTok.index;
+    indent = /^[ \t]*/.exec(html.slice(html.lastIndexOf('\n', fi) + 1))[0] || '  ';
+  }
+  let i = start, depth = 1, lastSig = start - 1, lastChar = '[';
+  while (i < n) {
+    const ch = html[i], nx = html[i + 1];
+    if (ch === '/' && nx === '/') { i = html.indexOf('\n', i); if (i === -1) break; continue; }
+    if (ch === '/' && nx === '*') { const e = html.indexOf('*/', i + 2); if (e === -1) break; i = e + 2; continue; }
+    if (ch === "'" || ch === '"' || ch === '`') {
+      let j = i + 1;
+      while (j < n && html[j] !== ch) { if (html[j] === '\\') j++; j++; }
+      lastSig = j; lastChar = ch; i = j + 1; continue;
+    }
+    if (ch === '[') depth++;
+    else if (ch === ']') {
+      depth--;
+      if (depth === 0) return { at: lastSig + 1, needsComma: lastChar !== ',' && lastChar !== '[', indent, line: lineOf(html, lastSig) };
+    }
+    if (!/\s/.test(ch)) { lastSig = i; lastChar = ch; }
+    i++;
+  }
+  return null;
+}
+
+const ENT = { rsquo: '\u2019', lsquo: '\u2018', ldquo: '\u201C', rdquo: '\u201D', ndash: '\u2013', mdash: '\u2014', amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ' };
+function htmlToText(h) {
+  return h.replace(/<[^>]+>/g, '')
+    .replace(/&(#x?[0-9a-f]+|[a-z]+);/gi, (all, g) => {
+      if (g[0] === '#') { const c = g[1].toLowerCase() === 'x' ? parseInt(g.slice(2), 16) : parseInt(g.slice(1), 10); return Number.isFinite(c) ? String.fromCodePoint(c) : all; }
+      return ENT[g.toLowerCase()] ?? all;
+    })
+    .replace(/\s+/g, ' ').trim();
+}
+/** Pull [question, answer] pairs out of the snippet's <details><summary>..</summary><p>..</p></details> items. */
+function parseFaqItems(faqHtml) {
+  const re = /<details>\s*<summary>([\s\S]*?)<\/summary>\s*<p>([\s\S]*?)<\/p>\s*<\/details>/gi;
+  const out = []; let m;
+  while ((m = re.exec(faqHtml))) out.push([htmlToText(m[1]), htmlToText(m[2])]);
+  return out;
+}
+
 const wrap = (name, body) => `${MARK[name][0]}\n${body}\n${MARK[name][1]}`;
 
 // ---------- main ----------
@@ -149,6 +222,11 @@ for (const name of Object.keys(MARK)) {
   html = r.html;
   if (r.found) removed.push(name);
 }
+{
+  const r = stripJsBlock(html);
+  html = r.html;
+  if (r.found) removed.push('faqitems');
+}
 if (removed.length) console.log(`Cleared previous blocks: ${removed.join(', ')}`);
 
 const before = { open: (html.match(/<section\b/gi) || []).length, close: (html.match(/<\/section>/gi) || []).length };
@@ -163,6 +241,15 @@ if (!opt.revert) {
     snip.script = snip.script.replace(/^<script>/, '<script is:inline>');
   }
   const hasHead = /<\/head>/i.test(html), hasBody = /<\/body>/i.test(html);
+  const faqArr = opt.faqBlock ? null : findFaqArray(html);
+  const dataMode = !!faqArr;
+  let items = [];
+  if (dataMode) {
+    items = parseFaqItems(snip.faq);
+    if (!items.length) die('Found the faqs array, but could not read any <details><summary>..</summary><p>..</p></details> items in the snippet.');
+    // the standalone FAQ block is not used in this mode, so drop its CSS
+    snip.style = snip.style.split('\n').filter((l) => !/^(#ep-faq-new\{|\.epf-)/.test(l)).join('\n');
+  }
 
   // 2) Guard: ids must not already exist outside our markers.
   for (const id of ['ep-solve', 'ep-faq-new']) {
@@ -180,32 +267,49 @@ if (!opt.revert) {
   // 4) Locate anchors on the clean baseline.
   const solveAnchor = findElementRange(html, opt.solverBefore);
   if (!solveAnchor) die(`Could not find an element with id="${opt.solverBefore}" for the solver section. Use --solver-before <id>.`);
-  const faqAnchor = findElementRange(html, opt.faqAfter);
-  if (!faqAnchor) die(`Could not find an element with id="${opt.faqAfter}" for the FAQ block. Use --faq-after <id>.`);
+  let faqAnchor = null;
+  if (!dataMode) {
+    faqAnchor = findElementRange(html, opt.faqAfter);
+    if (!faqAnchor) die(`Could not find an element with id="${opt.faqAfter}" for the FAQ block, and no "const faqs = [...]" array was found. Use --faq-after <id>.`);
+  }
   if (!hasHead && !isAstro) die('No </head> found, so the CSS has nowhere to go.');
   if (!hasBody && !isAstro) die('No </body> found, so the JS has nowhere to go.');
 
   // 5) Build insertions, then apply from the END of the document backwards so offsets stay valid.
+  const styleB = wrap('style', snip.style), solveB = wrap('solve', snip.solve), scriptB = wrap('script', snip.script);
   const edits = [];
-  if (hasBody) edits.push({ at: html.toLowerCase().lastIndexOf('</body>'), text: `${wrap('script', snip.script)}\n`, label: 'JS before </body>' });
-  edits.push({ at: faqAnchor.end, text: `\n${wrap('faq', snip.faq)}${hasBody ? '' : `\n${wrap('script', snip.script)}`}`, label: `FAQ block${hasBody ? '' : ' and JS'} after #${opt.faqAfter}` });
-  edits.push({ at: solveAnchor.start, text: `${hasHead ? '' : `${wrap('style', snip.style)}\n`}${wrap('solve', snip.solve)}\n`, label: `${hasHead ? '' : 'CSS and '}Solver section before #${opt.solverBefore}` });
-  if (hasHead) edits.push({ at: html.toLowerCase().indexOf('</head>'), text: `${wrap('style', snip.style)}\n`, label: 'CSS before </head>' });
-  edits.sort((a, b) => b.at - a.at);
+  if (hasBody) edits.push({ at: html.toLowerCase().lastIndexOf('</body>'), text: `${scriptB}\n`, label: 'JS before </body>' });
+  if (dataMode) {
+    const ind = faqArr.indent;
+    const lines = items.map(([q, a]) => `${ind}[${JSON.stringify(q)}, ${JSON.stringify(a)}],`);
+    if (faqArr.needsComma) lines[0] = `${ind}, ${lines[0].slice(ind.length)}`;
+    edits.push({ at: faqArr.at, text: `\n${ind}${JSM[0]}\n${lines.join('\n')}\n${ind}${JSM[1]}`, label: `${items.length} FAQ items appended to the faqs array (ends line ${faqArr.line})` });
+    edits.push({ at: solveAnchor.start, text: `${hasHead ? '' : `${styleB}\n`}${solveB}\n${hasBody ? '' : `${scriptB}\n`}`, label: `${hasHead ? '' : 'CSS, '}Solver section${hasBody ? '' : ' and JS'} before #${opt.solverBefore}` });
+  } else {
+    edits.push({ at: faqAnchor.end, text: `\n${wrap('faq', snip.faq)}${hasBody ? '' : `\n${scriptB}`}`, label: `FAQ block${hasBody ? '' : ' and JS'} after #${opt.faqAfter}` });
+    edits.push({ at: solveAnchor.start, text: `${hasHead ? '' : `${styleB}\n`}${solveB}\n`, label: `${hasHead ? '' : 'CSS and '}Solver section before #${opt.solverBefore}` });
+  }
+  if (hasHead) edits.push({ at: html.toLowerCase().indexOf('</head>'), text: `${styleB}\n`, label: 'CSS before </head>' });
+  edits.sort((x, y) => y.at - x.at);
 
   for (const e of edits) {
     summary.push(`  line ${lineOf(html, e.at)}: ${e.label}`);
     result = result.slice(0, e.at) + e.text + result.slice(e.at);
   }
+  summary.reverse();
+  summary.unshift(`  FAQ mode: ${dataMode ? 'items added to the page\u2019s own faqs array' : 'separate block'}`);
 
   // 6) Structural sanity checks on the result.
   const after = { open: (result.match(/<section\b/gi) || []).length, close: (result.match(/<\/section>/gi) || []).length };
+  const expectNew = dataMode ? 1 : 2;
   if (after.open - after.close !== before.open - before.close) die('Sanity check failed: <section> tags are unbalanced after the edit. Nothing was written.');
-  if (after.open !== before.open + 2) die(`Sanity check failed: expected 2 new sections, found ${after.open - before.open}. Nothing was written.`);
-  for (const name of ['style', 'solve', 'faq', 'script']) {
-    const [s, e] = MARK[name];
-    if (result.split(s).length !== 2 || result.split(e).length !== 2) die(`Sanity check failed: marker "${name}" is not present exactly once. Nothing was written.`);
+  if (after.open !== before.open + expectNew) die(`Sanity check failed: expected ${expectNew} new section(s), found ${after.open - before.open}. Nothing was written.`);
+  const need = dataMode ? ['style', 'solve', 'script'] : ['style', 'solve', 'faq', 'script'];
+  for (const name of need) {
+    const [ms, me] = MARK[name];
+    if (result.split(ms).length !== 2 || result.split(me).length !== 2) die(`Sanity check failed: marker "${name}" is not present exactly once. Nothing was written.`);
   }
+  if (dataMode && (result.split(JSM[0]).length !== 2 || result.split(JSM[1]).length !== 2)) die('Sanity check failed: FAQITEMS markers are not present exactly once. Nothing was written.');
 } else {
   summary.push(removed.length ? `  removed: ${removed.join(', ')}` : '  nothing to remove');
 }

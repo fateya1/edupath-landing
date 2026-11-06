@@ -73,6 +73,14 @@ const faqs = [
   ['How does M-Pesa fee payment work?', 'Parents view the balance in the Parent Portal and click "Pay via M-Pesa." An STK push is sent to their phone, they confirm with their PIN, and the fee record updates automatically.'],
   ['Can I import our existing data?', 'Yes. The Migration Hub provides Excel templates for students, teachers, parents, assessments, timetables, fees, library books and assets — migrate your whole school in an afternoon.'],
   ['Does Edupath work on smartphones and offline?', 'Yes. The web app is fully responsive, and the Android app adds Swahili/English, biometric login, dark & light themes and offline mode.'],
+  // EP:FAQITEMS:START
+  ["What if the timetable can’t be solved with our rules?", "Edupath tells you which rules are in conflict instead of giving you a timetable that only looks valid. Usually one rule is too strict for the teachers or rooms you have, for example a teacher available on two days who is assigned five lessons. Change that rule from “must” to “prefer”, or adjust the availability, and generate again."],
+  ["Can we still change the timetable by hand?", "Yes. Before generating, you can fix lessons in place, such as the Monday assembly or a fixed double period, and Edupath builds the rest around them. After generating, drag a lesson to a new slot. Slots that would cause a clash are blocked, and the last change can be undone with one click."],
+  ["What if a teacher falls sick or a room is out of use mid-term?", "Mark the teacher or room as unavailable and re-generate only the affected lessons. The rest of the timetable your staff and parents already know stays where it is."],
+  ["What if our student and teacher spreadsheets are messy?", "Use the Migration Hub Excel templates. Before anything is saved, the import lists the rows that need fixing, such as missing admission numbers or duplicate names, so you correct them in the sheet and upload again. If you get stuck, email admin@edupath.co.ke or WhatsApp +254 711 606 968 during office hours."],
+  ["Where is our school’s data stored?", "Your school’s data is stored in a managed PostgreSQL database on Neon, a cloud database platform. Every school’s data is isolated by a unique School ID, connections use HTTPS/TLS, and Edupath follows Kenya’s Data Protection Act (2019)."],
+  ["What if an M-Pesa payment doesn’t show on the fee statement?", "Most payments update as soon as the parent confirms with their PIN. If one doesn’t, ask the parent for the M-Pesa confirmation message and send us the reference code (it looks like QFJ2H4K)."],
+  // EP:FAQITEMS:END
 ];
 
 const faqJsonLd = JSON.stringify({
@@ -200,15 +208,6 @@ const faqJsonLd = JSON.stringify({
 .eps-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media(prefers-reduced-motion:reduce){.eps-cell.on,.eps-cell.bad{animation:none}}
 
-#ep-faq-new{background:#fff;padding:56px 20px}
-.epf-in{max-width:760px;margin:0 auto}
-.epf-in h2{font-size:clamp(1.4rem,2.6vw,1.8rem);color:var(--tdd);margin:0 0 18px}
-.epf-in details{border-bottom:1px solid var(--tb);padding:4px 0}
-.epf-in summary{cursor:pointer;list-style:none;font-weight:600;padding:14px 28px 14px 0;position:relative;line-height:1.4}
-.epf-in summary::-webkit-details-marker{display:none}
-.epf-in summary::after{content:"+";position:absolute;right:4px;top:12px;font-size:1.4rem;color:var(--t);line-height:1}
-.epf-in details[open] summary::after{content:"\2212"}
-.epf-in details p{margin:0 0 16px;line-height:1.65;color:var(--mut)}
 </style>
 <!-- EP:STYLE:END -->
 <!-- EP:SOLVE:START -->
@@ -242,6 +241,94 @@ const faqJsonLd = JSON.stringify({
   </div>
 </section>
 <!-- EP:SOLVE:END -->
+<!-- EP:SCRIPT:START -->
+<script is:inline>
+(function(){
+  var root=document.getElementById('ep-solve'); if(!root) return;
+  var D=['Monday','Tuesday','Wednesday','Thursday','Friday'];
+  var P=[['08:00','08:40'],['08:45','09:25'],['09:30','10:10'],['10:30','11:10'],['11:15','11:55'],['12:00','12:40'],['13:20','14:00'],['14:05','14:45'],['14:50','15:30']];
+  var BR={3:'10:10 - 10:30',6:'12:40 - 13:20'}; // break shown before this period index
+  var S={
+    MAT:['Mathematics','David Kamau','#EA580C'], KIS:['Kiswahili','Fatuma Hassan','#0D9488'], PHY:['Physics','Kiprop Ruto','#DC2626'],
+    BIO:['Biology','Otieno Odhiambo','#A23FE0'], CS:['Computer Studies','Beatrice Ndungu','#16A34A'], ENG:['English','Grace Wanjiku','#6D5BD0'],
+    PE:['Physical Education','Samuel Mwenda','#D97706'], CHE:['Chemistry','Otieno Odhiambo','#0891B2']
+  };
+  // final timetable: one array per day, one entry per period
+  var G=[
+    ['MAT','ENG','KIS','PE','PHY','CHE','BIO','CS','MAT'],
+    ['KIS','PE','PHY','CHE','BIO','CS','MAT','ENG','KIS'],
+    ['PHY','CHE','BIO','CS','MAT','ENG','KIS','PE','PHY'],
+    ['BIO','CS','MAT','ENG','KIS','PE','PHY','CHE','BIO'],
+    ['CS','MAT','ENG','KIS','PE','PHY','CHE','BIO','CS']
+  ];
+  var CL=[7,20,33]; // placement steps where a clash is shown
+  var grid=document.getElementById('eps-grid'), log=document.getElementById('eps-log'),
+      n1=document.getElementById('eps-n1'), n2=document.getElementById('eps-n2'), n3=document.getElementById('eps-n3'),
+      sr=document.getElementById('eps-sr'), btn=document.getElementById('eps-go');
+  var cells={}, order=[], token=0, started=false, total=0;
+  function el(t,c,x){var e=document.createElement(t); if(c)e.className=c; if(x!=null)e.textContent=x; return e;}
+
+  grid.appendChild(el('div','eps-h','Period'));
+  D.forEach(function(d){grid.appendChild(el('div','eps-h',d));});
+  for(var r=0;r<9;r++){
+    if(BR[r]){ grid.appendChild(el('div','eps-brk','Break')); grid.appendChild(el('div','eps-brkt',BR[r])); }
+    var per=el('div','eps-per'); per.appendChild(el('b','','Period '+(r+1))); per.appendChild(el('span','',P[r][0]+' - '+P[r][1])); grid.appendChild(per);
+    for(var c=0;c<5;c++){var cell=el('div','eps-cell'); cell.setAttribute('aria-hidden','true'); cells[r+'-'+c]=cell; grid.appendChild(cell);}
+  }
+  for(var i=0;i<45;i++){var k=(i*7)%45, cc=Math.floor(k/9), rr=k%9; order.push([rr,cc]); total++;}
+
+  function fill(key,code,bad){
+    var s=S[code], e=cells[key]; e.innerHTML='';
+    e.style.setProperty('--c',bad?'#B91C1C':s[2]);
+    e.className='eps-cell '+(bad?'bad':'on');
+    e.appendChild(el('b','',s[0])); e.appendChild(el('i','',s[1]));
+  }
+  function clear(key){var e=cells[key]; e.className='eps-cell'; e.innerHTML=''; e.style.removeProperty('--c');}
+  function slot(o){return D[o[1]].slice(0,3)+' '+P[o[0]][0];}
+  function say(t,bad){log.textContent=t; log.className='eps-log'+(bad?' bad':'');}
+  function reset(){for(var k in cells)clear(k); n1.textContent='0'; n2.textContent='0'; n3.textContent='\u2013'; say('Placing lessons\u2026');}
+  function done(caught){
+    n3.textContent='0';
+    var msg='All '+total+' lessons placed. '+caught+' clashes caught and fixed. 0 clashes in the final timetable.';
+    say(msg); sr.textContent=msg; btn.disabled=false; btn.removeAttribute('aria-busy'); btn.textContent='Generate again';
+  }
+
+  function run(instant){
+    token++; var my=token; reset(); btn.disabled=true; btn.setAttribute('aria-busy','true');
+    if(instant){
+      order.forEach(function(o){fill(o[0]+'-'+o[1],G[o[1]][o[0]]);});
+      n1.textContent=total; n2.textContent=CL.length; done(CL.length); return;
+    }
+    var i=0, caught=0;
+    (function step(){
+      if(my!==token) return;
+      if(i>=order.length){done(caught); return;}
+      var o=order[i], key=o[0]+'-'+o[1], code=G[o[1]][o[0]], s=S[code];
+      if(CL.indexOf(i)>-1){
+        var w=null; for(var j=order.length-1;j>i;j--){ if(order[j][0]+'-'+order[j][1]!==key){w=order[j];break;} }
+        var wk=w[0]+'-'+w[1],
+            why=(code==='CHE'||code==='PHY'||code==='BIO')?'the lab is booked by another class':(code==='CS')?'the computer room is booked by another class':s[1]+' is already teaching another class';
+        fill(wk,code,true); say('Clash on '+slot(w)+': '+why+'. Moving '+s[0]+'\u2026',true);
+        setTimeout(function(){
+          if(my!==token) return;
+          clear(wk); fill(key,code); caught++; n1.textContent=i+1; n2.textContent=caught;
+          say('Moved '+s[0]+' to '+slot(o)+'.'); i++; setTimeout(step,300);
+        },1100);
+      } else {
+        fill(key,code); n1.textContent=i+1; say('Placed '+s[0]+' on '+slot(o)+'.'); i++; setTimeout(step,100);
+      }
+    })();
+  }
+
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  btn.addEventListener('click',function(){run(reduce);});
+  function auto(){ if(started) return; started=true; run(reduce); }
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es,ob){ if(es[0].isIntersecting){auto(); ob.disconnect();} },{threshold:.25}).observe(root);
+  } else { auto(); }
+})();
+</script>
+<!-- EP:SCRIPT:END -->
 <section class="sec" id="features">
       <div class="sec-inner">
         <h2 class="sec-title">Everything your school needs, in one place.</h2>
@@ -341,131 +428,6 @@ const faqJsonLd = JSON.stringify({
         </div>
       </div>
     </section>
-<!-- EP:FAQ:START -->
-<section id="ep-faq-new" aria-labelledby="epf-title">
-  <div class="epf-in">
-    <h2 id="epf-title">More questions, answered</h2>
-
-    <details>
-      <summary>What if the timetable can&rsquo;t be solved with our rules?</summary>
-      <p>Edupath tells you which rules are in conflict instead of giving you a timetable that only looks valid. Usually one rule is too strict for the teachers or rooms you have, for example a teacher available on two days who is assigned five lessons. Change that rule from &ldquo;must&rdquo; to &ldquo;prefer&rdquo;, or adjust the availability, and generate again.</p>
-    </details>
-
-    <details>
-      <summary>Can we still change the timetable by hand?</summary>
-      <p>Yes. Before generating, you can fix lessons in place, such as the Monday assembly or a fixed double period, and Edupath builds the rest around them. After generating, drag a lesson to a new slot. Slots that would cause a clash are blocked, and the last change can be undone with one click.</p>
-    </details>
-
-    <details>
-      <summary>What if a teacher falls sick or a room is out of use mid-term?</summary>
-      <p>Mark the teacher or room as unavailable and re-generate only the affected lessons. The rest of the timetable your staff and parents already know stays where it is.</p>
-    </details>
-
-    <details>
-      <summary>What if our student and teacher spreadsheets are messy?</summary>
-      <p>Use the Migration Hub Excel templates. Before anything is saved, the import lists the rows that need fixing, such as missing admission numbers or duplicate names, so you correct them in the sheet and upload again. If you get stuck, email <a href="mailto:admin@edupath.co.ke">admin@edupath.co.ke</a> or WhatsApp +254 711 606 968 during office hours.</p>
-    </details>
-
-    <details>
-      <summary>Where is our school&rsquo;s data stored?</summary>
-      <p>Your school&rsquo;s data is stored in a managed PostgreSQL database on Neon, a cloud database platform. Every school&rsquo;s data is isolated by a unique School ID, connections use HTTPS/TLS, and Edupath follows Kenya&rsquo;s Data Protection Act (2019).</p>
-    </details>
-
-    <details>
-      <summary>What if an M-Pesa payment doesn&rsquo;t show on the fee statement?</summary>
-      <p>Most payments update as soon as the parent confirms with their PIN. If one doesn&rsquo;t, ask the parent for the M-Pesa confirmation message and send us the reference code (it looks like QFJ2H4K).</p>
-    </details>
-  </div>
-</section>
-<!-- EP:FAQ:END -->
-<!-- EP:SCRIPT:START -->
-<script is:inline>
-(function(){
-  var root=document.getElementById('ep-solve'); if(!root) return;
-  var D=['Monday','Tuesday','Wednesday','Thursday','Friday'];
-  var P=[['08:00','08:40'],['08:45','09:25'],['09:30','10:10'],['10:30','11:10'],['11:15','11:55'],['12:00','12:40'],['13:20','14:00'],['14:05','14:45'],['14:50','15:30']];
-  var BR={3:'10:10 - 10:30',6:'12:40 - 13:20'}; // break shown before this period index
-  var S={
-    MAT:['Mathematics','David Kamau','#EA580C'], KIS:['Kiswahili','Fatuma Hassan','#0D9488'], PHY:['Physics','Kiprop Ruto','#DC2626'],
-    BIO:['Biology','Otieno Odhiambo','#A23FE0'], CS:['Computer Studies','Beatrice Ndungu','#16A34A'], ENG:['English','Grace Wanjiku','#6D5BD0'],
-    PE:['Physical Education','Samuel Mwenda','#D97706'], CHE:['Chemistry','Otieno Odhiambo','#0891B2']
-  };
-  // final timetable: one array per day, one entry per period
-  var G=[
-    ['MAT','ENG','KIS','PE','PHY','CHE','BIO','CS','MAT'],
-    ['KIS','PE','PHY','CHE','BIO','CS','MAT','ENG','KIS'],
-    ['PHY','CHE','BIO','CS','MAT','ENG','KIS','PE','PHY'],
-    ['BIO','CS','MAT','ENG','KIS','PE','PHY','CHE','BIO'],
-    ['CS','MAT','ENG','KIS','PE','PHY','CHE','BIO','CS']
-  ];
-  var CL=[7,20,33]; // placement steps where a clash is shown
-  var grid=document.getElementById('eps-grid'), log=document.getElementById('eps-log'),
-      n1=document.getElementById('eps-n1'), n2=document.getElementById('eps-n2'), n3=document.getElementById('eps-n3'),
-      sr=document.getElementById('eps-sr'), btn=document.getElementById('eps-go');
-  var cells={}, order=[], token=0, started=false, total=0;
-  function el(t,c,x){var e=document.createElement(t); if(c)e.className=c; if(x!=null)e.textContent=x; return e;}
-
-  grid.appendChild(el('div','eps-h','Period'));
-  D.forEach(function(d){grid.appendChild(el('div','eps-h',d));});
-  for(var r=0;r<9;r++){
-    if(BR[r]){ grid.appendChild(el('div','eps-brk','Break')); grid.appendChild(el('div','eps-brkt',BR[r])); }
-    var per=el('div','eps-per'); per.appendChild(el('b','','Period '+(r+1))); per.appendChild(el('span','',P[r][0]+' - '+P[r][1])); grid.appendChild(per);
-    for(var c=0;c<5;c++){var cell=el('div','eps-cell'); cell.setAttribute('aria-hidden','true'); cells[r+'-'+c]=cell; grid.appendChild(cell);}
-  }
-  for(var i=0;i<45;i++){var k=(i*7)%45, cc=Math.floor(k/9), rr=k%9; order.push([rr,cc]); total++;}
-
-  function fill(key,code,bad){
-    var s=S[code], e=cells[key]; e.innerHTML='';
-    e.style.setProperty('--c',bad?'#B91C1C':s[2]);
-    e.className='eps-cell '+(bad?'bad':'on');
-    e.appendChild(el('b','',s[0])); e.appendChild(el('i','',s[1]));
-  }
-  function clear(key){var e=cells[key]; e.className='eps-cell'; e.innerHTML=''; e.style.removeProperty('--c');}
-  function slot(o){return D[o[1]].slice(0,3)+' '+P[o[0]][0];}
-  function say(t,bad){log.textContent=t; log.className='eps-log'+(bad?' bad':'');}
-  function reset(){for(var k in cells)clear(k); n1.textContent='0'; n2.textContent='0'; n3.textContent='\u2013'; say('Placing lessons\u2026');}
-  function done(caught){
-    n3.textContent='0';
-    var msg='All '+total+' lessons placed. '+caught+' clashes caught and fixed. 0 clashes in the final timetable.';
-    say(msg); sr.textContent=msg; btn.disabled=false; btn.removeAttribute('aria-busy'); btn.textContent='Generate again';
-  }
-
-  function run(instant){
-    token++; var my=token; reset(); btn.disabled=true; btn.setAttribute('aria-busy','true');
-    if(instant){
-      order.forEach(function(o){fill(o[0]+'-'+o[1],G[o[1]][o[0]]);});
-      n1.textContent=total; n2.textContent=CL.length; done(CL.length); return;
-    }
-    var i=0, caught=0;
-    (function step(){
-      if(my!==token) return;
-      if(i>=order.length){done(caught); return;}
-      var o=order[i], key=o[0]+'-'+o[1], code=G[o[1]][o[0]], s=S[code];
-      if(CL.indexOf(i)>-1){
-        var w=null; for(var j=order.length-1;j>i;j--){ if(order[j][0]+'-'+order[j][1]!==key){w=order[j];break;} }
-        var wk=w[0]+'-'+w[1],
-            why=(code==='CHE'||code==='PHY'||code==='BIO')?'the lab is booked by another class':(code==='CS')?'the computer room is booked by another class':s[1]+' is already teaching another class';
-        fill(wk,code,true); say('Clash on '+slot(w)+': '+why+'. Moving '+s[0]+'\u2026',true);
-        setTimeout(function(){
-          if(my!==token) return;
-          clear(wk); fill(key,code); caught++; n1.textContent=i+1; n2.textContent=caught;
-          say('Moved '+s[0]+' to '+slot(o)+'.'); i++; setTimeout(step,300);
-        },1100);
-      } else {
-        fill(key,code); n1.textContent=i+1; say('Placed '+s[0]+' on '+slot(o)+'.'); i++; setTimeout(step,100);
-      }
-    })();
-  }
-
-  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  btn.addEventListener('click',function(){run(reduce);});
-  function auto(){ if(started) return; started=true; run(reduce); }
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(function(es,ob){ if(es[0].isIntersecting){auto(); ob.disconnect();} },{threshold:.25}).observe(root);
-  } else { auto(); }
-})();
-</script>
-<!-- EP:SCRIPT:END -->
 
     <!-- REGISTER -->
     <section class="sec sec--tint" id="register">
