@@ -416,6 +416,104 @@ const faqJsonLd = JSON.stringify({
 .epm-tab{font-size:.68rem;padding:6px 9px}
 .epm-views{min-height:340px}
 }
+#ep-fin{--ink:#0F2F2C;--mut:#5B6B7A;--tdd:#134E4A;--t:#0D9488;background:#F5F9F8;padding:72px 20px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);box-sizing:border-box}
+#ep-fin *{box-sizing:border-box}
+#ep-fin [hidden]{display:none!important}
+.epr-wrap{max-width:1120px;margin:0 auto;display:grid;gap:36px;grid-template-columns:1fr;align-items:center}
+@media(min-width:1000px){.epr-wrap{grid-template-columns:4fr 8fr;gap:44px}}
+.epr-copy h2{font-size:clamp(1.7rem,3.2vw,2.35rem);line-height:1.15;margin:0 0 14px;color:var(--tdd);letter-spacing:-.01em}
+.epr-copy p{margin:0 0 18px;line-height:1.6;color:var(--mut);max-width:46ch}
+.epr-pts{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:10px}
+.epr-pts li{display:flex;gap:10px;line-height:1.45;font-size:.95rem}
+.epr-pts li::before{content:"\2713";flex:none;width:20px;height:20px;border-radius:50%;background:var(--t);color:#fff;font-size:.72rem;display:grid;place-items:center;margin-top:1px}
+.epr-go{appearance:none;border:0;background:var(--t);color:#fff;font:inherit;font-weight:600;padding:13px 22px;border-radius:10px;cursor:pointer;min-height:46px}
+.epr-go:hover:not(:disabled){background:#0F766E}
+.epr-go:disabled{opacity:.6;cursor:progress}
+#ep-fin :focus-visible{outline:3px solid var(--tdd);outline-offset:3px}
+.epr-app{position:relative;overflow:hidden;background:#fff;border:1px solid #DDE7E4;border-radius:16px;padding:14px;box-shadow:0 12px 32px rgba(19,78,74,.10)}
+.epr-top{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.epr-top b{display:block;font-size:1.05rem;color:#111}
+.epr-top small{font-size:.7rem;color:var(--mut)}
+.epr-sel{display:flex;gap:6px;align-items:flex-end;flex-wrap:wrap}
+.epr-sel label{display:block;font-size:.56rem;letter-spacing:.08em;color:#8A94A6;margin-bottom:2px}
+.epr-inp{min-height:30px;padding:6px 9px;border:1px solid #E1E4F2;border-radius:8px;font-size:.72rem;background:#fff;display:flex;align-items:center;color:#111}
+.epr-inp:empty::before{content:attr(data-ph);color:#9AA3B2}
+.epr-inp.typing::after{content:"";width:1px;height:1em;background:#111;margin-left:1px;animation:eprBlink 1s steps(1) infinite}
+.epr-b{display:inline-block;font-size:.7rem;font-weight:700;padding:8px 12px;border-radius:8px;color:#fff;white-space:nowrap;transition:transform .15s}
+.epr-b.green{background:#22C55E}.epr-b.blue{background:#3B82F6}.epr-b.dark{background:#0B1220}
+.press{transform:scale(.95)}
+.epr-tabs{display:flex;flex-wrap:wrap;border-bottom:1px solid #E6EAF0;margin-bottom:12px}
+.epr-tab{font-size:.74rem;font-weight:600;padding:9px 12px;color:#334155;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .25s,border-color .25s}
+.epr-tab.on{color:#16A34A;border-color:#22C55E}
+.epr-tab em{font-style:normal;background:#EF4444;color:#fff;border-radius:99px;font-size:.6rem;padding:1px 6px;margin-left:4px}
+.epr-views{min-height:392px}
+.epr-v{display:none}
+.epr-v.show{display:block;animation:eprIn .35s ease-out}
+.epr-ovg{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:center}
+.epr-gauge{text-align:center;position:relative}
+.epr-gauge svg{width:140px;height:84px;display:block;margin:0 auto}
+.epr-gauge b{display:block;margin-top:-30px;font-size:1.3rem;color:#F59E0B}
+.epr-gauge span{font-size:.62rem;color:var(--mut)}
+.epr-kp{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.epr-k{background:#fff;border:1px solid #EEF0F4;border-left:4px solid var(--kc);border-radius:10px;padding:8px 10px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.epr-k span{display:block;font-size:.62rem;color:#8A94A6}
+.epr-k b{display:block;font-size:.88rem;font-variant-numeric:tabular-nums;color:#111;margin:2px 0;white-space:nowrap}
+.epr-k small{font-size:.6rem;color:#8A94A6}
+.epr-box{border:1px solid #EEF0F4;border-radius:12px;padding:12px;margin-bottom:8px}
+.epr-dh{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.epr-dh b{display:block;font-size:.84rem;color:#111}.epr-dh small{font-size:.66rem;color:#8A94A6}
+.epr-dh .epr-inp{flex:1;min-width:130px;max-width:230px}
+.epr-sc{overflow-x:auto;overflow-y:hidden}
+.epr-t{width:100%;min-width:560px;border-collapse:collapse;font-size:.68rem;color:#111}
+.epr-t th{text-align:left;padding:7px 5px;color:#8A94A6;font-size:.58rem;letter-spacing:.06em;font-weight:700;text-transform:uppercase}
+.epr-t td{padding:8px 5px;border-top:1px solid #EEF0F4;vertical-align:middle}
+.epr-t td.r,.epr-t th.r{text-align:right}
+.epr-t tr.hid{display:none}
+.epr-t tr.show{animation:eprIn .3s ease-out}
+.epr-t tr.tot td{font-weight:700;border-top:2px solid #111}
+.epr-red{color:#DC2626;font-weight:700}.epr-or{color:#D97706;font-weight:600}.epr-gr{color:#16A34A;font-weight:600}
+.epr-wa{display:inline-block;background:#16A34A;color:#fff;border-radius:7px;padding:5px 9px;font-size:.62rem;font-weight:700;white-space:nowrap;transition:transform .15s,background .3s}
+.epr-wa.sent{background:#DCFCE7;color:#15803D}
+.epr-cr{display:grid;grid-template-columns:70px 1fr;gap:8px;margin:5px 0;font-size:.62rem;color:#111;align-items:center}
+.epr-cr div div{height:9px;border-radius:2px;margin:1px 0;width:0;transition:width .9s ease-out}
+.epr-cr .g{background:#22C55E}.epr-cr .rd{background:#EF4444}
+.epr-ax{display:flex;justify-content:space-between;margin:2px 0 8px 78px;font-size:.56rem;color:#8A94A6}
+.epr-rate{display:inline-block;width:34px;height:6px;background:#E5E7EB;border-radius:3px;margin-right:6px;vertical-align:middle;overflow:hidden}
+.epr-rate i{display:block;height:100%;width:0;background:#F59E0B;transition:width .9s ease-out}
+.epr-ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;margin-bottom:10px}
+.epr-ctl .sp{flex:1}
+.epr-ctl label{display:block;font-size:.56rem;letter-spacing:.08em;color:#8A94A6;margin-bottom:2px}
+.epr-h{font-size:.86rem;font-weight:700;color:#111;margin:4px 0 0}
+.epr-sub{font-size:.66rem;color:#8A94A6;margin:2px 0 8px}
+.epr-note0{font-size:.74rem;color:#8A94A6;padding:18px 0;text-align:center}
+.epr-bal{margin-top:8px;font-size:.74rem;font-weight:600;color:#16A34A;animation:eprIn .4s ease-out}
+.epr-cur{position:absolute;left:0;top:0;z-index:9;pointer-events:none;transition:transform .6s cubic-bezier(.4,0,.2,1),opacity .4s;opacity:0}
+.epr-cur.vis{opacity:1}
+.epr-cur svg{display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
+.epr-cur i{position:absolute;left:-8px;top:-8px;width:20px;height:20px;border-radius:50%;border:2px solid #16A34A;opacity:0}
+.epr-cur.click i{animation:eprRip .45s ease-out}
+.epr-note{margin:10px 0 0;font-size:.78rem;color:var(--mut)}
+.epr-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@keyframes eprIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@keyframes eprRip{from{transform:scale(.3);opacity:.9}to{transform:scale(1.6);opacity:0}}
+@keyframes eprBlink{50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.epr-v.show,.epr-t tr.show,.epr-bal{animation:none}.epr-cur{display:none}.epr-cr div div,.epr-rate i{transition:none}}
+@media(max-width:640px){
+#ep-fin{padding:48px 16px}
+.epr-app{padding:10px}
+.epr-ovg{grid-template-columns:1fr}
+.epr-kp{grid-template-columns:1fr 1fr}
+.epr-xs,.epr-t tr[data-xs]{display:none!important}
+.epr-sel .epr-xs{display:none}
+.epr-tab{padding:8px 8px;font-size:.66rem}
+.epr-views{min-height:340px}
+.epr-sc{overflow:visible}
+.epr-t{min-width:0;font-size:.62rem}
+.epr-t td{padding:7px 3px}
+.epr-m{display:none}
+.epr-cr{grid-template-columns:56px 1fr}
+.epr-ax{margin-left:64px}
+}
 </style>
 <!-- EP:STYLE:END -->
 <!-- EP:SOLVE:START -->
@@ -800,6 +898,122 @@ const faqJsonLd = JSON.stringify({
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
 })();
+(function(){
+  function init(){
+  var root=document.getElementById('ep-fin'); if(!root) return;
+  var $=function(i){return document.getElementById(i);};
+  var app=$('epr-app'), cur=$('epr-cur'), btn=$('epr-go'), sr=$('epr-sr'), arc=$('epr-arc'), pct=$('epr-pct');
+  var tabEls={}; [].forEach.call(root.querySelectorAll('.epr-tab'),function(t){tabEls[t.getAttribute('data-v')]=t;});
+  var token=0, started=false, instant=false, L=157.08;
+  var DF=[['DEM123','Nduku Mutua','Form 3 Blue','63,000','15,000','63,000'],['DEM186','Wesley Muthama','Form 4 Green','61,500','9,500','61,500'],['DEM013','Esther Atieno','Grade 10 Green','60,000','15,000','60,000'],['DEM215','Grace Waweru','Form 4 Blue','60,000','8,000','60,000'],['DEM042','Wafula Wafula','Grade 10 Blue','60,000','15,000','60,000']];
+  var CL=[['Form 3 Blue',40,2131500,1491000,640500,70.0],['Form 3 Green',40,2089000,1453500,635500,69.6],['Form 4 Blue',40,2269500,1615500,654000,71.2],['Form 4 Green',40,2279500,1564000,715500,68.6],['Grade 10 Blue',40,2014000,1448500,565500,71.9],['Grade 10 Green',40,1987000,1390500,596500,70.0]];
+  var TB=[['1000','Cash in Hand','2,190,227.00',''],['1010','M-Pesa Account','23,594,492.00',''],['1020','Bank Account','','2,441,955.00'],['1021','Tuition Account (Bank)','486,560.00',''],['4000','Fee Income','','28,480,500.00'],['4010','Canteen Income','','726,219.00'],['5070','Procurement (Purchase Orders)','5,863,955.00',''],['','Total','36,987,234.00','36,987,234.00']];
+  var CB=[['','','Balance b/f','','','','0.00'],['2026-01-05','DEMO-2026-T1','Government capitation - Term 1, tranche 1 (1 vote head)','Tuition Account (Bank)','497,280.00','','497,280.00'],['2026-01-05','DEMO-2026-T1','Government capitation - Term 1, tranche 1 (7 vote heads)','Operations Account (Bank)','1,572,000.00','','2,069,280.00'],['2026-03-07','PV-INV-2026-D01','Invoice INV-2026-D01 - ABC Supplies Ltd','Tuition Account (Bank)','','412,000.00','2,257,280.00'],['2026-03-15','PV-INV-2026-D10','Invoice INV-2026-D10 - Greenview Stationers','Operations Account (Bank)','','310,000.00','1,947,280.00']];
+  function fmt(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+  function el(t,c,x){var e=document.createElement(t); if(c)e.className=c; if(x!=null)e.textContent=x; return e;}
+  function row(tb,cells,cls,rcols,mcols,xs){var tr=el('tr','hid'+(cls?' '+cls:'')); if(xs) tr.setAttribute('data-xs',''); cells.forEach(function(c,i){var td=el('td',(rcols.indexOf(i)>-1?'r':'')+(mcols.indexOf(i)>-1?' epr-m':''),c); tr.appendChild(td);}); tb.appendChild(tr); return tr;}
+  // defaulters
+  var dtb=$('epr-dtb'), dtr=[];
+  DF.forEach(function(d,i){
+    var tr=el('tr'); tr.setAttribute('data-s',(d[0]+' '+d[1]+' '+d[2]).toLowerCase());
+    tr.appendChild(el('td','',d[0])); tr.appendChild(el('td','',d[1])); tr.appendChild(el('td','epr-m',d[2])); tr.appendChild(el('td','epr-red','KES '+d[3]));
+    tr.appendChild(el('td','epr-or epr-m','KES '+d[4])); tr.appendChild(el('td','epr-m','KES '+d[5])); tr.appendChild(el('td','epr-red epr-m','Never'));
+    var a=el('td'); a.appendChild(el('span','epr-wa','WhatsApp')); tr.appendChild(a); dtb.appendChild(tr); dtr.push(tr);
+  });
+  // classes: chart + table
+  var chart=$('epr-chart'), ctb=$('epr-ctb'), bars=[], rates=[];
+  CL.forEach(function(c){
+    var r=el('div','epr-cr'); r.appendChild(el('b','',c[0])); var b=el('div'); var g=el('div','g'), rd=el('div','rd'); b.appendChild(g); b.appendChild(rd); r.appendChild(b); chart.appendChild(r); bars.push([g,rd,c]);
+    var tr=el('tr'); tr.appendChild(el('td','',c[0])); tr.appendChild(el('td','epr-m',String(c[1]))); tr.appendChild(el('td','epr-m','KES '+fmt(c[2]))); tr.appendChild(el('td','epr-gr','KES '+fmt(c[3]))); tr.appendChild(el('td','epr-red','KES '+fmt(c[4])));
+    var rt=el('td'); var rb=el('span','epr-rate'); var ri=el('i'); rb.appendChild(ri); rt.appendChild(rb); rt.appendChild(document.createTextNode(c[5].toFixed(1)+'%')); tr.appendChild(rt); ctb.appendChild(tr); rates.push([ri,c[5]]);
+  });
+  // trial balance + cash book (rows start hidden)
+  var tbb=$('epr-tbb'), tbr=TB.map(function(c,i){return row(tbb,c,c[1]==='Total'?'tot':'',[2,3],[],i===3||i===5);});
+  var cbb=$('epr-cbb'), cbr=CB.map(function(c,i){var tr=row(cbb,c,'',[4,5,6],[1,3],i===3); return tr;});
+  function anim(e,to,dur,pre,suf){
+    if(instant||!dur){e.textContent=pre+fmt(to)+suf;return;}
+    var t0=null,my=token;
+    requestAnimationFrame(function f(ts){
+      if(my!==token) return; if(t0===null) t0=ts;
+      var k=Math.min(1,(ts-t0)/dur), v=1-Math.pow(1-k,3);
+      e.textContent=pre+fmt(to*v)+suf; if(k<1) requestAnimationFrame(f);
+    });
+  }
+  function gauge(p,animate){arc.style.transition=animate?'stroke-dashoffset 1.4s ease-out':'none'; arc.style.strokeDashoffset=String(L*(1-p/100));}
+  function countUp(){
+    [].forEach.call(root.querySelectorAll('[data-n]'),function(e){anim(e,+e.getAttribute('data-n'),1400,'KES ','');});
+    anim(pct,70,1400,'','%'); gauge(70.2,!instant);
+  }
+  function grow(){bars.forEach(function(b,i){setTimeout(function(){b[0].style.width=(b[2][3]/1800000*100)+'%'; b[1].style.width=(b[2][4]/1800000*100)+'%'; rates[i][0].style.width=rates[i][1]+'%';},instant?0:i*140);});}
+  function setTab(v){
+    for(var k in tabEls) tabEls[k].classList.toggle('on',k===v);
+    [].forEach.call(root.querySelectorAll('.epr-v'),function(x){x.classList.remove('show');});
+    $('epr-v-'+v).classList.add('show');
+  }
+  function showRows(list){list.forEach(function(r){r.className=r.className.replace('hid','show');});}
+  function resetAll(){
+    [].forEach.call(root.querySelectorAll('[data-n]'),function(e){e.textContent='KES 0';}); pct.textContent='0%'; gauge(0,false);
+    var q=$('epr-q'); q.textContent=''; q.classList.remove('typing'); dtr.forEach(function(r){r.classList.remove('hid'); r.querySelector('.epr-wa').className='epr-wa'; r.querySelector('.epr-wa').textContent='WhatsApp';});
+    bars.forEach(function(b,i){b[0].style.width='0'; b[1].style.width='0'; rates[i][0].style.width='0';});
+    tbr.concat(cbr).forEach(function(r){r.className=r.className.replace('show','hid');});
+    $('epr-tbt').hidden=true; $('epr-cbt').hidden=true; $('epr-n1').hidden=false; $('epr-n2').hidden=false; $('epr-bal').hidden=true; setTab('ov');
+  }
+  function wait(ms,my){return new Promise(function(res,rej){setTimeout(function(){my===token?res():rej('x');},ms);});}
+  function moveTo(e,my,dx){
+    var a=app.getBoundingClientRect(), r=e.getBoundingClientRect();
+    var x=r.left-a.left+Math.min(r.width*0.55,r.width-8)+(dx||0), y=r.top-a.top+r.height*0.5;
+    cur.style.transform='translate('+x+'px,'+y+'px)'; return wait(560,my);
+  }
+  function click(e,my){
+    cur.classList.remove('click'); void cur.offsetWidth; cur.classList.add('click'); e.classList.add('press');
+    setTimeout(function(){e.classList.remove('press'); cur.classList.remove('click');},400); return wait(220,my);
+  }
+  async function visit(v,my,fn){
+    await moveTo(tabEls[v],my); await click(tabEls[v],my); setTab(v); await wait(300,my);
+    if(fn) await fn(); await wait(450,my);
+  }
+  async function tour(my){
+    cur.style.transition='none'; cur.style.transform='translate('+Math.round(app.clientWidth*0.5)+'px,'+Math.round(app.clientHeight*0.6)+'px)';
+    void cur.offsetWidth; cur.style.transition=''; cur.classList.add('vis'); await wait(500,my);
+    var rf=$('epr-ref'); await moveTo(rf,my); await click(rf,my); countUp(); await wait(1900,my);
+    await visit('df',my,async function(){
+      var q=$('epr-q'), txt='Muthama'; await moveTo(q,my); await click(q,my); q.classList.add('typing');
+      for(var i=1;i<=txt.length;i++){q.textContent=txt.slice(0,i); var s=q.textContent.toLowerCase(); dtr.forEach(function(r){r.classList.toggle('hid',r.getAttribute('data-s').indexOf(s)<0);}); await wait(80,my);}
+      q.classList.remove('typing'); await wait(250,my);
+      var wa=dtr[1].querySelector('.epr-wa'); await moveTo(wa,my); await click(wa,my); wa.classList.add('sent'); wa.textContent='Sent \u2713'; await wait(500,my);
+    });
+    await visit('cl',my,async function(){grow(); await wait(1700,my);});
+    await visit('tb',my,async function(){
+      var g=$('epr-gen1'); await moveTo(g,my); await click(g,my); $('epr-n1').hidden=true; $('epr-tbt').hidden=false;
+      for(var i=0;i<tbr.length;i++){showRows([tbr[i]]); await wait(150,my);}
+      $('epr-bal').hidden=false; await wait(500,my);
+    });
+    await visit('cb',my,async function(){
+      var g=$('epr-gen2'); await moveTo(g,my); await click(g,my); $('epr-n2').hidden=true; $('epr-cbt').hidden=false;
+      for(var i=0;i<cbr.length;i++){showRows([cbr[i]]); await wait(220,my);}
+      await wait(400,my);
+    });
+    await moveTo(tabEls.ov,my); await click(tabEls.ov,my); setTab('ov'); await wait(700,my);
+  }
+  function finish(){
+    cur.classList.remove('vis'); var m='Tour finished. Collection rate 70%, one defaulter reminded, trial balance in balance.';
+    sr.textContent=m; btn.disabled=false; btn.removeAttribute('aria-busy'); btn.textContent='Replay tour';
+  }
+  function run(inst){
+    token++; var my=token; instant=inst; resetAll(); sr.textContent=''; btn.disabled=true; btn.setAttribute('aria-busy','true');
+    if(inst){countUp(); grow(); showRows(tbr); showRows(cbr); $('epr-tbt').hidden=false; $('epr-cbt').hidden=false; $('epr-n1').hidden=true; $('epr-n2').hidden=true; $('epr-bal').hidden=false; finish(); return;}
+    tour(my).then(finish,function(e){if(e!=='x') finish();});
+  }
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  resetAll();
+  btn.addEventListener('click',function(){run(reduce);});
+  function go(){if(started) return; started=true; run(reduce);}
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es,ob){if(es[0].isIntersecting){go(); ob.disconnect();}},{threshold:.3}).observe(root);
+  } else { go(); }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+})();
 </script>
 <!-- EP:SCRIPT:END -->
 <section class="sec" id="features">
@@ -818,7 +1032,76 @@ const faqJsonLd = JSON.stringify({
     </section>
 
     <!-- PORTALS -->
-    <section class="sec sec--tint" id="portals">
+    <!-- EP:FIN:START -->
+<section id="ep-fin" aria-labelledby="epr-title">
+  <div class="epr-wrap">
+    <div class="epr-copy">
+      <h2 id="epr-title">Financial reports, from collection rate to cash book.</h2>
+      <p>Follow the cursor through the reports your bursar and principal use: overview, defaulters, classes, trial balance and cash book.</p>
+      <ul class="epr-pts">
+        <li>See billed, collected and outstanding fees, with the collection rate, at a glance.</li>
+        <li>Find defaulters and send a WhatsApp reminder from the same row.</li>
+        <li>Compare classes side by side on what was billed, collected and is still owed.</li>
+        <li>Generate a trial balance and cash book for any period, and download them as Excel (CSV) or PDF.</li>
+      </ul>
+      <button class="epr-go" type="button" id="epr-go">Replay tour</button>
+    </div>
+    <div>
+      <div class="epr-app" id="epr-app" role="img" aria-label="Animated tour of the financial reports: the overview counts up, a defaulter is found and sent a WhatsApp reminder, classes are compared, then a trial balance and cash book are generated">
+        <div aria-hidden="true">
+          <div class="epr-top">
+            <div><b>Financial Reports</b><small>Fee collection analytics, defaulters &amp; payment breakdown</small></div>
+            <div class="epr-sel"><div class="epr-xs"><label>YEAR</label><div class="epr-inp">2026</div></div><div class="epr-xs"><label>TERM</label><div class="epr-inp">Term 3</div></div><div class="epr-xs"><label>CLASS</label><div class="epr-inp">All Classes</div></div><span class="epr-b green" id="epr-ref">Refresh</span></div>
+          </div>
+          <div class="epr-tabs">
+            <span class="epr-tab on" data-v="ov">Overview</span><span class="epr-tab" data-v="df">Defaulters<em>143</em></span><span class="epr-tab" data-v="cl">Classes</span><span class="epr-tab" data-v="tb">Trial Balance</span><span class="epr-tab" data-v="cb">Cash Book</span>
+          </div>
+          <div class="epr-views">
+            <div class="epr-v show" id="epr-v-ov"><div class="epr-ovg">
+              <div class="epr-gauge"><svg viewBox="0 0 120 72"><path d="M10 62 A50 50 0 0 1 110 62" fill="none" stroke="#E5E7EB" stroke-width="10" stroke-linecap="round"/><path id="epr-arc" d="M10 62 A50 50 0 0 1 110 62" fill="none" stroke="#F59E0B" stroke-width="10" stroke-linecap="round" stroke-dasharray="157.08" stroke-dashoffset="157.08"/></svg><b id="epr-pct">0%</b><span>Collection Rate</span></div>
+              <div class="epr-kp">
+                <div class="epr-k" style="--kc:#1F2A44"><span>Total Billed</span><b data-n="12770500">KES 0</b><small>240 students</small></div>
+                <div class="epr-k" style="--kc:#22C55E"><span>Collected</span><b data-n="8963000">KES 0</b><small>70.2% of billed</small></div>
+                <div class="epr-k" style="--kc:#EF4444"><span>Outstanding</span><b data-n="3807500">KES 0</b><small>143 defaulters</small></div>
+                <div class="epr-k epr-xs" style="--kc:#22C55E"><span>Canteen Income</span><b data-n="0">KES 0</b><small>this term</small></div>
+                <div class="epr-k epr-xs" style="--kc:#22C55E"><span>Government Capitation</span><b data-n="1067712">KES 0</b><small>this term</small></div>
+                <div class="epr-k epr-xs" style="--kc:#EF4444"><span>Procurement Spend</span><b data-n="1051000">KES 0</b><small>this term</small></div>
+                <div class="epr-k epr-xs" style="--kc:#EF4444"><span>Payroll Expenditure</span><b data-n="0">KES 0</b><small>this term</small></div>
+                <div class="epr-k" style="--kc:#22C55E"><span>Net Position</span><b data-n="8979712">KES 0</b><small>fees + capitation + canteen &minus; expenses</small></div>
+                <div class="epr-k" style="--kc:#22C55E"><span>Via M-Pesa</span><b data-n="7422000">KES 0</b><small>468 transactions</small></div>
+                <div class="epr-k epr-xs" style="--kc:#3B82F6"><span>Via Cash</span><b data-n="489500">KES 0</b><small>32 transactions</small></div>
+                <div class="epr-k epr-xs" style="--kc:#1F2A44"><span>Via Bank</span><b data-n="1051500">KES 0</b><small>66 transactions</small></div>
+              </div></div></div>
+            <div class="epr-v" id="epr-v-df"><div class="epr-box">
+              <div class="epr-dh"><div><b>Fee Defaulters</b><small>25 students with outstanding balances</small></div><div class="epr-inp" id="epr-q" data-ph="Search name, admission no, class..."></div><span class="epr-b blue epr-m">Export CSV</span></div>
+              <div class="epr-sc"><table class="epr-t" id="epr-dt"><thead><tr><th>Adm No</th><th>Student Name</th><th class="epr-m">Class</th><th>Total Owed</th><th class="epr-m">Carried Fwd</th><th class="epr-m">This Term</th><th class="epr-m">Last Payment</th><th>Actions</th></tr></thead><tbody id="epr-dtb"></tbody></table></div>
+            </div></div>
+            <div class="epr-v" id="epr-v-cl"><div class="epr-box"><div id="epr-chart"></div><div class="epr-ax"><span>0k</span><span>450k</span><span>900k</span><span>1350k</span><span>1800k</span></div>
+              <div class="epr-sc"><table class="epr-t"><thead><tr><th>Class</th><th class="epr-m">Students</th><th class="epr-m">Billed</th><th>Collected</th><th>Outstanding</th><th>Rate</th></tr></thead><tbody id="epr-ctb"></tbody></table></div></div></div>
+            <div class="epr-v" id="epr-v-tb"><div class="epr-box">
+              <div class="epr-ctl"><div><label>FROM</label><div class="epr-inp">01/01/2026</div></div><div><label>TO</label><div class="epr-inp">11/06/2026</div></div><span class="epr-b green" id="epr-gen1">Generate</span><span class="sp"></span><span class="epr-b blue epr-m">Download Excel (CSV)</span><span class="epr-b dark epr-m">Download PDF</span></div>
+              <p class="epr-h">Trial Balance</p><p class="epr-sub">For the period 2026-01-01 to 2026-11-06</p>
+              <div class="epr-note0" id="epr-n1">Choose a period, then press Generate.</div>
+              <div class="epr-sc"><table class="epr-t" id="epr-tbt" hidden><thead><tr><th>Code</th><th>Account</th><th class="r">Debit (KES)</th><th class="r">Credit (KES)</th></tr></thead><tbody id="epr-tbb"></tbody></table></div>
+              <div class="epr-bal" id="epr-bal" hidden>Debits equal credits - trial balance is in balance.</div>
+            </div></div>
+            <div class="epr-v" id="epr-v-cb"><div class="epr-box">
+              <div class="epr-ctl"><div><label>FROM</label><div class="epr-inp">01/01/2026</div></div><div><label>TO</label><div class="epr-inp">11/06/2026</div></div><div class="epr-m"><label>ACCOUNT</label><div class="epr-inp">All accounts</div></div><span class="epr-b green" id="epr-gen2">Generate</span><span class="sp"></span><span class="epr-b blue epr-m">Download Excel (CSV)</span><span class="epr-b dark epr-m">Download PDF</span></div>
+              <p class="epr-h">Cash Book</p><p class="epr-sub">All accounts | 2026-01-01 to 2026-11-06 | 1,874 entries</p>
+              <div class="epr-note0" id="epr-n2">Choose a period, then press Generate.</div>
+              <div class="epr-sc"><table class="epr-t" id="epr-cbt" hidden><thead><tr><th>Date</th><th class="epr-m">Ref</th><th>Description</th><th class="epr-m">Account</th><th class="r">Receipts</th><th class="r">Payments</th><th class="r">Balance</th></tr></thead><tbody id="epr-cbb"></tbody></table></div>
+            </div></div>
+          </div>
+        </div>
+        <div class="epr-cur" id="epr-cur"><i></i><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.8L9 19z" fill="#111" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="epr-sr" id="epr-sr" role="status"></div>
+      <p class="epr-note">An illustration using a sample school and sample figures.</p>
+    </div>
+  </div>
+</section>
+<!-- EP:FIN:END -->
+<section class="sec sec--tint" id="portals">
       <div class="sec-inner">
         <h2 class="sec-title">A portal for every role.</h2>
         <div class="idx-list">
