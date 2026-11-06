@@ -97,6 +97,7 @@
 <style>
 #ep-fees{--ind:#5A55E0;--lav:#EEF0FB;--ink:#0F2F2C;--mut:#5B6B7A;--t:#0D9488;--tdd:#134E4A;background:#F6F7FD;padding:72px 20px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);box-sizing:border-box}
 #ep-fees *{box-sizing:border-box}
+#ep-fees [hidden]{display:none!important}
 .epm-wrap{max-width:1120px;margin:0 auto;display:grid;gap:36px;grid-template-columns:1fr;align-items:center}
 @media(min-width:1000px){.epm-wrap{grid-template-columns:4fr 8fr;gap:44px}}
 .epm-copy h2{font-size:clamp(1.7rem,3.2vw,2.35rem);line-height:1.15;margin:0 0 14px;color:var(--tdd);letter-spacing:-.01em}
@@ -104,24 +105,26 @@
 .epm-pts{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:10px}
 .epm-pts li{display:flex;gap:10px;line-height:1.45;font-size:.95rem}
 .epm-pts li::before{content:"\2713";flex:none;width:20px;height:20px;border-radius:50%;background:var(--t);color:#fff;font-size:.72rem;display:grid;place-items:center;margin-top:1px}
-.epm-btn{appearance:none;border:0;background:var(--t);color:#fff;font:inherit;font-weight:600;padding:13px 22px;border-radius:10px;cursor:pointer;min-height:46px}
-.epm-btn:hover:not(:disabled){background:#0F766E}
-.epm-btn:disabled{opacity:.6;cursor:progress}
+.epm-go{appearance:none;border:0;background:var(--t);color:#fff;font:inherit;font-weight:600;padding:13px 22px;border-radius:10px;cursor:pointer;min-height:46px}
+.epm-go:hover:not(:disabled){background:#0F766E}
+.epm-go:disabled{opacity:.6;cursor:progress}
 #ep-fees :focus-visible{outline:3px solid var(--tdd);outline-offset:3px}
-.epm-app{background:#fff;border:1px solid #E3E6F6;border-radius:16px;padding:14px;box-shadow:0 12px 32px rgba(67,56,202,.10)}
+.epm-app{position:relative;overflow:hidden;background:#fff;border:1px solid #E3E6F6;border-radius:16px;padding:14px;box-shadow:0 12px 32px rgba(67,56,202,.10)}
 .epm-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:12px}
 .epm-card{background:#fff;border:1px solid #E6E8F5;border-radius:12px;padding:12px 14px;box-shadow:0 2px 10px rgba(90,85,224,.06)}
 .epm-card span{display:block;font-size:.75rem;color:var(--mut)}
 .epm-card b{display:block;margin-top:4px;font-size:clamp(1.05rem,2.2vw,1.55rem);font-variant-numeric:tabular-nums;white-space:nowrap}
 .epm-card .g{color:#16A34A}.epm-card .r{color:#DC2626}
 .epm-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-.epm-tab{font-size:.74rem;font-weight:600;padding:7px 11px;border-radius:9px;background:var(--lav);color:#2B2F52;transition:background .3s,box-shadow .3s}
+.epm-tab{font-size:.74rem;font-weight:600;padding:7px 11px;border-radius:9px;background:var(--lav);color:#2B2F52;transition:background .25s,color .25s,transform .15s}
 .epm-tab.on{background:var(--ind);color:#fff}
-.epm-tab.hot{background:#C7D2FE;box-shadow:0 0 0 3px rgba(90,85,224,.35)}
+.press{transform:scale(.95)}
+.epm-views{min-height:392px}
+.epm-v{display:none}
+.epm-v.show{display:block;animation:epmIn .35s ease-out}
 .epm-feed{display:flex;align-items:center;gap:8px;min-height:38px;padding:8px 12px;border-radius:10px;background:#F4F5FB;border:1px solid #E6E8F5;font-size:.8rem;margin-bottom:12px;transition:background .3s,border-color .3s}
 .epm-feed::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:#94A3B8}
 .epm-feed.pay{background:#ECFDF3;border-color:#A7E3BF}.epm-feed.pay::before{background:#16A34A}
-.epm-feed.sms{background:#EEF0FF;border-color:#C3C8F5}.epm-feed.sms::before{background:var(--ind)}
 .epm-feed span{animation:epmIn .3s ease-out}
 .epm-scroll{overflow-x:auto}
 .epm-tbl{width:100%;min-width:720px;border-collapse:collapse;font-size:.74rem}
@@ -134,42 +137,140 @@
 .epm-chip.PAID{background:#DCFCE7;color:#15803D}.epm-chip.PARTIAL{background:#FEF3C7;color:#B45309}.epm-chip.UNPAID{background:#FEE2E2;color:#B91C1C}
 .epm-chip.pop{animation:epmPop .35s ease-out}
 .epm-act{font-size:.68rem;font-weight:600;padding:4px 9px;border-radius:7px;background:#E6EAFB;color:#3730A3}
+.epm-box{background:#fff;border:1px solid #E6E8F5;border-radius:12px;padding:14px;margin-bottom:10px}
+.epm-box h4{margin:0 0 6px;font-size:.95rem;color:#111}
+.epm-d{margin:0 0 10px;font-size:.72rem;color:var(--mut);line-height:1.5}
+.epm-k{font-size:.66rem;letter-spacing:.08em;color:var(--mut);margin-bottom:8px;font-weight:600}
+.epm-v label{display:block;font-size:.68rem;color:var(--mut);margin:8px 0 4px}
+.epm-inp{min-height:30px;padding:6px 9px;border:1px solid #E1E4F2;border-radius:8px;font-size:.76rem;background:#fff;display:flex;align-items:center;color:#111}
+.epm-inp:empty::before{content:attr(data-ph);color:#9AA3B2}
+.epm-inp.typing::after{content:"";width:1px;height:1em;background:#111;margin-left:1px;animation:epmBlink 1s steps(1) infinite}
+.epm-two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.epm-row{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;margin-bottom:8px}
+.epm-row>div{flex:1 1 90px}
+.epm-b2{display:inline-block;font-size:.72rem;padding:7px 12px;border-radius:8px;border:1px solid #E1E4F2;background:#fff;color:#2B2F52;transition:transform .15s,background .3s}
+.epm-b2.dark{background:#6B7280;color:#fff;border-color:#6B7280}
+.epm-b2.amber{background:#FEF3C7;border-color:#F3D98B;color:#B45309;font-weight:600}
+.epm-b2.sent{background:#DCFCE7;border-color:#86D9A5;color:#15803D}
+.epm-ind{display:inline-block;font-size:.74rem;font-weight:600;padding:8px 14px;border-radius:8px;background:var(--ind);color:#fff;transition:transform .15s,background .3s}
+.epm-ind.sent{background:#15803D}
+.epm-bf{border:1px solid #F3D98B;background:#FFFCF0;border-radius:10px;padding:10px;margin-top:10px;font-size:.72rem}
+.epm-bf b{display:block;color:#B45309;margin-bottom:6px;font-size:.76rem}
+.epm-chk{display:flex;gap:8px;align-items:center;color:#334155}
+.epm-chk i{width:14px;height:14px;border:1.5px solid #9AA3B2;border-radius:3px;display:inline-grid;place-items:center;font-style:normal;font-size:.6rem;color:#fff;transition:background .2s}
+.epm-chk.on i{background:var(--ind);border-color:var(--ind)}.epm-chk.on i::after{content:"\2713"}
+.epm-aud3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:10px}
+.epm-aud{border:1.5px solid #E6E8F5;border-radius:12px;padding:10px 12px;font-size:.72rem;color:var(--mut);transition:background .3s,border-color .3s,transform .15s}
+.epm-aud b{display:block;font-size:.82rem;margin-bottom:2px}
+.epm-aud.o b{color:#DC2626}.epm-aud.a b{color:#B45309}.epm-aud.c b{color:var(--ind)}
+.epm-aud.sel{border-color:var(--ind);background:#FEE2E2}
+.epm-ta{min-height:50px;font-size:.74rem;line-height:1.5;padding:8px 9px;border:1px solid #E1E4F2;border-radius:8px;color:#111}
+.epm-foot{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:.72rem;color:var(--mut)}
+.epm-two2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:10px 0}
+.epm-pnl{border-radius:12px;padding:10px 12px;font-size:.72rem;border:1px solid;color:var(--mut)}
+.epm-pnl b{display:block;font-size:.84rem;margin-bottom:3px}
+.epm-pnl.g{background:#F1FBF6;border-color:#BFE6D0}.epm-pnl.g b{color:#16A34A}
+.epm-pnl.bl{background:#F1F5FE;border-color:#C9D6F7}.epm-pnl.bl b{color:#3B6FE0}
+.epm-pnl.y{background:#FFFCF0;border-color:#F3D98B}.epm-pnl.y b{color:#B45309}
+.epm-btns{display:flex;gap:8px;margin-top:8px}
+.epm-at{width:100%;min-width:560px;border-collapse:collapse;font-size:.72rem}
+.epm-at th{text-align:left;padding:6px;color:#1E2140}
+.epm-at td{padding:8px 6px;border-top:1px solid #EEF0F8;vertical-align:top}
+.epm-at tr.epm-hide{display:none}
+.epm-at tr.epm-in{animation:epmIn .4s ease-out}
+.epm-tag{background:#E0E7FF;color:#3730A3;border-radius:6px;padding:2px 7px;font-size:.66rem;font-weight:600;white-space:nowrap}
+.epm-cur{position:absolute;left:0;top:0;z-index:5;pointer-events:none;transition:transform .75s cubic-bezier(.4,0,.2,1),opacity .4s;opacity:0}
+.epm-cur.vis{opacity:1}
+.epm-cur svg{display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
+.epm-cur i{position:absolute;left:-8px;top:-8px;width:20px;height:20px;border-radius:50%;border:2px solid var(--ind);opacity:0}
+.epm-cur.click i{animation:epmRip .45s ease-out}
 .epm-note{margin:10px 0 0;font-size:.78rem;color:var(--mut)}
 .epm-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @keyframes epmIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 @keyframes epmPop{0%{transform:scale(.8);opacity:.4}100%{transform:none;opacity:1}}
-@media(prefers-reduced-motion:reduce){.epm-feed span,.epm-chip.pop{animation:none}}
+@keyframes epmRip{from{transform:scale(.3);opacity:.9}to{transform:scale(1.6);opacity:0}}
+@keyframes epmBlink{50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.epm-feed span,.epm-chip.pop,.epm-v.show,.epm-at tr.epm-in{animation:none}.epm-cur{display:none}}
 </style>
 
-<!-- ============ PART 1b: WATCH FEES UPDATE ============ -->
+<!-- ============ PART 1b: FEE MANAGEMENT TOUR ============ -->
 <section id="ep-fees" aria-labelledby="epm-title">
   <div class="epm-wrap">
     <div class="epm-copy">
-      <h2 id="epm-title">Watch fees update the moment parents pay.</h2>
-      <p>A parent pays by M-Pesa. The fee record, the student&rsquo;s status and the school&rsquo;s totals update on their own, and reminders go out to whoever still owes.</p>
+      <h2 id="epm-title">Fee management from payment to audit trail.</h2>
+      <p>Follow the cursor through the same screens your bursar uses: fee records, new fees, fee structures, payments, SMS and automatic reminders, and the audit trail.</p>
       <ul class="epm-pts">
-        <li>Each payment lands on the right student&rsquo;s record.</li>
-        <li>Status moves from Unpaid to Partial to Paid automatically.</li>
-        <li>SMS reminders reach parents who still have a balance.</li>
+        <li>Payments land on the right student and update the totals straight away.</li>
+        <li>Set a termly fee structure and every active student in the grade is billed automatically.</li>
+        <li>Reminders go out by SMS and WhatsApp, on demand or on a schedule.</li>
+        <li>Every change is written to an audit trail that can&rsquo;t be edited or deleted.</li>
       </ul>
-      <button class="epm-btn" type="button" id="epm-go">Replay</button>
+      <button class="epm-go" type="button" id="epm-go">Replay tour</button>
     </div>
     <div>
-      <div class="epm-app" role="img" aria-label="Animated example of the fee management screen: M-Pesa payments arrive and balances, statuses and totals update automatically">
-        <div class="epm-cards" aria-hidden="true">
-          <div class="epm-card"><span>Total Fee Records</span><b id="epm-rec">720</b></div>
-          <div class="epm-card"><span>Total Collected</span><b class="g" id="epm-col">KES 28,480,500</b></div>
-          <div class="epm-card"><span>Outstanding Balance</span><b class="r" id="epm-out">KES 6,743,500</b></div>
+      <div class="epm-app" id="epm-app" role="img" aria-label="Animated tour of the fee management screens: a cursor visits fee records, add fee, fee structure, edit payments, SMS reminders, automatic reminders and the audit trail">
+        <div aria-hidden="true">
+          <div class="epm-cards">
+            <div class="epm-card"><span>Total Fee Records</span><b id="epm-rec">720</b></div>
+            <div class="epm-card"><span>Total Collected</span><b class="g" id="epm-col">KES 28,480,500</b></div>
+            <div class="epm-card"><span>Outstanding Balance</span><b class="r" id="epm-out">KES 6,743,500</b></div>
+          </div>
+          <div class="epm-tabs">
+            <span class="epm-tab on" data-v="rec">Fee Records</span><span class="epm-tab" data-v="add">Add Fee</span><span class="epm-tab" data-v="str">Fee Structure</span><span class="epm-tab" data-v="edit">Edit Fee / Payments</span><span class="epm-tab" data-v="sms">SMS Reminders</span><span class="epm-tab" data-v="auto">Auto Reminders</span><span class="epm-tab" data-v="aud">Audit Trail</span>
+          </div>
+          <div class="epm-views">
+            <div class="epm-v show" id="epm-v-rec">
+              <div class="epm-feed" id="epm-feed"><span>Waiting for the next payment&hellip;</span></div>
+              <div class="epm-scroll"><table class="epm-tbl"><thead><tr><th>Students</th><th>Admission No.</th><th>Term</th><th>Fee Structure</th><th>Total</th><th>Paid</th><th>Balance</th><th>Status</th><th>Action</th></tr></thead><tbody id="epm-body"></tbody></table></div>
+            </div>
+            <div class="epm-v" id="epm-v-add"><div class="epm-box">
+              <h4>Add Fee Record</h4>
+              <label>Student *</label><div class="epm-inp" id="epm-i-stu" data-ph="Search student by name or admission number&hellip;"></div>
+              <div class="epm-two"><div><label>Term *</label><div class="epm-inp">First Term</div></div><div><label>Academic Year *</label><div class="epm-inp">2026</div></div></div>
+              <div class="epm-two"><div><label>Fee Type *</label><div class="epm-inp">Tuition</div></div><div><label>Total Amount (KES) *</label><div class="epm-inp" id="epm-i-amt" data-ph="e.g. 15000"></div></div></div>
+              <div class="epm-bf"><b>Balance Carried Forward (B/F) and Prepayment Credit</b><div class="epm-chk" id="epm-chk"><i></i>Auto-detect B/F &mdash; automatically sum all unpaid balances for this student</div></div>
+            </div></div>
+            <div class="epm-v" id="epm-v-str"><div class="epm-box">
+              <h4>Termly Fee Structure</h4>
+              <p class="epm-d">Set the fee amount per grade and fee type for a term. On the term&rsquo;s start date, every active student in that grade is automatically billed &mdash; with any unpaid balance from the previous term added, and any available credit applied automatically.</p>
+              <div class="epm-row"><div><label>Academic Year</label><div class="epm-inp">2026</div></div><div><label>Term</label><div class="epm-inp">First</div></div><span class="epm-b2">Load Existing</span></div>
+              <div class="epm-row"><div><label>Grade Level</label><div class="epm-inp">GRADE_10</div></div><div><label>Fee Type</label><div class="epm-inp">TUITION</div></div><div><label>Amount (KES)</label><div class="epm-inp" id="epm-i-fs"></div></div></div>
+              <span class="epm-b2 dark">+ Add Row</span><div style="margin-top:12px"><span class="epm-ind" id="epm-save">Save Fee Structure</span></div>
+            </div></div>
+            <div class="epm-v" id="epm-v-edit">
+              <div class="epm-box"><div class="epm-k">FIND A FEE RECORD</div><div class="epm-inp" id="epm-i-find" data-ph="Search by student name or admission number"></div></div>
+              <div class="epm-box" style="text-align:center;color:#5B6B7A;font-size:.78rem;padding:22px 14px">
+                <span id="epm-empty">Search for a student above, or use &ldquo;Edit Fee / Payments&rdquo; in a row&rsquo;s Actions menu.</span>
+                <div id="epm-hit" hidden style="text-align:left;color:#111"></div>
+              </div>
+            </div>
+            <div class="epm-v" id="epm-v-sms">
+              <div class="epm-aud3"><div class="epm-aud o" id="epm-a1"><b>Overdue Balances</b>Send to all overdue records</div><div class="epm-aud a"><b>All Outstanding</b>Send to all with any balance</div><div class="epm-aud c"><b>Custom Selection</b>Pick specific students</div></div>
+              <div class="epm-box"><h4>Compose SMS</h4><div class="epm-inp">Balance Due Reminder</div>
+                <div class="epm-ta" style="margin-top:8px">Dear Parent, {name} has an outstanding fee balance of KES {balance}. Please clear this at the earliest. - {school}</div>
+                <div class="epm-foot"><span>114 chars</span><span>1 SMS</span></div>
+                <div class="epm-foot"><span>399 overdue</span><span class="epm-ind" id="epm-send">Send SMS Reminders</span></div>
+              </div>
+            </div>
+            <div class="epm-v" id="epm-v-auto"><div class="epm-box">
+              <h4>Automated Fee Reminders</h4><p class="epm-d">Reminders are sent automatically via WhatsApp and SMS</p>
+              <div class="epm-two2"><div class="epm-pnl g"><b>Daily Reminders</b>8:00 AM EAT<br>Overdue + due within 7 days</div><div class="epm-pnl bl"><b>Weekly Summary</b>Every Monday 7:00 AM<br>Fee collection summary to admins</div></div>
+              <div class="epm-pnl y"><b>Manual Trigger</b>Send WhatsApp reminders now to all parents with overdue or upcoming fee balances
+                <div class="epm-btns"><span class="epm-b2">View Summary</span><span class="epm-b2 amber" id="epm-now">Send Reminders Now</span></div></div>
+            </div></div>
+            <div class="epm-v" id="epm-v-aud"><div class="epm-box">
+              <h4>Audit Trail</h4><p class="epm-d">Who changed what, when and why. Entries can&rsquo;t be edited or deleted.</p>
+              <div class="epm-scroll"><table class="epm-at"><thead><tr><th>When</th><th>Who</th><th>Action</th><th>Student</th><th>What changed</th><th>Reason</th></tr></thead><tbody id="epm-aud-body">
+                <tr class="epm-hide" data-new><td>Just now</td><td>System</td><td><span class="epm-tag">payment</span></td><td>DEM237</td><td>Balance KES 30,500 &rarr; KES 0</td><td>M-Pesa payment</td></tr>
+                <tr class="epm-hide" data-new><td>21 Oct 2026, 22:57</td><td>System</td><td><span class="epm-tag">payment edit</span></td><td>&mdash;</td><td>Amount KES 17,000 &rarr; KES 19,000</td><td>&mdash;</td></tr>
+                <tr class="epm-hide" data-new><td>21 Oct 2026, 22:22</td><td>System</td><td><span class="epm-tag">fee record edit</span></td><td>&mdash;</td><td>Balance KES 58,000 &rarr; KES 50,000</td><td>8000 paid in third term not entered</td></tr>
+              </tbody></table></div>
+            </div></div>
+          </div>
         </div>
-        <div class="epm-tabs" aria-hidden="true" id="epm-tabs">
-          <span class="epm-tab on">Fee Records</span><span class="epm-tab">Add Fee</span><span class="epm-tab">Fee Structure</span><span class="epm-tab">Edit Fee / Payments</span><span class="epm-tab">SMS Reminders</span><span class="epm-tab" id="epm-auto">Auto Reminders</span><span class="epm-tab">Audit Trail</span>
-        </div>
-        <div class="epm-feed" id="epm-feed" aria-hidden="true"><span>Waiting for the next payment&hellip;</span></div>
-        <div class="epm-scroll" aria-hidden="true">
-          <table class="epm-tbl"><thead><tr><th>Students</th><th>Admission No.</th><th>Term</th><th>Fee Structure</th><th>Total</th><th>Paid</th><th>Balance</th><th>Status</th><th>Action</th></tr></thead><tbody id="epm-body"></tbody></table>
-        </div>
-        <div class="epm-sr" id="epm-sr" role="status"></div>
+        <div class="epm-cur" id="epm-cur"><i></i><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.8L9 19z" fill="#111" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
       </div>
+      <div class="epm-sr" id="epm-sr" role="status"></div>
       <p class="epm-note">An illustration using sample students and figures.</p>
     </div>
   </div>
@@ -215,6 +316,7 @@
 
 <script>
 (function(){
+  function init(){
   var root=document.getElementById('ep-solve'); if(!root) return;
   var D=['Monday','Tuesday','Wednesday','Thursday','Friday'];
   var P=[['08:00','08:40'],['08:45','09:25'],['09:30','10:10'],['10:30','11:10'],['11:15','11:55'],['12:00','12:40'],['13:20','14:00'],['14:05','14:45'],['14:50','15:30']];
@@ -297,16 +399,20 @@
   if('IntersectionObserver' in window){
     new IntersectionObserver(function(es,ob){ if(es[0].isIntersecting){auto(); ob.disconnect();} },{threshold:.25}).observe(root);
   } else { auto(); }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
 })();
 </script>
 
 <script>
 (function(){
+  function init(){
   var root=document.getElementById('ep-fees'); if(!root) return;
   var $=function(i){return document.getElementById(i);};
-  var body=$('epm-body'), feed=$('epm-feed'), cCol=$('epm-col'), cOut=$('epm-out'), sr=$('epm-sr'), btn=$('epm-go'), auto=$('epm-auto');
+  var app=$('epm-app'), cur=$('epm-cur'), body=$('epm-body'), feed=$('epm-feed'), cCol=$('epm-col'), cOut=$('epm-out'), sr=$('epm-sr'), btn=$('epm-go');
+  var tabEls={}; [].forEach.call(root.querySelectorAll('.epm-tab'),function(t){tabEls[t.getAttribute('data-v')]=t;});
   var R=[['Dorothy Cynthia Mutiso','DEM237',59500,29000],['Moses Hassan Kioko','DEM238',50000,0],['Kamau David Kamau','DEM240',52000,52000],['Felicity Nafula Nzomo','DEM239',67000,67000],['Kenneth Nicholas Makau','DEM236',52000,39500]];
-  var E=[{k:'pay',i:0,amt:30500},{k:'sms',i:1},{k:'pay',i:1,amt:20000},{k:'pay',i:4,amt:12500},{k:'pay',i:1,amt:30000}];
+  var E=[{i:0,amt:30500},{i:1,amt:20000},{i:4,amt:12500}];
   var S, trs, token=0, started=false, instant=false;
   function fmt(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
   function st(r){return r.p>=r.t?'PAID':(r.p>0?'PARTIAL':'UNPAID');}
@@ -332,36 +438,100 @@
   }
   function chip(i,pop){var c=trs[i].querySelector('.epm-chip'),s=st(S.rows[i]); c.className='epm-chip '+s+(pop?' pop':''); c.textContent=s;}
   function say(cls,t){feed.className='epm-feed'+(cls?' '+cls:''); feed.innerHTML=''; var s=document.createElement('span'); s.textContent=t; feed.appendChild(s);}
-  function pay(i,amt,done){
+  function pay(i,amt){
     var r=S.rows[i], tr=trs[i], pd=tr.querySelector('.epm-pd'), bl=tr.querySelector('.epm-bl');
     var p0=r.p, c0=S.col, o0=S.out; r.p+=amt; S.col+=amt; S.out-=amt;
-    if(instant){anim(pd,p0,r.p);anim(bl,r.t-p0,r.t-r.p);anim(cCol,c0,S.col);anim(cOut,o0,S.out);chip(i,false);return;}
-    tr.classList.add('flash');
+    if(!instant) tr.classList.add('flash');
     anim(pd,p0,r.p,700); anim(bl,r.t-p0,r.t-r.p,700); anim(cCol,c0,S.col,900); anim(cOut,o0,S.out,900);
+    if(instant){chip(i,false);return;}
     setTimeout(function(){chip(i,true);},700);
-    setTimeout(function(){tr.classList.remove('flash'); done();},1400);
+    setTimeout(function(){tr.classList.remove('flash');},1400);
+  }
+  function setTab(v){
+    for(var k in tabEls) tabEls[k].classList.toggle('on',k===v);
+    [].forEach.call(root.querySelectorAll('.epm-v'),function(x){x.classList.remove('show');});
+    $('epm-v-'+v).classList.add('show');
+  }
+  function resetViews(){
+    ['epm-i-stu','epm-i-amt','epm-i-fs','epm-i-find'].forEach(function(i){var e=$(i); e.textContent=''; e.classList.remove('typing');});
+    $('epm-chk').classList.remove('on'); $('epm-save').className='epm-ind'; $('epm-save').textContent='Save Fee Structure';
+    $('epm-empty').hidden=false; $('epm-hit').hidden=true; $('epm-a1').classList.remove('sel');
+    $('epm-send').className='epm-ind'; $('epm-send').textContent='Send SMS Reminders';
+    $('epm-now').className='epm-b2 amber'; $('epm-now').textContent='Send Reminders Now';
+    [].forEach.call(root.querySelectorAll('#epm-aud-body tr'),function(r){r.className='epm-hide';});
+  }
+  function wait(ms,my){return new Promise(function(res,rej){setTimeout(function(){my===token?res():rej('x');},ms);});}
+  function moveTo(el,my,dx){
+    var a=app.getBoundingClientRect(), r=el.getBoundingClientRect();
+    var x=r.left-a.left+Math.min(r.width*0.55,r.width-8)+(dx||0), y=r.top-a.top+r.height*0.5;
+    cur.style.transform='translate('+x+'px,'+y+'px)'; return wait(800,my);
+  }
+  function click(el,my){
+    cur.classList.remove('click'); void cur.offsetWidth; cur.classList.add('click'); el.classList.add('press');
+    setTimeout(function(){el.classList.remove('press'); cur.classList.remove('click');},400); return wait(260,my);
+  }
+  async function type(el,text,my){
+    el.classList.add('typing');
+    for(var i=1;i<=text.length;i++){el.textContent=text.slice(0,i); await wait(42,my);}
+    el.classList.remove('typing');
+  }
+  async function visit(v,my,fn){
+    await moveTo(tabEls[v],my); await click(tabEls[v],my); setTab(v); await wait(300,my);
+    if(fn) await fn(); await wait(550,my);
+  }
+  async function tour(my){
+    cur.style.transition='none'; cur.style.transform='translate('+Math.round(app.clientWidth*0.6)+'px,'+Math.round(app.clientHeight*0.45)+'px)';
+    void cur.offsetWidth; cur.style.transition=''; cur.classList.add('vis');
+    await wait(600,my);
+    for(var k=0;k<E.length;k++){
+      var e=E[k], r=S.rows[e.i];
+      say('pay','M-Pesa payment received: KES '+fmt(e.amt)+' for '+r.a+', '+r.n); await wait(600,my);
+      pay(e.i,e.amt); await wait(1200,my);
+    }
+    say('','Balances, statuses and totals are up to date.'); await wait(500,my);
+    await visit('add',my,async function(){
+      var s=$('epm-i-stu'), a=$('epm-i-amt');
+      await moveTo(s,my); await click(s,my); await type(s,'DEM240  Kamau David Kamau',my);
+      await moveTo(a,my); await click(a,my); await type(a,'52000',my);
+      await moveTo($('epm-chk'),my,-60); await click($('epm-chk'),my); $('epm-chk').classList.add('on');
+    });
+    await visit('str',my,async function(){
+      var f=$('epm-i-fs'), sv=$('epm-save');
+      await moveTo(f,my); await click(f,my); await type(f,'52000',my);
+      await moveTo(sv,my); await click(sv,my); sv.classList.add('sent'); sv.textContent='Fee structure saved';
+    });
+    await visit('edit',my,async function(){
+      var f=$('epm-i-find'), r=S.rows[1];
+      await moveTo(f,my); await click(f,my); await type(f,'DEM238',my); await wait(300,my);
+      $('epm-empty').hidden=true; var h=$('epm-hit'); h.hidden=false;
+      h.innerHTML='<b>'+r.n+'</b> &nbsp;'+r.a+' &middot; Tuition Fees &middot; THIRD<br><span style="font-size:.74rem">Total KES '+fmt(r.t)+' &nbsp; <span class="epm-pd">Paid KES '+fmt(r.p)+'</span> &nbsp; <span class="epm-bl">Balance KES '+fmt(r.t-r.p)+'</span></span> &nbsp; <span class="epm-chip '+st(r)+'">'+st(r)+'</span>';
+    });
+    await visit('sms',my,async function(){
+      var a=$('epm-a1'), sd=$('epm-send');
+      await moveTo(a,my); await click(a,my); a.classList.add('sel'); await wait(300,my);
+      await moveTo(sd,my); await click(sd,my); sd.textContent='Sending\u2026'; await wait(600,my);
+      sd.classList.add('sent'); sd.textContent='Sent to 399 parents';
+    });
+    await visit('auto',my,async function(){
+      var n=$('epm-now');
+      await moveTo(n,my); await click(n,my); n.classList.add('sent'); n.textContent='Reminders sent';
+    });
+    await visit('aud',my,async function(){
+      var rows=root.querySelectorAll('#epm-aud-body tr');
+      for(var i=0;i<rows.length;i++){rows[i].className='epm-in'; await wait(400,my);}
+    });
+    await moveTo(tabEls.rec,my); await click(tabEls.rec,my); setTab('rec'); await wait(900,my);
   }
   function finish(){
-    var m='All payments applied. Balances, statuses and totals are up to date.';
-    say('',m); sr.textContent=m; btn.disabled=false; btn.removeAttribute('aria-busy'); btn.textContent='Replay';
+    var m='Tour finished. Payments applied, reminders sent and every change recorded in the audit trail.';
+    cur.classList.remove('vis'); say('','Balances, statuses and totals are up to date.'); sr.textContent=m;
+    btn.disabled=false; btn.removeAttribute('aria-busy'); btn.textContent='Replay tour';
   }
   function run(inst){
-    token++; var my=token; instant=inst; build(); say('','Waiting for the next payment\u2026'); sr.textContent='';
+    token++; var my=token; instant=inst; build(); resetViews(); setTab('rec'); say('','Waiting for the next payment\u2026'); sr.textContent='';
     btn.disabled=true; btn.setAttribute('aria-busy','true');
-    if(inst){E.forEach(function(e){if(e.k==='pay') pay(e.i,e.amt);}); finish(); return;}
-    var k=0;
-    (function next(){
-      if(my!==token) return;
-      if(k>=E.length){finish(); return;}
-      var e=E[k++], r=S.rows[e.i];
-      if(e.k==='sms'){
-        say('sms','Reminder SMS sent to the parent of '+r.a+': KES '+fmt(r.t-r.p)+' outstanding'); auto.className='epm-tab hot';
-        setTimeout(function(){auto.className='epm-tab'; next();},2200);
-      } else {
-        say('pay','M-Pesa payment received: KES '+fmt(e.amt)+' for '+r.a+', '+r.n);
-        setTimeout(function(){pay(e.i,e.amt,function(){setTimeout(next,900);});},900);
-      }
-    })();
+    if(inst){E.forEach(function(e){pay(e.i,e.amt);}); finish(); return;}
+    tour(my).then(finish,function(e){if(e!=='x') finish();});
   }
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   build();
@@ -370,5 +540,7 @@
   if('IntersectionObserver' in window){
     new IntersectionObserver(function(es,ob){if(es[0].isIntersecting){go(); ob.disconnect();}},{threshold:.3}).observe(root);
   } else { go(); }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
 })();
 </script>
