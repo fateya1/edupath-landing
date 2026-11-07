@@ -12,7 +12,9 @@
  *   4. (v2) Cards link to the new /school-timetable-software and /school-financial-reports pages; both pages are
  *      added to the footer Product list and the nav's Features highlight; '#ep-tour' is added to the
  *      section-view tracking in analytics.js.
- *   5. Footer social icons: WhatsApp points at wa.me/254711606968. X and LinkedIn are removed unless
+ *   5. (v3) Hero lead and homepage meta description describe the whole product (admissions and CBE report
+ *      cards through timetables, fees, accounts and payroll). Use --lead "your text" to set your own lead.
+ *   6. Footer social icons: WhatsApp points at wa.me/254711606968. X and LinkedIn are removed unless
  *      you pass real profile URLs (--x, --linkedin).
  *
  * Usage (run from the repo root):
@@ -24,6 +26,7 @@
  *   --root <dir>       Repo root (default: current directory)
  *   --x <url>          Keep the X icon and point it at this URL
  *   --linkedin <url>   Keep the LinkedIn icon and point it at this URL
+ *   --lead <text>      Use your own hero lead sentence (plain text; replaces whatever the lead is now)
  *   --dry-run          Show what would change; write nothing
  *   --no-backup        Skip the timestamped .bak copies
  *   -h, --help         Show this help
@@ -44,11 +47,13 @@ for (let i = 0; i < args.length; i++) {
   if (a === '--root') opt.root = path.resolve(val());
   else if (a === '--x') opt.x = val();
   else if (a === '--linkedin') opt.linkedin = val();
+  else if (a === '--lead') opt.lead = val();
   else if (a === '--dry-run') opt.dry = true;
   else if (a === '--no-backup') opt.noBackup = true;
   else if (a === '-h' || a === '--help') { console.log(fs.readFileSync(new URL(import.meta.url), 'utf8').match(/\/\*\*([\s\S]*?)\*\//)[1].replace(/^ \* ?/gm, '').trim()); process.exit(0); }
   else die(`Unknown option ${a} (try --help)`);
 }
+if (opt.lead && /[<>{}]/.test(opt.lead)) die('--lead must be plain text (no < > { } characters)');
 for (const [k, v] of [['--x', opt.x], ['--linkedin', opt.linkedin]]) if (v && !/^https:\/\//.test(v)) die(`${k} must be a full https:// URL`);
 
 const files = {
@@ -108,6 +113,25 @@ else edit('index', 'Financial Reports card', fee, fee + '\n  ' + frNew);
 edit('index', 'Trust strip: hours claim', '<span class="trust-item">SAVE 20+ HRS/WEEK</span>', '<span class="trust-item">FREE UP TO 200 STUDENTS</span>', 'FREE UP TO 200 STUDENTS');
 edit('index', 'Trust strip: setup time', '<span class="trust-item">LIVE IN 5 MINUTES</span>', '<span class="trust-item">SET UP IN 5\u201315 MINUTES</span>', 'SET UP IN 5\u201315 MINUTES');
 edit('index', 'Hero line: setup time', '\u00b7 Live in about 5 minutes</p>', '\u00b7 Set up in 5 to 15 minutes</p>', 'Set up in 5 to 15 minutes</p>');
+
+// 3b. Hero lead + homepage meta description: describe the whole product
+const DEFAULT_LEAD = "From admissions and CBE report cards to timetables, fee collection, accounts and payroll, Edupath SMS runs your whole school in one place, with M-Pesa and WhatsApp built in.";
+const esc = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+const heroOld = '<p class="hero-lead">Edupath SMS brings admissions, attendance, academics and fees into one all-in-one platform \u2014 built for Kenya\'s CBE curriculum, with M-Pesa and WhatsApp built in.</p>';
+const lead = opt.lead || DEFAULT_LEAD;
+const heroNew = `<p class="hero-lead">${esc(lead).replace(/&quot;/g, '"')}</p>`;
+const heroRe = /<p class="hero-lead">[\s\S]*?<\/p>/;
+if (txt.index.includes(heroNew)) results.push('  already   Hero lead');
+else if (txt.index.includes(heroOld)) edit('index', 'Hero lead', heroOld, heroNew);
+else if (opt.lead && heroRe.test(txt.index)) { txt.index = txt.index.replace(heroRe, () => heroNew); results.push('  applied   Hero lead (replaced the current text)'); }
+else if (heroRe.test(txt.index)) results.push('  already   Hero lead (already changed; pass --lead to replace it)');
+else missing.push('Hero lead: <p class="hero-lead"> not found in index.astro');
+
+const META_OLD = 'description="Edupath SMS is an all-in-one school management platform for Kenyan schools \u2014 CBE-ready, with M-Pesa fee collection and WhatsApp notifications built in."';
+const META_NEW = 'description="Edupath SMS is an all-in-one school management system for Kenyan schools: admissions, CBE report cards, timetables, fees and M-Pesa, accounts and payroll."';
+if (txt.index.includes(META_NEW)) results.push('  already   Homepage meta description');
+else if (txt.index.includes(META_OLD)) edit('index', 'Homepage meta description', META_OLD, META_NEW);
+else results.push('  already   Homepage meta description (already changed)');
 
 // 4a. Footer product links, nav highlight, analytics section tracking
 edit('footer', 'Footer: product links',
