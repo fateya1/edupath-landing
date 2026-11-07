@@ -396,6 +396,12 @@
 .ept-b.pri{background:var(--t);color:#fff}
 .ept-b.wa{border-color:#25D366;color:#15803D}
 .ept-b:hover{filter:brightness(.96)}
+.ept-pill{display:inline-block;margin-left:7px;padding:2px 8px;border-radius:99px;background:#DDF3EF;color:#0F766E;font-size:.68rem;font-weight:700;vertical-align:1px}
+.ept-tab[aria-selected="true"] .ept-pill{background:rgba(255,255,255,.25);color:#fff}
+.ept-plan{margin:0 0 20px;font-size:.88rem;color:var(--mut)}
+.ept-plan b{color:var(--tdd)}
+.ept-plan a{color:var(--td);font-weight:600}
+#ep-tour{scroll-margin-top:84px}
 @media(max-width:640px){#ep-tour{padding:48px 16px}.ept-bar{justify-content:center}.ept-tab{padding:9px 12px;font-size:.82rem}.ept-b{width:100%}}
 </style>
 
@@ -407,8 +413,8 @@
     </div>
     <div class="ept-bar">
       <div class="ept-tabs" role="tablist" aria-label="Product tours">
-        <button class="ept-tab" role="tab" type="button" id="ept-t-solve" aria-selected="true" aria-controls="ep-solve">Timetables</button>
-        <button class="ept-tab" role="tab" type="button" id="ept-t-fees" aria-selected="false" aria-controls="ep-fees" tabindex="-1">Fees</button>
+        <button class="ept-tab" role="tab" type="button" id="ept-t-solve" aria-selected="true" aria-controls="ep-solve">Timetables<span class="ept-pill">Pro</span></button>
+        <button class="ept-tab" role="tab" type="button" id="ept-t-fees" aria-selected="false" aria-controls="ep-fees" tabindex="-1">Fees<span class="ept-pill">Starter+</span></button>
         <button class="ept-tab" role="tab" type="button" id="ept-t-fin" aria-selected="false" aria-controls="ep-fin" tabindex="-1">Reports</button>
       </div>
       <div class="ept-ctl"><button type="button" id="ept-pause" aria-pressed="false">Pause</button><button type="button" id="ept-replay">Replay</button></div>
@@ -425,6 +431,7 @@
         <li>Teachers and classes are never double-booked, and double lessons never span a break.</li>
         <li>Move lessons, cover absent teachers, repair problems, and restore earlier versions.</li>
       </ul>
+        <p class="ept-plan">Included in <b>Pro</b> and Enterprise. <a href="#pricing">Compare plans</a></p>
     </div>
     <div>
       <div class="eps-panel" id="eps-panel" role="img" aria-label="Animated tour of the timetable screens: a cursor opens the bell schedule, rooms, availability, requirements and feasibility check, generates a clash-free timetable, then moves lessons, covers an absence, repairs, shows history and prints">
@@ -512,6 +519,7 @@
         <li>Reminders go out by SMS and WhatsApp, on demand or on a schedule.</li>
         <li>Every change is written to an audit trail that can&rsquo;t be edited or deleted.</li>
       </ul>
+        <p class="ept-plan">Included in <b>Starter</b>, Pro and Enterprise. <a href="#pricing">Compare plans</a></p>
     </div>
     <div>
       <div class="epm-app" id="epm-app" role="img" aria-label="Animated tour of the fee management screens: a cursor visits fee records, add fee, fee structure, edit payments, SMS reminders, automatic reminders and the audit trail">
@@ -1132,7 +1140,7 @@
     function select(k,viaChain){
       clearTimeout(timer);
       if(cur&&T[cur]) T[cur].stop();
-      if(cur&&cur!==k) P[cur].hidden=true;
+      K.forEach(function(x){if(x!==k) P[x].hidden=true;});
       K.forEach(function(x){var on=x===k; tabs[x].setAttribute('aria-selected',on?'true':'false'); tabs[x].tabIndex=on?0:-1;});
       P[k].hidden=false; cur=k; paused=false; held=false; label(); if(!viaChain) chain=false;
       if(T[k]) T[k].start();
@@ -1160,6 +1168,22 @@
       else if(v&&held){held=false; if(!paused) T[cur].resume();}
     }
     function begin(){if(started) return; started=true; chain=!reduce; select('solve',true);}
+    var H={'#tour-timetables':'solve','#tour-fees':'fees','#tour-reports':'fin'};
+    function openHash(h,scroll){
+      var k=H[h]; if(!k) return false;
+      started=true; chain=false; select(k,false);
+      if(scroll&&root.scrollIntoView) root.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+      return true;
+    }
+    document.addEventListener('click',function(e){
+      var a=e.target&&e.target.closest?e.target.closest('a[href*="#tour-"]'):null; if(!a) return;
+      var href=a.getAttribute('href'), h=href.slice(href.indexOf('#'));
+      if(!H[h]) return; e.preventDefault();
+      if(window.history&&history.pushState) history.pushState(null,'',h);
+      openHash(h,true);
+    });
+    window.addEventListener('hashchange',function(){openHash(location.hash,true);});
+    openHash(location.hash,true);
     if('IntersectionObserver' in window){
       new IntersectionObserver(function(es){
         var on=es[0].intersectionRatio>=0.15;
