@@ -1,0 +1,145 @@
+---
+import FeaturePage from '../layouts/FeaturePage.astro';
+
+const faqs = [
+  ['Which plans include Financial Reports?', 'Financial Reports are available on every plan, in the same way as fee management.'],
+  ['Can I look at one term or one class?', 'Yes. Choose the year, the term and the class at the top of the page, then press Refresh. The overview, defaulters and classes tabs follow your selection.'],
+  ['Can I message parents who owe fees?', 'Yes. Every row in the defaulters list has a WhatsApp button, so you can contact that student\'s parent straight from the report. You can also search the list by name, admission number or class, and export it as CSV.'],
+  ['How do I know the books balance?', 'The trial balance totals the debit and credit columns and tells you whether debits equal credits, so an out-of-balance ledger is easy to spot.'],
+  ['Can I download the reports?', 'Yes. The trial balance and cash book can be downloaded as Excel (CSV) or as a PDF for any period you choose.'],
+  ['Does the cash book cover every account?', 'You can generate it for all accounts or filter to a single account, for any date range. Each entry shows the date, reference, description, account, receipts, payments and a running balance.'],
+];
+
+const jsonLd = JSON.stringify([
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'School Financial Reports Kenya',
+    description: 'Fee collection analytics, defaulters, class comparison, trial balance and cash book for Kenyan schools.',
+    url: 'https://www.edupath.co.ke/school-financial-reports',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
+  },
+]);
+---
+
+<FeaturePage
+  title="School Financial Reports Kenya | Edupath SMS"
+  description="Fee collection analytics, defaulters, class comparison, trial balance and cash book for Kenyan schools. Download as Excel (CSV) or PDF. Included in every plan."
+  path="/school-financial-reports"
+  ogTitle="School Financial Reports Kenya | Edupath SMS"
+  ogDescription="See billed, collected and outstanding fees, chase defaulters on WhatsApp, compare classes, and generate a trial balance and cash book for any period."
+  jsonLd={jsonLd}
+  badge="Financial Reports · All plans"
+  heading={"Know where every shilling <span>stands</span>"}
+  lead="See billed, collected and outstanding fees at a glance, find defaulters and send a WhatsApp reminder, compare classes, and generate a trial balance and cash book for any period."
+  active="/school-financial-reports"
+  ctaHeading="See your school's finances clearly."
+  ctaText="Financial Reports come with every plan, including the free one. Set up in minutes, no credit card required."
+  ctaLabel="Create Free Account →"
+>
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">How It Works</div>
+      <h2>From overview to cash book in four steps.</h2>
+      <div class="fs-steps">
+        <div class="fs-step">
+          <div class="fs-step-num">1</div>
+          <div>
+            <h3>Choose the year, term and class</h3>
+            <p>Pick the period you want to look at, or leave the class as All Classes for the whole school, then press Refresh.</p>
+          </div>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-num">2</div>
+          <div>
+            <h3>Read the overview</h3>
+            <p>Total billed, collected and outstanding, with the collection rate. See how much came in by M-Pesa, cash and bank, plus canteen income, government capitation, procurement spend, payroll and your net position.</p>
+          </div>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-num">3</div>
+          <div>
+            <h3>Follow up on defaulters</h3>
+            <p>Search the list, sort by what is owed, and send a WhatsApp message from the same row. Export the list as CSV when you need it elsewhere.</p>
+          </div>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-num">4</div>
+          <div>
+            <h3>Generate the books</h3>
+            <p>Produce a trial balance or a cash book for any period and download it as Excel (CSV) or PDF.</p>
+          </div>
+        </div>
+      </div>
+      <p style="margin-top:var(--space-xl)"><a class="btn btn--secondary" href="/#tour-reports">Watch the reports tour</a></p>
+    </div>
+  </section>
+
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">Features</div>
+      <h2>The reports your bursar and principal ask for.</h2>
+      <div class="fs-grid">
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(62.7% 0.194 149.214 / 0.12)">📊</div>
+          <h3>Overview dashboard</h3>
+          <p>Billed, collected and outstanding fees with a collection-rate gauge, so you see the state of fee collection at a glance.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(63.7% 0.237 25.331 / 0.12)">⚠️</div>
+          <h3>Defaulters</h3>
+          <p>Every student with an outstanding balance: total owed, carried forward, owed this term and last payment, with a WhatsApp button on each row.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(60% 0.118 184.704 / 0.15)">🏫</div>
+          <h3>Class comparison</h3>
+          <p>A chart and table of collected and outstanding fees for every class, with each class's collection rate side by side.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(76.9% 0.188 70.08 / 0.18)">⚖️</div>
+          <h3>Trial balance</h3>
+          <p>Account codes with debit and credit columns for any period, and a clear message on whether debits equal credits.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(62.7% 0.194 149.214 / 0.12)">📒</div>
+          <h3>Cash book</h3>
+          <p>Receipts and payments by date and reference, with a running balance. Look at all accounts or filter to one.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(60% 0.118 184.704 / 0.15)">📱</div>
+          <h3>Payment channels</h3>
+          <p>See how much was paid through M-Pesa, cash and bank, with the number of transactions for each.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(76.9% 0.188 70.08 / 0.18)">🏛️</div>
+          <h3>Income and spend</h3>
+          <p>Canteen income, government capitation, procurement spend and payroll, rolled up into a net position for the term.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(63.7% 0.237 25.331 / 0.12)">⬇️</div>
+          <h3>Downloads</h3>
+          <p>Download the trial balance and cash book as Excel (CSV) or PDF, and export the defaulters list as CSV.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">FAQ</div>
+      <h2>Financial report questions</h2>
+      <div class="fs-faq">
+        {faqs.map(([q, a]) => (
+          <div class="fs-faq-item">
+            <h3>{q}</h3>
+            <p>{a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</FeaturePage>

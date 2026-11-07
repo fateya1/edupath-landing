@@ -9,7 +9,10 @@
  *   3. Trust strip: "SAVE 20+ HRS/WEEK" -> "FREE UP TO 200 STUDENTS" (matches the Free plan),
  *      "LIVE IN 5 MINUTES" -> "SET UP IN 5-15 MINUTES" (matches the setup FAQ).
  *      Hero line: "Live in about 5 minutes" -> "Set up in 5 to 15 minutes".
- *   4. Footer social icons: WhatsApp points at wa.me/254711606968. X and LinkedIn are removed unless
+ *   4. (v2) Cards link to the new /school-timetable-software and /school-financial-reports pages; both pages are
+ *      added to the footer Product list and the nav's Features highlight; '#ep-tour' is added to the
+ *      section-view tracking in analytics.js.
+ *   5. Footer social icons: WhatsApp points at wa.me/254711606968. X and LinkedIn are removed unless
  *      you pass real profile URLs (--x, --linkedin).
  *
  * Usage (run from the repo root):
@@ -51,6 +54,8 @@ for (const [k, v] of [['--x', opt.x], ['--linkedin', opt.linkedin]]) if (v && !/
 const files = {
   index: path.join(opt.root, 'src/pages/index.astro'),
   footer: path.join(opt.root, 'src/components/Footer.astro'),
+  nav: path.join(opt.root, 'src/components/Nav.astro'),
+  analytics: path.join(opt.root, 'analytics.js'),
 };
 for (const f of Object.values(files)) if (!fs.existsSync(f)) die(`Not found: ${f}\nRun this from the repo root, or pass --root <dir>.`);
 
@@ -66,32 +71,59 @@ const missing = [];
 /** Replace exactly one occurrence of `from` with `to`. `done` is a string that, if present, means already applied. */
 function edit(file, label, from, to, done) {
   const t = txt[file];
+  // already applied? (checked first, because the new text may still contain the old text)
+  if (done && t.includes(done)) { results.push(`  already   ${label}`); return; }
   const n = t.split(from).length - 1;
   if (n === 1) { txt[file] = t.replace(from, () => to); results.push(`  applied   ${label}`); return; }
   if (n > 1) { missing.push(`${label}: expected one match in ${path.basename(files[file])}, found ${n}`); return; }
-  if (done && t.includes(done)) { results.push(`  already   ${label}`); return; }
   missing.push(`${label}: text not found in ${path.basename(files[file])}`);
 }
 
+/** Like edit(), but accepts any of several earlier versions of the text. */
+function editAny(file, label, froms, to, done) {
+  const t = txt[file];
+  if (done && t.includes(done)) { results.push(`  already   ${label}`); return; }
+  const hit = froms.filter((f) => t.split(f).length - 1 === 1);
+  if (hit.length === 1) { txt[file] = t.replace(hit[0], () => to); results.push(`  applied   ${label}`); return; }
+  missing.push(`${label}: expected text not found in ${path.basename(files[file])}`);
+}
+
 // 1. Timetable Builder card
-edit('index', 'Timetable Builder card',
-  "{ title: 'Timetable Builder', text: 'Assign periods, bulk import from Excel, personalised weekly schedules.', href: null },",
-  "{ title: 'Timetable Builder', text: 'Generate clash-free timetables from your teaching requirements, then move lessons, cover absences, repair and print.', href: '/#tour-timetables' },",
-  "href: '/#tour-timetables' }");
+const ttNew = "{ title: 'Timetable Builder', text: 'Generate clash-free timetables from your teaching requirements, then move lessons, cover absences, repair and print.', href: '/school-timetable-software' },";
+editAny('index', 'Timetable Builder card',
+  [
+    "{ title: 'Timetable Builder', text: 'Assign periods, bulk import from Excel, personalised weekly schedules.', href: null },",
+    "{ title: 'Timetable Builder', text: 'Generate clash-free timetables from your teaching requirements, then move lessons, cover absences, repair and print.', href: '/#tour-timetables' },",
+  ], ttNew, "href: '/school-timetable-software' }");
 
 // 2. Financial Reports card, right after Fee Management & M-Pesa
 const fee = "{ title: 'Fee Management & M-Pesa', text: 'STK push payments, balances and automatic receipts and statements.', href: '/mpesa-school-fees' },";
-if (txt.index.includes("title: 'Financial Reports'")) results.push('  already   Financial Reports card');
-else edit('index', 'Financial Reports card', fee,
-  fee + "\n  { title: 'Financial Reports', text: 'Collection rate, defaulters, class comparison, trial balance and cash book, with CSV and PDF downloads.', href: '/#tour-reports' },",
-  "title: 'Financial Reports'");
+const frNew = "{ title: 'Financial Reports', text: 'Collection rate, defaulters, class comparison, trial balance and cash book, with CSV and PDF downloads.', href: '/school-financial-reports' },";
+const frOld = "{ title: 'Financial Reports', text: 'Collection rate, defaulters, class comparison, trial balance and cash book, with CSV and PDF downloads.', href: '/#tour-reports' },";
+if (txt.index.includes("href: '/school-financial-reports' }")) results.push('  already   Financial Reports card');
+else if (txt.index.includes(frOld)) edit('index', 'Financial Reports card', frOld, frNew);
+else edit('index', 'Financial Reports card', fee, fee + '\n  ' + frNew);
 
 // 3. Unsourced claims
 edit('index', 'Trust strip: hours claim', '<span class="trust-item">SAVE 20+ HRS/WEEK</span>', '<span class="trust-item">FREE UP TO 200 STUDENTS</span>', 'FREE UP TO 200 STUDENTS');
 edit('index', 'Trust strip: setup time', '<span class="trust-item">LIVE IN 5 MINUTES</span>', '<span class="trust-item">SET UP IN 5\u201315 MINUTES</span>', 'SET UP IN 5\u201315 MINUTES');
 edit('index', 'Hero line: setup time', '\u00b7 Live in about 5 minutes</p>', '\u00b7 Set up in 5 to 15 minutes</p>', 'Set up in 5 to 15 minutes</p>');
 
-// 4. Footer socials
+// 4a. Footer product links, nav highlight, analytics section tracking
+edit('footer', 'Footer: product links',
+  '<li><a href="/mpesa-school-fees">M-Pesa Fees</a></li>',
+  '<li><a href="/mpesa-school-fees">M-Pesa Fees</a></li>\n          <li><a href="/school-timetable-software">Timetables</a></li>\n          <li><a href="/school-financial-reports">Financial Reports</a></li>',
+  'href="/school-timetable-software"');
+edit('nav', 'Nav: highlight Features on the new pages',
+  "match: ['/cbe-school-management', '/mpesa-school-fees', '/parent-portal', '/school-attendance'] }",
+  "match: ['/cbe-school-management', '/mpesa-school-fees', '/parent-portal', '/school-attendance', '/school-timetable-software', '/school-financial-reports'] }",
+  "'/school-timetable-software', '/school-financial-reports'] }");
+edit('analytics', 'Analytics: track views of the tour section',
+  "const sections = ['#hero', '#features', '#portals', '#pricing', '#wa', '#register', '#testimonials', '#faq'];",
+  "const sections = ['#hero', '#features', '#ep-tour', '#portals', '#pricing', '#wa', '#register', '#testimonials', '#faq'];",
+  "'#ep-tour'");
+
+// 4b. Footer socials
 edit('footer', 'Footer: WhatsApp link',
   '<a href="#" title="WhatsApp" aria-label="Edupath on WhatsApp">',
   '<a href="https://wa.me/254711606968" target="_blank" rel="noopener" title="WhatsApp" aria-label="Edupath on WhatsApp">',
@@ -122,11 +154,12 @@ console.log(`${opt.dry ? 'Dry run' : 'Apply'} plan:`);
 console.log(results.join('\n'));
 
 let changed = 0;
+const changedNames = [];
 const stamp = new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14);
 for (const k of Object.keys(files)) {
   const out = txt[k].replace(/\n/g, eol[k]);
   if (out === raw[k]) continue;
-  changed++;
+  changed++; changedNames.push(path.relative(opt.root, files[k]));
   if (opt.dry) continue;
   if (!opt.noBackup) fs.copyFileSync(files[k], `${files[k]}.bak-${stamp}`);
   const tmp = `${files[k]}.tmp-${process.pid}`;
@@ -134,5 +167,5 @@ for (const k of Object.keys(files)) {
   catch (e) { try { fs.unlinkSync(tmp); } catch {} die(`Write failed for ${files[k]}: ${e.message}`); }
 }
 if (!changed) ok('No changes needed. Everything is already applied.');
-else if (opt.dry) ok(`Dry run only. ${changed} file(s) would change; nothing was written.`);
-else ok(`Applied to ${changed} file(s).${opt.noBackup ? '' : ' Backups: *.bak-' + stamp}`);
+else if (opt.dry) ok(`Dry run only. ${changed} file(s) would change (${changedNames.join(', ')}); nothing was written.`);
+else ok(`Applied to ${changed} file(s): ${changedNames.join(', ')}.${opt.noBackup ? '' : ' Backups: *.bak-' + stamp}`);

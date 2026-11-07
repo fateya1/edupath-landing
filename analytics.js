@@ -75,7 +75,7 @@
 
   // ── 3. Section Visibility ─────────────────────────────────────────────────
   (function trackSections() {
-    const sections = ['#hero', '#features', '#portals', '#pricing', '#wa', '#register', '#testimonials', '#faq'];
+    const sections = ['#hero', '#features', '#ep-tour', '#portals', '#pricing', '#wa', '#register', '#testimonials', '#faq'];
     const seen = new Set();
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => {

@@ -1,0 +1,157 @@
+---
+import FeaturePage from '../layouts/FeaturePage.astro';
+
+const faqs = [
+  ['Which plans include the timetable builder?', 'Full timetable management is part of the Pro plan and everything above it. See the pricing section for what each plan includes.'],
+  ['What if our rules cannot all be met?', 'Run the feasibility check first. It compares what each class and teacher needs against the time they are available, and flags anything that cannot fit. When you generate, preferences are balanced against each other, and any that cannot be met are reported after the search.'],
+  ['Can we still edit the timetable by hand?', 'Yes. On the timetable grid you can click any cell to add or edit a lesson, and click x to clear it. The move-lessons board also lets you drag a lesson, or click it and then click a green cell, which is a move with no clashes.'],
+  ['Can we import an existing timetable?', 'Yes. Timetables can be imported from Excel through the Migration Hub, and every import is saved as a version you can restore.'],
+  ['What happens when a teacher is absent?', 'Record the absence, then pick a free teacher for each lesson that needs cover. Teachers who teach the subject come first, then those who know the class, and anyone who has already covered a lot this week is ranked lower.'],
+  ['Can we undo a timetable we did not like?', 'Yes. A version is saved automatically every time a timetable is generated, repaired, imported from Excel or restored. Restoring one puts back what those classes had before that change, and the last 20 versions are kept.'],
+];
+
+const jsonLd = JSON.stringify([
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'School Timetable Software Kenya',
+    description: 'Generate clash-free school timetables for Kenyan schools, with feasibility checks, teacher cover and repair.',
+    url: 'https://www.edupath.co.ke/school-timetable-software',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
+  },
+]);
+---
+
+<FeaturePage
+  title="School Timetable Software Kenya | Edupath SMS"
+  description="Generate clash-free school timetables in Kenya. Bell schedule, rooms, availability, feasibility check, teacher cover and repair. Included in the Pro plan."
+  path="/school-timetable-software"
+  ogTitle="School Timetable Software Kenya | Edupath SMS"
+  ogDescription="Set your bell schedule, rooms and teacher availability, check feasibility, then generate a clash-free timetable. Move lessons, cover absences and print."
+  jsonLd={jsonLd}
+  badge="Timetable Builder · Pro plan"
+  heading={"Generate clash-free <span>school timetables</span>"}
+  lead="Tell Edupath your bell schedule, rooms, teacher availability and what each class needs. It builds the week and checks every rule, then lets you adjust, cover absences and repair problems."
+  active="/school-timetable-software"
+  ctaHeading="See your timetable build itself."
+  ctaText="Try the live demo, or start on the free plan and move to Pro when you need the timetable builder."
+  ctaLabel="Create Free Account →"
+>
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">How It Works</div>
+      <h2>From set-up to printed timetable in five steps.</h2>
+      <div class="fs-steps">
+        <div class="fs-step">
+          <div class="fs-step-num">1</div>
+          <div>
+            <h3>Set up your school</h3>
+            <p>Enter your bell schedule (lessons and breaks), your rooms and teacher availability. Lesson numbers are fixed, so changing a lesson's times updates every slot in that period, for all classes.</p>
+          </div>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-num">2</div>
+          <div>
+            <h3>Say what each class needs</h3>
+            <p>For each class, list the subject, the teacher, the number of periods per week, and how many of them are double lessons (two periods back to back).</p>
+          </div>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-num">3</div>
+          <div>
+            <h3>Check feasibility</h3>
+            <p>Edupath compares what each class and teacher needs against the time they are available, and flags anything that cannot fit before you generate.</p>
+          </div>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-num">4</div>
+          <div>
+            <h3>Generate</h3>
+            <p>Teachers and classes are never double-booked, availability is respected, and double lessons never span a break. You review the result before anything is saved.</p>
+          </div>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-num">5</div>
+          <div>
+            <h3>Adjust, cover and print</h3>
+            <p>Drag lessons to clash-free slots, record teacher absences and pick cover, repair lessons that are in trouble, then print or export each class and teacher timetable.</p>
+          </div>
+        </div>
+      </div>
+      <p style="margin-top:var(--space-xl)"><a class="btn btn--secondary" href="/#tour-timetables">Watch the timetable tour</a></p>
+    </div>
+  </section>
+
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">Features</div>
+      <h2>Everything a timetable officer needs.</h2>
+      <div class="fs-grid">
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(60% 0.118 184.704 / 0.15)">🔔</div>
+          <h3>Bell schedule</h3>
+          <p>Lessons and breaks with exact start and end times. Add or remove periods as your school day changes.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(76.9% 0.188 70.08 / 0.18)">🏫</div>
+          <h3>Rooms</h3>
+          <p>Classrooms, labs and halls. Renaming a room renames it on every slot that uses it, and a room that is in use cannot be deleted.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(62.7% 0.194 149.214 / 0.12)">✅</div>
+          <h3>Availability</h3>
+          <p>Green cells are available. Mark a cell, a day or a period unavailable for teachers, classes or rooms. Nothing is blocked until you save.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(60% 0.118 184.704 / 0.15)">🧩</div>
+          <h3>Combined lessons</h3>
+          <p>Teach classes of one grade together when they share a teacher and subject. They are placed in the same period and the teacher counts once.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(62.7% 0.194 149.214 / 0.12)">🖱️</div>
+          <h3>Move lessons</h3>
+          <p>View by class, teacher or room. Drag a lesson, or click it and then a green cell: green cells are moves with no clashes and nobody marked unavailable.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(76.9% 0.188 70.08 / 0.18)">🧑‍🏫</div>
+          <h3>Teacher cover</h3>
+          <p>Record who is away and pick a free teacher for each lesson. Teachers of the subject come first, then those who know the class.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(63.7% 0.237 25.331 / 0.12)">🛠️</div>
+          <h3>Repair</h3>
+          <p>Finds lessons that are now in trouble, for example after you mark a teacher unavailable, and moves only those to the nearest free periods.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(60% 0.118 184.704 / 0.15)">🕘</div>
+          <h3>Version history</h3>
+          <p>A version is saved automatically whenever a timetable is generated, repaired, imported or restored. The last 20 are kept.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(62.7% 0.194 149.214 / 0.12)">🖨️</div>
+          <h3>Print and export</h3>
+          <p>Print or save as PDF, or download an Excel file. Each class or teacher gets its own page.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">FAQ</div>
+      <h2>Timetable questions</h2>
+      <div class="fs-faq">
+        {faqs.map(([q, a]) => (
+          <div class="fs-faq-item">
+            <h3>{q}</h3>
+            <p>{a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</FeaturePage>

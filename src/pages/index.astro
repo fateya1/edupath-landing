@@ -24,9 +24,9 @@ const features = [
   { title: 'Assessments & Report Cards', text: 'CBE (EE/ME/AE/BE) and 8-4-4 grading with one-click PDF report cards.', href: '/cbe-school-management' },
   { title: 'Attendance Tracking', text: 'Mark in under two minutes from any device, with real-time parent alerts.', href: '/school-attendance' },
   { title: 'Fee Management & M-Pesa', text: 'STK push payments, balances and automatic receipts and statements.', href: '/mpesa-school-fees' },
-  { title: 'Financial Reports', text: 'Collection rate, defaulters, class comparison, trial balance and cash book, with CSV and PDF downloads.', href: '/#tour-reports' },
+  { title: 'Financial Reports', text: 'Collection rate, defaulters, class comparison, trial balance and cash book, with CSV and PDF downloads.', href: '/school-financial-reports' },
   { title: 'Teacher & Staff Management', text: 'Profiles, TSC numbers, assignments and results integration.', href: null },
-  { title: 'Timetable Builder', text: 'Generate clash-free timetables from your teaching requirements, then move lessons, cover absences, repair and print.', href: '/#tour-timetables' },
+  { title: 'Timetable Builder', text: 'Generate clash-free timetables from your teaching requirements, then move lessons, cover absences, repair and print.', href: '/school-timetable-software' },
   { title: 'Hostel Management', text: 'Room allocations, capacity and check-in/out for boarding schools.', href: null },
   { title: 'Transport Management', text: 'Routes, bus assignments, drivers and parent pickup points.', href: null },
   { title: 'HR & Payroll', text: 'Contracts, pay runs, SHA/NSSF/PAYE, payslips and leave.', href: null },
@@ -554,6 +554,7 @@ const faqJsonLd = JSON.stringify({
 .ept-plan{margin:0 0 20px;font-size:.88rem;color:var(--mut)}
 .ept-plan b{color:var(--tdd)}
 .ept-plan a{color:var(--td);font-weight:600}
+.ept-plan a+a{margin-left:14px}
 #ep-tour{scroll-margin-top:84px}
 @media(max-width:640px){#ep-tour{padding:48px 16px}.ept-bar{justify-content:center}.ept-tab{padding:9px 12px;font-size:.82rem}.ept-b{width:100%}}
 </style>
@@ -568,7 +569,7 @@ const faqJsonLd = JSON.stringify({
     <div class="ept-bar">
       <div class="ept-tabs" role="tablist" aria-label="Product tours">
         <button class="ept-tab" role="tab" type="button" id="ept-t-solve" aria-selected="true" aria-controls="ep-solve">Timetables<span class="ept-pill">Pro</span></button>
-        <button class="ept-tab" role="tab" type="button" id="ept-t-fees" aria-selected="false" aria-controls="ep-fees" tabindex="-1">Fees<span class="ept-pill">Starter+</span></button>
+        <button class="ept-tab" role="tab" type="button" id="ept-t-fees" aria-selected="false" aria-controls="ep-fees" tabindex="-1">Fees</button>
         <button class="ept-tab" role="tab" type="button" id="ept-t-fin" aria-selected="false" aria-controls="ep-fin" tabindex="-1">Reports</button>
       </div>
       <div class="ept-ctl"><button type="button" id="ept-pause" aria-pressed="false">Pause</button><button type="button" id="ept-replay">Replay</button></div>
@@ -585,7 +586,7 @@ const faqJsonLd = JSON.stringify({
         <li>Teachers and classes are never double-booked, and double lessons never span a break.</li>
         <li>Move lessons, cover absent teachers, repair problems, and restore earlier versions.</li>
       </ul>
-        <p class="ept-plan">Included in <b>Pro</b> and Enterprise. <a href="#pricing">Compare plans</a></p>
+        <p class="ept-plan">Included in <b>Pro</b> and Enterprise. <a href="#pricing" data-link="compare_plans">Compare plans</a> <a href="/school-timetable-software" data-link="learn_more_timetables">Learn more</a></p>
     </div>
     <div>
       <div class="eps-panel" id="eps-panel" role="img" aria-label="Animated tour of the timetable screens: a cursor opens the bell schedule, rooms, availability, requirements and feasibility check, generates a clash-free timetable, then moves lessons, covers an absence, repairs, shows history and prints">
@@ -673,7 +674,7 @@ const faqJsonLd = JSON.stringify({
         <li>Reminders go out by SMS and WhatsApp, on demand or on a schedule.</li>
         <li>Every change is written to an audit trail that can&rsquo;t be edited or deleted.</li>
       </ul>
-        <p class="ept-plan">Included in <b>Starter</b>, Pro and Enterprise. <a href="#pricing">Compare plans</a></p>
+        <p class="ept-plan">Included in <b>all plans</b>. <a href="/mpesa-school-fees" data-link="learn_more_fees">Learn more</a></p>
     </div>
     <div>
       <div class="epm-app" id="epm-app" role="img" aria-label="Animated tour of the fee management screens: a cursor visits fee records, add fee, fee structure, edit payments, SMS reminders, automatic reminders and the audit trail">
@@ -754,6 +755,7 @@ const faqJsonLd = JSON.stringify({
         <li>Compare classes side by side on what was billed, collected and is still owed.</li>
         <li>Generate a trial balance and cash book for any period, and download them as Excel (CSV) or PDF.</li>
       </ul>
+        <p class="ept-plan">Included in <b>all plans</b>. <a href="/school-financial-reports" data-link="learn_more_reports">Learn more</a></p>
     </div>
     <div>
       <div class="epr-app" id="epr-app" role="img" aria-label="Animated tour of the financial reports: the overview counts up, a defaulter is found and sent a WhatsApp reminder, classes are compared, then a trial balance and cash book are generated">
@@ -812,9 +814,9 @@ const faqJsonLd = JSON.stringify({
     </div>
     <div class="ept-cta">
       <p>Like what you see?</p>
-      <a class="ept-b pri" href="#register">Start free, no card needed</a>
-      <a class="ept-b" href="https://app.edupath.co.ke/login?demo=1">Try the live demo</a>
-      <a class="ept-b wa" href="https://wa.me/254711606968?text=Hello%20Edupath%2C%20I%27d%20like%20a%20walkthrough" target="_blank" rel="noopener">Chat on WhatsApp</a>
+      <a class="ept-b pri" href="#register" data-cta="start_free">Start free, no card needed</a>
+      <a class="ept-b" href="https://app.edupath.co.ke/login?demo=1" data-cta="live_demo">Try the live demo</a>
+      <a class="ept-b wa" data-cta="whatsapp" href="https://wa.me/254711606968?text=Hello%20Edupath%2C%20I%27d%20like%20a%20walkthrough" target="_blank" rel="noopener">Chat on WhatsApp</a>
     </div>
   </div>
 </section>
@@ -1242,43 +1244,52 @@ const faqJsonLd = JSON.stringify({
     var pb=$('ept-pause'), rb=$('ept-replay'), T=window.EPTours=window.EPTours||{};
     var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var cur=null, paused=false, chain=false, held=false, started=false, timer=0;
+    var NM={solve:'timetables',fees:'fees',fin:'reports'};
+    function track(n,p){try{if(typeof gtag==='function') gtag('event',n,Object.assign({page_path:location.pathname},p||{}));}catch(e){}}
+    root.addEventListener('click',function(e){
+      var a=e.target&&e.target.closest?e.target.closest('a[data-cta],a[data-link]'):null; if(!a) return;
+      if(a.hasAttribute('data-cta')) track('tour_cta_click',{cta:a.getAttribute('data-cta'),tour:NM[cur]||''});
+      else track('tour_link_click',{link:a.getAttribute('data-link'),tour:NM[cur]||''});
+    });
     if(reduce) pb.hidden=true;
     function label(){pb.textContent=paused?'Resume':'Pause'; pb.setAttribute('aria-pressed',paused?'true':'false');}
-    function select(k,viaChain){
+    function select(k,viaChain,why){
       clearTimeout(timer);
       if(cur&&T[cur]) T[cur].stop();
       K.forEach(function(x){if(x!==k) P[x].hidden=true;});
       K.forEach(function(x){var on=x===k; tabs[x].setAttribute('aria-selected',on?'true':'false'); tabs[x].tabIndex=on?0:-1;});
       P[k].hidden=false; cur=k; paused=false; held=false; label(); if(!viaChain) chain=false;
+      track('tour_started',{tour:NM[k],trigger:why||(viaChain?'autoplay':'tab')});
       if(T[k]) T[k].start();
     }
     T.onDone=function(k){
+      if(!reduce&&k===cur) track('tour_completed',{tour:NM[k]});
       if(reduce||!chain||k!==cur) return;
       var i=K.indexOf(k);
-      if(i<K.length-1) timer=setTimeout(function(){if(chain) select(K[i+1],true);},1500); else chain=false;
+      if(i<K.length-1) timer=setTimeout(function(){if(chain) select(K[i+1],true,'chain');},1500); else chain=false;
     };
     K.forEach(function(k,i){
-      tabs[k].addEventListener('click',function(){select(k,false);});
+      tabs[k].addEventListener('click',function(){select(k,false,'tab');});
       tabs[k].addEventListener('keydown',function(e){
         var j=-1; if(e.key==='ArrowRight') j=(i+1)%K.length; else if(e.key==='ArrowLeft') j=(i+K.length-1)%K.length; else if(e.key==='Home') j=0; else if(e.key==='End') j=K.length-1;
-        if(j>-1){e.preventDefault(); tabs[K[j]].focus(); select(K[j],false);}
+        if(j>-1){e.preventDefault(); tabs[K[j]].focus(); select(K[j],false,'tab');}
       });
     });
     pb.addEventListener('click',function(){
       if(!cur||!T[cur]) return; paused=!paused; held=false;
-      if(paused) T[cur].pause(); else T[cur].resume(); label();
+      if(paused) T[cur].pause(); else T[cur].resume(); label(); track(paused?'tour_paused':'tour_resumed',{tour:NM[cur]});
     });
-    rb.addEventListener('click',function(){select(cur||'solve',false);});
+    rb.addEventListener('click',function(){select(cur||'solve',false,'replay');});
     function vis(v){
       if(!cur||!T[cur]) return;
       if(!v&&!paused){T[cur].pause(); held=true;}
       else if(v&&held){held=false; if(!paused) T[cur].resume();}
     }
-    function begin(){if(started) return; started=true; chain=!reduce; select('solve',true);}
+    function begin(){if(started) return; started=true; chain=!reduce; select('solve',true,'autoplay');}
     var H={'#tour-timetables':'solve','#tour-fees':'fees','#tour-reports':'fin'};
     function openHash(h,scroll){
       var k=H[h]; if(!k) return false;
-      started=true; chain=false; select(k,false);
+      started=true; chain=false; select(k,false,'link');
       if(scroll&&root.scrollIntoView) root.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
       return true;
     }
