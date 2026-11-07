@@ -13,6 +13,7 @@
  *   --faq-after <id>        Insert the FAQ block after the element with this id         (default: faq)
  *   --fees-before <id>      Insert the fee-management animation before this element id (default: pricing)
  *   --fin-before <id>       Insert the financial-reports animation before this element id (default: portals)
+ *   --tour-before <id>      Insert the combined tabbed tour (timetables, fees, reports) before this id (default: portals)
  *   --dry-run               Show what would change; write nothing
  *   --revert                Remove everything this script added
  *   --faq-block             Force the old behaviour: add the FAQ as a separate styled block instead of
@@ -71,14 +72,15 @@ const stamp = () => new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14);
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 function parseArgs(argv) {
-  const o = { solverBefore: 'pricing', faqAfter: 'faq', feesBefore: 'pricing', finBefore: 'portals', snippet: path.join(HERE, 'edupath-timetable-solver-snippet.html') };
+  const o = { solverBefore: 'pricing', faqAfter: 'faq', feesBefore: 'pricing', tourBefore: null, finBefore: 'portals', snippet: path.join(HERE, 'edupath-timetable-solver-snippet.html') };
   const rest = [];
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     const val = () => { if (i + 1 >= argv.length) die(`Missing value for ${a}`); return argv[++i]; };
     switch (a) {
       case '--snippet': o.snippet = path.resolve(val()); break;
-      case '--solver-before': o.solverBefore = val().replace(/^#/, ''); break;
+      case '--solver-before': o.solverBefore = val().replace(/^#/, ''); o.solverBeforeSet = true; break;
+      case '--tour-before': o.tourBefore = val().replace(/^#/, ''); break;
       case '--faq-after': o.faqAfter = val().replace(/^#/, ''); break;
       case '--fees-before': o.feesBefore = val().replace(/^#/, ''); break;
       case '--fin-before': o.finBefore = val().replace(/^#/, ''); break;
@@ -139,6 +141,7 @@ function loadSnippet(file) {
   const faq = findElementRange(s, 'ep-faq-new');
   const fees = findElementRange(s, 'ep-fees'); // optional
   const fin = findElementRange(s, 'ep-fin'); // optional
+  const tour = findElementRange(s, 'ep-tour'); // optional: combined tabbed tour
   if (!styles.length) die('Snippet has no <style> block.');
   if (!scripts.length) die('Snippet has no <script> block.');
   if (!solve) die('Snippet is missing the section with id="ep-solve".');
@@ -150,6 +153,7 @@ function loadSnippet(file) {
     faq: s.slice(faq.start, faq.end),
     fees: fees ? s.slice(fees.start, fees.end) : null,
     fin: fin ? s.slice(fin.start, fin.end) : null,
+    tour: tour ? s.slice(tour.start, tour.end) : null,
   };
 }
 
@@ -246,6 +250,11 @@ const summary = [];
 
 if (!opt.revert) {
   const snip = loadSnippet(opt.snippet);
+  if (snip.tour) {
+    // one combined tour replaces the separate solver / fees / reports sections
+    snip.solve = snip.tour; snip.fees = null; snip.fin = null;
+    opt.solverBefore = opt.tourBefore || (opt.solverBeforeSet ? opt.solverBefore : 'portals');
+  }
   const isAstro = /\.astro$/i.test(opt.target);
   if (isAstro) {
     snip.style = snip.style.replace(/^<style>/, '<style is:global>');
@@ -308,10 +317,10 @@ if (!opt.revert) {
     const lines = items.map(([q, a]) => `${ind}[${JSON.stringify(q)}, ${JSON.stringify(a)}],`);
     if (faqArr.needsComma) lines[0] = `${ind}, ${lines[0].slice(ind.length)}`;
     edits.push({ at: faqArr.at, text: `\n${ind}${JSM[0]}\n${lines.join('\n')}\n${ind}${JSM[1]}`, label: `${items.length} FAQ items appended to the faqs array (ends line ${faqArr.line})` });
-    edits.push({ at: solveAnchor.start, text: `${hasHead ? '' : `${styleB}\n`}${solveB}\n${hasBody ? '' : `${scriptB}\n`}`, label: `${hasHead ? '' : 'CSS, '}Solver section${hasBody ? '' : ' and JS'} before #${opt.solverBefore}` });
+    edits.push({ at: solveAnchor.start, text: `${hasHead ? '' : `${styleB}\n`}${solveB}\n${hasBody ? '' : `${scriptB}\n`}`, label: `${hasHead ? '' : 'CSS, '}${snip.tour ? 'Product tour' : 'Solver section'}${hasBody ? '' : ' and JS'} before #${opt.solverBefore}` });
   } else {
     edits.push({ at: faqAnchor.end, text: `\n${wrap('faq', snip.faq)}${hasBody ? '' : `\n${scriptB}`}`, label: `FAQ block${hasBody ? '' : ' and JS'} after #${opt.faqAfter}` });
-    edits.push({ at: solveAnchor.start, text: `${hasHead ? '' : `${styleB}\n`}${solveB}\n`, label: `${hasHead ? '' : 'CSS and '}Solver section before #${opt.solverBefore}` });
+    edits.push({ at: solveAnchor.start, text: `${hasHead ? '' : `${styleB}\n`}${solveB}\n`, label: `${hasHead ? '' : 'CSS and '}${snip.tour ? 'Product tour' : 'Solver section'} before #${opt.solverBefore}` });
   }
   if (snip.fin) edits.push({ at: finAnchor.start, text: `${wrap('fin', snip.fin)}\n`, label: `Financial reports animation before #${opt.finBefore}` });
   if (snip.fees) edits.push({ at: feesAnchor.start, text: `${wrap('fees', snip.fees)}\n`, label: `Fee animation before #${opt.feesBefore}` });

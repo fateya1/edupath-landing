@@ -160,14 +160,30 @@ const faqJsonLd = JSON.stringify({
     </section>
 
     <!-- FEATURES — the full product, as a simple index -->
+    <section class="sec" id="features">
+      <div class="sec-inner">
+        <h2 class="sec-title">Everything your school needs, in one place.</h2>
+        <div class="idx-list">
+          {features.map((f) => (
+            <a class="idx-row" href={f.href ?? '/#features'} aria-label={f.title}>
+              <span class="idx-name">{f.title}</span>
+              <span class="idx-text">{f.text}</span>
+              {f.href && <span class="idx-arrow" aria-hidden="true">→</span>}
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTALS -->
     <!-- EP:STYLE:START -->
 <style is:global>#ep-solve,#ep-faq-new{--t:#0D9488;--td:#0F766E;--tdd:#134E4A;--tt:#F0FDFA;--tb:#CCE7E3;--ink:#0F2F2C;--mut:#4B6B67;--bad:#B91C1C;--badbg:#FEE2E2;--ind:#5A55E0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);box-sizing:border-box}
 #ep-solve *,#ep-faq-new *{box-sizing:border-box}
-#ep-solve{background:var(--tt);padding:72px 20px}
+#ep-solve{padding:0}
 #ep-solve [hidden]{display:none!important}
 .eps-wrap{max-width:1120px;margin:0 auto;display:grid;gap:36px;grid-template-columns:1fr;align-items:center}
 @media(min-width:1000px){.eps-wrap{grid-template-columns:4fr 8fr;gap:44px}}
-.eps-copy h2{font-size:clamp(1.7rem,3.2vw,2.35rem);line-height:1.15;margin:0 0 14px;color:var(--tdd);letter-spacing:-.01em}
+.eps-copy h3{font-size:clamp(1.4rem,2.6vw,1.9rem);line-height:1.15;margin:0 0 14px;color:var(--tdd);letter-spacing:-.01em}
 .eps-copy p{margin:0 0 18px;line-height:1.6;color:var(--mut);max-width:46ch}
 .eps-pts{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:10px}
 .eps-pts li{display:flex;gap:10px;line-height:1.45;font-size:.95rem}
@@ -283,7 +299,6 @@ const faqJsonLd = JSON.stringify({
 @keyframes epsBlink{50%{opacity:0}}
 @media(prefers-reduced-motion:reduce){.eps-cell.on,.eps-cell.bad,.eps-modal.on,.eps-d.on,.eps-li.new,.eps-hr{animation:none}.eps-cur{display:none}}
 @media(max-width:640px){
-#ep-solve{padding:48px 16px}
 .eps-panel{padding:10px}
 .eps-stats{grid-template-columns:1fr 1fr}
 .eps-tb{font-size:.62rem;padding:6px 8px}
@@ -307,12 +322,12 @@ const faqJsonLd = JSON.stringify({
 .eps-add{grid-template-columns:1fr 1fr}
 .eps-cls{grid-template-columns:1fr}
 }
-#ep-fees{--ind:#5A55E0;--lav:#EEF0FB;--ink:#0F2F2C;--mut:#5B6B7A;--t:#0D9488;--tdd:#134E4A;background:#F6F7FD;padding:72px 20px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);box-sizing:border-box}
+#ep-fees{--ind:#5A55E0;--lav:#EEF0FB;--ink:#0F2F2C;--mut:#5B6B7A;--t:#0D9488;--tdd:#134E4A;padding:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);box-sizing:border-box}
 #ep-fees *{box-sizing:border-box}
 #ep-fees [hidden]{display:none!important}
 .epm-wrap{max-width:1120px;margin:0 auto;display:grid;gap:36px;grid-template-columns:1fr;align-items:center}
 @media(min-width:1000px){.epm-wrap{grid-template-columns:4fr 8fr;gap:44px}}
-.epm-copy h2{font-size:clamp(1.7rem,3.2vw,2.35rem);line-height:1.15;margin:0 0 14px;color:var(--tdd);letter-spacing:-.01em}
+.epm-copy h3{font-size:clamp(1.4rem,2.6vw,1.9rem);line-height:1.15;margin:0 0 14px;color:var(--tdd);letter-spacing:-.01em}
 .epm-copy p{margin:0 0 18px;line-height:1.6;color:var(--mut);max-width:46ch}
 .epm-pts{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:10px}
 .epm-pts li{display:flex;gap:10px;line-height:1.45;font-size:.95rem}
@@ -404,7 +419,6 @@ const faqJsonLd = JSON.stringify({
 @keyframes epmBlink{50%{opacity:0}}
 @media(prefers-reduced-motion:reduce){.epm-feed span,.epm-chip.pop,.epm-v.show,.epm-at tr.epm-in{animation:none}.epm-cur{display:none}}
 @media(max-width:640px){
-#ep-fees{padding:48px 16px}
 .epm-app{padding:10px}
 .epm-scroll{overflow:visible}
 .epm-tbl,.epm-at{min-width:0}
@@ -416,12 +430,12 @@ const faqJsonLd = JSON.stringify({
 .epm-tab{font-size:.68rem;padding:6px 9px}
 .epm-views{min-height:340px}
 }
-#ep-fin{--ink:#0F2F2C;--mut:#5B6B7A;--tdd:#134E4A;--t:#0D9488;background:#F5F9F8;padding:72px 20px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);box-sizing:border-box}
+#ep-fin{--ink:#0F2F2C;--mut:#5B6B7A;--tdd:#134E4A;--t:#0D9488;padding:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);box-sizing:border-box}
 #ep-fin *{box-sizing:border-box}
 #ep-fin [hidden]{display:none!important}
 .epr-wrap{max-width:1120px;margin:0 auto;display:grid;gap:36px;grid-template-columns:1fr;align-items:center}
 @media(min-width:1000px){.epr-wrap{grid-template-columns:4fr 8fr;gap:44px}}
-.epr-copy h2{font-size:clamp(1.7rem,3.2vw,2.35rem);line-height:1.15;margin:0 0 14px;color:var(--tdd);letter-spacing:-.01em}
+.epr-copy h3{font-size:clamp(1.4rem,2.6vw,1.9rem);line-height:1.15;margin:0 0 14px;color:var(--tdd);letter-spacing:-.01em}
 .epr-copy p{margin:0 0 18px;line-height:1.6;color:var(--mut);max-width:46ch}
 .epr-pts{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:10px}
 .epr-pts li{display:flex;gap:10px;line-height:1.45;font-size:.95rem}
@@ -499,7 +513,6 @@ const faqJsonLd = JSON.stringify({
 @keyframes eprBlink{50%{opacity:0}}
 @media(prefers-reduced-motion:reduce){.epr-v.show,.epr-t tr.show,.epr-bal{animation:none}.epr-cur{display:none}.epr-cr div div,.epr-rate i{transition:none}}
 @media(max-width:640px){
-#ep-fin{padding:48px 16px}
 .epr-app{padding:10px}
 .epr-ovg{grid-template-columns:1fr}
 .epr-kp{grid-template-columns:1fr 1fr}
@@ -514,13 +527,50 @@ const faqJsonLd = JSON.stringify({
 .epr-cr{grid-template-columns:56px 1fr}
 .epr-ax{margin-left:64px}
 }
+#ep-tour{--t:#0D9488;--td:#0F766E;--tdd:#134E4A;--tt:#F0FDFA;--tb:#CCE7E3;--ink:#0F2F2C;--mut:#4B6B67;background:var(--tt);padding:72px 20px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);box-sizing:border-box}
+#ep-tour *{box-sizing:border-box}
+.ept-in{max-width:1120px;margin:0 auto}
+.ept-hd{text-align:center;max-width:720px;margin:0 auto 22px}
+.ept-hd h2{font-size:clamp(1.9rem,3.6vw,2.7rem);line-height:1.12;margin:0 0 10px;color:var(--tdd);letter-spacing:-.015em}
+.ept-hd p{margin:0;color:var(--mut);line-height:1.6}
+.ept-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:26px}
+.ept-tabs{display:inline-flex;gap:4px;background:#fff;border:1px solid var(--tb);border-radius:12px;padding:4px;flex-wrap:wrap}
+.ept-tab{appearance:none;border:0;background:transparent;font:inherit;font-weight:600;font-size:.9rem;color:#2B4A47;padding:10px 16px;border-radius:9px;cursor:pointer;min-height:44px}
+.ept-tab[aria-selected="true"]{background:var(--t);color:#fff}
+.ept-tab:hover:not([aria-selected="true"]){background:var(--tt)}
+.ept-ctl{display:flex;gap:8px}
+.ept-ctl button{appearance:none;border:1px solid var(--tb);background:#fff;font:inherit;font-weight:600;font-size:.85rem;color:var(--tdd);padding:10px 16px;border-radius:10px;cursor:pointer;min-height:44px;min-width:88px}
+.ept-ctl button:hover{background:var(--tt)}
+#ep-tour :focus-visible{outline:3px solid var(--tdd);outline-offset:3px}
+.ept-cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;margin-top:30px;text-align:center}
+.ept-cta p{width:100%;margin:0 0 4px;font-weight:600;color:var(--tdd)}
+.ept-b{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 22px;border-radius:10px;font-weight:600;text-decoration:none;border:1.5px solid var(--t);color:var(--td);background:#fff}
+.ept-b.pri{background:var(--t);color:#fff}
+.ept-b.wa{border-color:#25D366;color:#15803D}
+.ept-b:hover{filter:brightness(.96)}
+@media(max-width:640px){#ep-tour{padding:48px 16px}.ept-bar{justify-content:center}.ept-tab{padding:9px 12px;font-size:.82rem}.ept-b{width:100%}}
 </style>
 <!-- EP:STYLE:END -->
 <!-- EP:SOLVE:START -->
-<section id="ep-solve" aria-labelledby="eps-title">
+<section id="ep-tour" aria-labelledby="ept-title">
+  <div class="ept-in">
+    <div class="ept-hd">
+      <h2 id="ept-title">See it in action.</h2>
+      <p>Pick a part of Edupath and watch the screens your team would use, on sample school data.</p>
+    </div>
+    <div class="ept-bar">
+      <div class="ept-tabs" role="tablist" aria-label="Product tours">
+        <button class="ept-tab" role="tab" type="button" id="ept-t-solve" aria-selected="true" aria-controls="ep-solve">Timetables</button>
+        <button class="ept-tab" role="tab" type="button" id="ept-t-fees" aria-selected="false" aria-controls="ep-fees" tabindex="-1">Fees</button>
+        <button class="ept-tab" role="tab" type="button" id="ept-t-fin" aria-selected="false" aria-controls="ep-fin" tabindex="-1">Reports</button>
+      </div>
+      <div class="ept-ctl"><button type="button" id="ept-pause" aria-pressed="false">Pause</button><button type="button" id="ept-replay">Replay</button></div>
+    </div>
+    <div class="ept-panes">
+      <div class="ept-pane" id="ep-solve" role="tabpanel" aria-labelledby="ept-t-solve">
   <div class="eps-wrap">
     <div class="eps-copy">
-      <h2 id="eps-title">Timetables built around your school&rsquo;s rules.</h2>
+      <h3 id="eps-title">Timetables built around your school&rsquo;s rules.</h3>
       <p>Follow the cursor through the same screens your timetable officer uses: bell schedule, rooms, availability and requirements, a feasibility check, then generate, adjust, repair and print.</p>
       <ul class="eps-pts">
         <li>Set your bell schedule, rooms, teacher availability and what each class needs.</li>
@@ -528,7 +578,6 @@ const faqJsonLd = JSON.stringify({
         <li>Teachers and classes are never double-booked, and double lessons never span a break.</li>
         <li>Move lessons, cover absent teachers, repair problems, and restore earlier versions.</li>
       </ul>
-      <button class="eps-btn" type="button" id="eps-go">Replay tour</button>
     </div>
     <div>
       <div class="eps-panel" id="eps-panel" role="img" aria-label="Animated tour of the timetable screens: a cursor opens the bell schedule, rooms, availability, requirements and feasibility check, generates a clash-free timetable, then moves lessons, covers an absence, repairs, shows history and prints">
@@ -604,524 +653,11 @@ const faqJsonLd = JSON.stringify({
       <p class="eps-note">An illustration using a sample school and sample figures.</p>
     </div>
   </div>
-</section>
-<!-- EP:SOLVE:END -->
-<!-- EP:SCRIPT:START -->
-<script is:inline>(function(){
-  function init(){
-  var root=document.getElementById('ep-solve'); if(!root) return;
-  var $=function(i){return document.getElementById(i);};
-  var panel=$('eps-panel'), cur=$('eps-cur'), modal=$('eps-modal'), grid=$('eps-grid'), log=$('eps-log'), sl=$('eps-sl'), sr=$('eps-sr'), btn=$('eps-go'), ghost=$('eps-ghost');
-  var D=['Monday','Tuesday','Wednesday','Thursday','Friday'];
-  var P=[['08:00','08:40'],['08:45','09:25'],['09:30','10:10'],['10:30','11:10'],['11:15','11:55'],['12:00','12:40'],['13:20','14:00'],['14:05','14:45'],['14:50','15:30']];
-  var BR={3:'10:10 - 10:30',6:'12:40 - 13:20'};
-  var S={
-    MAT:['Mathematics','David Kamau','#EA580C','Math'], KIS:['Kiswahili','Fatuma Hassan','#0D9488','Kisw'], PHY:['Physics','Kiprop Ruto','#DC2626','Phys'],
-    BIO:['Biology','Otieno Odhiambo','#A23FE0','Bio'], CS:['Computer Studies','Beatrice Ndungu','#16A34A','CS'], ENG:['English','Grace Wanjiku','#6D5BD0','Eng'],
-    PE:['Physical Education','Samuel Mwenda','#D97706','PE'], CHE:['Chemistry','Otieno Odhiambo','#0891B2','Chem']
-  };
-  var G=[
-    ['MAT','ENG','KIS','PE','PHY','CHE','BIO','CS','MAT'],
-    ['KIS','PE','PHY','CHE','BIO','CS','MAT','ENG','KIS'],
-    ['PHY','CHE','BIO','CS','MAT','ENG','KIS','PE','PHY'],
-    ['BIO','CS','MAT','ENG','KIS','PE','PHY','CHE','BIO'],
-    ['CS','MAT','ENG','KIS','PE','PHY','CHE','BIO','CS']
-  ];
-  var CL=[7,20,33], cells={}, order=[], total=45, token=0, started=false, instant=false, lastMsg='';
-  function el(t,c,x){var e=document.createElement(t); if(c)e.className=c; if(x!=null)e.textContent=x; return e;}
-  var tb={}; [].forEach.call(root.querySelectorAll('.eps-tb'),function(t){tb[t.getAttribute('data-t')]=t;});
-
-  // timetable grid
-  grid.appendChild(el('div','eps-h','Period'));
-  D.forEach(function(d){grid.appendChild(el('div','eps-h',d));});
-  for(var r=0;r<9;r++){
-    if(BR[r]){grid.appendChild(el('div','eps-brk','Break')); grid.appendChild(el('div','eps-brkt',BR[r]));}
-    var per=el('div','eps-per'), pb=el('b'); pb.appendChild(el('span','eps-f','Period '+(r+1))); pb.appendChild(el('span','eps-s','P'+(r+1)));
-    per.appendChild(pb); per.appendChild(el('span','eps-t',P[r][0]+' - '+P[r][1])); grid.appendChild(per);
-    for(var c=0;c<5;c++){var cell=el('div','eps-cell'); cells[r+'-'+c]=cell; grid.appendChild(cell);}
-  }
-  for(var i=0;i<45;i++){var k=(i*7)%45; order.push([k%9,Math.floor(k/9)]);}
-  // availability grid
-  var av=$('eps-av'), avc=[]; av.appendChild(el('div','',''));
-  ['Mon','Tue','Wed','Thu','Fri'].forEach(function(d){av.appendChild(el('div','',d));});
-  for(var r2=0;r2<6;r2++){av.appendChild(el('div','','P'+(r2+1))); for(var c2=0;c2<5;c2++){var a=el('div','eps-ac'); avc.push(a); av.appendChild(a);}}
-  // requirement rows, counted from the timetable itself
-  var cnt={}; G.forEach(function(day){day.forEach(function(x){cnt[x]=(cnt[x]||0)+1;});});
-  var rq=$('eps-rq'); Object.keys(S).forEach(function(k,i){var row=el('div','eps-rr'+(i>3?' eps-xs':'')); row.appendChild(el('b','',S[k][0])); row.appendChild(el('span','',S[k][1])); row.appendChild(el('span','',cnt[k]+' periods')); rq.appendChild(row);});
-  rq.appendChild(el('div','eps-sum','8 subjects, 45 of 45 periods'));
-  // move-lessons board (Mon-Wed, periods 1-3)
-  var mb=$('eps-mb'), mc=[];
-  function mini(e,code){e.className='eps-mc ml'; e.style.setProperty('--c',S[code][2]); e.innerHTML=''; e.appendChild(el('b','',S[code][0])); e.appendChild(el('i','',S[code][1]));}
-  function mini0(e,go){e.className='eps-mc'+(go?' go':''); e.style.removeProperty('--c'); e.innerHTML='';}
-  function buildBoard(){
-    mb.innerHTML=''; mc=[]; mb.appendChild(el('div','',''));
-    ['Mon','Tue','Wed'].forEach(function(d){mb.appendChild(el('div','',d));});
-    for(var r=0;r<3;r++){mb.appendChild(el('div','','P'+(r+1))); mc[r]=[]; for(var c=0;c<3;c++){var e=el('div','eps-mc'); mc[r][c]=e; mb.appendChild(e); if(r===1&&c===2) mini0(e,true); else mini(e,G[c][r]);}}
-  }
-  function fill(key,code,bad){
-    var s=S[code], e=cells[key]; e.innerHTML=''; e.style.setProperty('--c',bad?'#B91C1C':s[2]); e.className='eps-cell '+(bad?'bad':'on');
-    var nb=el('b'); nb.appendChild(el('span','eps-f',s[0])); nb.appendChild(el('span','eps-s',s[3])); e.appendChild(nb); e.appendChild(el('i','',s[1]));
-  }
-  function clear(key){var e=cells[key]; e.className='eps-cell'; e.innerHTML=''; e.style.removeProperty('--c');}
-  function slot(o){return D[o[1]].slice(0,3)+' '+P[o[0]][0];}
-  function say(cls,t){log.textContent=t; log.className='eps-log'+(cls?' '+cls:'');}
-  function resetAll(){
-    for(var k in cells) clear(k); sl.textContent='0/45'; say('','Waiting for the timetable to be generated\u2026');
-    modal.classList.remove('on'); [].forEach.call(root.querySelectorAll('.eps-d'),function(d){d.classList.remove('on');});
-    $('eps-brkrow').classList.remove('hl');
-    ['eps-rn','eps-rs','eps-csel'].forEach(function(i){var e=$(i); e.textContent=''; e.classList.remove('typing');});
-    $('eps-asel').textContent='-- Select --'; $('eps-rnew').hidden=true; av.hidden=true; avc.forEach(function(a){a.classList.remove('off');});
-    rq.hidden=true; $('eps-fch').hidden=false; $('eps-fres').hidden=true; $('eps-g1').classList.remove('on');
-    buildBoard(); ghost.hidden=true; $('eps-cv0').hidden=false; $('eps-cv1').hidden=true;
-    $('eps-rp0').hidden=false; $('eps-rp1').hidden=true; $('eps-fixb').textContent='Find the smallest fix';
-    $('eps-h0').hidden=false; $('eps-h1').hidden=true; $('eps-pb').textContent='Print or save as PDF';
-  }
-  function wait(ms,my){return new Promise(function(res,rej){setTimeout(function(){my===token?res():rej('x');},ms);});}
-  function moveTo(e,my,dx){
-    var a=panel.getBoundingClientRect(), r=e.getBoundingClientRect();
-    var x=r.left-a.left+Math.min(r.width*0.55,r.width-8)+(dx||0), y=r.top-a.top+r.height*0.5;
-    cur.style.transform='translate('+x+'px,'+y+'px)'; return wait(560,my);
-  }
-  function click(e,my){
-    cur.classList.remove('click'); void cur.offsetWidth; cur.classList.add('click'); e.classList.add('press');
-    setTimeout(function(){e.classList.remove('press'); cur.classList.remove('click');},400); return wait(200,my);
-  }
-  async function type(e,text,my){e.classList.add('typing'); for(var i=1;i<=text.length;i++){e.textContent=text.slice(0,i); await wait(38,my);} e.classList.remove('typing');}
-  function open(k){[].forEach.call(root.querySelectorAll('.eps-d'),function(d){d.classList.remove('on');}); $('eps-d-'+k).classList.add('on'); modal.classList.add('on');}
-  function close(){modal.classList.remove('on');}
-  async function tool(k,my,fn){
-    await moveTo(tb[k],my); await click(tb[k],my); open(k); await wait(300,my);
-    if(fn) await fn(); await wait(200,my); close(); await wait(150,my);
-  }
-  async function generate(my){
-    var caught=0; say('','Generating timetable\u2026');
-    for(var i=0;i<order.length;i++){
-      var o=order[i], key=o[0]+'-'+o[1], code=G[o[1]][o[0]], s=S[code];
-      if(CL.indexOf(i)>-1){
-        var w=null; for(var j=order.length-1;j>i;j--){if(order[j][0]+'-'+order[j][1]!==key){w=order[j];break;}}
-        var wk=w[0]+'-'+w[1], why=(code==='CHE'||code==='PHY'||code==='BIO')?'the lab is booked by another class':(code==='CS')?'the computer room is booked by another class':s[1]+' is already teaching another class';
-        fill(wk,code,true); say('bad','Clash on '+slot(w)+': '+why+'. Moving '+s[0]+'\u2026'); await wait(750,my);
-        clear(wk); fill(key,code); caught++; say('','Moved '+s[0]+' to '+slot(o)+'.'); await wait(200,my);
-      } else { fill(key,code); say('','Placed '+s[0]+' on '+slot(o)+'.'); }
-      sl.textContent=(i+1)+'/45'; await wait(38,my);
-    }
-    lastMsg='All 45 lessons placed. '+caught+' clashes caught and fixed. 0 clashes in the final timetable.'; say('',lastMsg);
-  }
-  async function tour(my){
-    cur.style.transition='none'; cur.style.transform='translate('+Math.round(panel.clientWidth*0.62)+'px,'+Math.round(panel.clientHeight*0.3)+'px)';
-    void cur.offsetWidth; cur.style.transition=''; cur.classList.add('vis'); await wait(500,my);
-    await tool('bell',my,async function(){var r=$('eps-brkrow'); await moveTo(r,my); await click(r,my); r.classList.add('hl'); await wait(350,my);});
-    await tool('rooms',my,async function(){
-      var n=$('eps-rn'), s=$('eps-rs'), a=$('eps-radd');
-      await moveTo(n,my); await click(n,my); await type(n,'Lab C',my);
-      await moveTo(s,my); await click(s,my); await type(s,'40',my);
-      await moveTo(a,my); await click(a,my); $('eps-rnew').hidden=false; await wait(350,my);
-    });
-    await tool('avail',my,async function(){
-      var sel=$('eps-asel'); await moveTo(sel,my); await click(sel,my); sel.textContent='Kiprop Ruto'; av.hidden=false; await wait(200,my);
-      var c=avc[3*5+4]; await moveTo(c,my); await click(c,my); c.classList.add('off'); await wait(350,my);
-    });
-    await tool('req',my,async function(){
-      var sel=$('eps-csel'); await moveTo(sel,my); await click(sel,my); sel.textContent='Grade 10 Green (Grade 10)'; rq.hidden=false; await wait(700,my);
-    });
-    await tool('feas',my,async function(){await wait(700,my); $('eps-fch').hidden=true; $('eps-fres').hidden=false; await wait(700,my);});
-    await tool('gen',my,async function(){
-      var c=$('eps-g1'), g=$('eps-gobtn'); await moveTo(c,my); await click(c,my); c.classList.add('on'); await wait(200,my);
-      await moveTo(g,my); await click(g,my);
-    });
-    await generate(my); await wait(500,my);
-    await tool('move',my,async function(){
-      var src=mc[0][0], dst=mc[1][2];
-      await moveTo(src,my); ghost.textContent=S.MAT[0]; ghost.style.setProperty('--c',S.MAT[2]); mini0(src,false); ghost.hidden=false; await wait(200,my);
-      await moveTo(dst,my); ghost.hidden=true; mini(dst,'MAT'); await wait(450,my);
-    });
-    await tool('cover',my,async function(){var b=$('eps-recb'); await moveTo(b,my); await click(b,my); $('eps-cv0').hidden=true; $('eps-cv1').hidden=false; await wait(600,my);});
-    await tool('repair',my,async function(){var b=$('eps-fixb'); await moveTo(b,my); await click(b,my); $('eps-rp0').hidden=true; $('eps-rp1').hidden=false; await wait(600,my);});
-    await tool('hist',my,async function(){await wait(350,my); $('eps-h0').hidden=true; $('eps-h1').hidden=false; await moveTo($('eps-rstr'),my); await wait(350,my);});
-    await tool('print',my,async function(){var b=$('eps-pb'); await moveTo(b,my); await click(b,my); b.textContent='Preparing PDF\u2026'; await wait(500,my); b.textContent='PDF ready'; await wait(250,my);});
-    await moveTo(tb.gen,my); await wait(300,my);
-  }
-  function finish(){
-    cur.classList.remove('vis'); say('',lastMsg); sr.textContent='Tour finished. '+lastMsg;
-    btn.disabled=false; btn.removeAttribute('aria-busy'); btn.textContent='Replay tour';
-  }
-  function run(inst){
-    token++; var my=token; instant=inst; resetAll(); sr.textContent=''; btn.disabled=true; btn.setAttribute('aria-busy','true');
-    if(inst){order.forEach(function(o){fill(o[0]+'-'+o[1],G[o[1]][o[0]]);}); sl.textContent='45/45'; lastMsg='All 45 lessons placed. 0 clashes in the final timetable.'; finish(); return;}
-    tour(my).then(finish,function(e){if(e!=='x') finish();});
-  }
-  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  resetAll();
-  btn.addEventListener('click',function(){run(reduce);});
-  function auto(){if(started) return; started=true; run(reduce);}
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(function(es,ob){if(es[0].isIntersecting){auto(); ob.disconnect();}},{threshold:.25}).observe(root);
-  } else { auto(); }
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
-})();
-(function(){
-  function init(){
-  var root=document.getElementById('ep-fees'); if(!root) return;
-  var $=function(i){return document.getElementById(i);};
-  var app=$('epm-app'), cur=$('epm-cur'), body=$('epm-body'), feed=$('epm-feed'), cCol=$('epm-col'), cOut=$('epm-out'), sr=$('epm-sr'), btn=$('epm-go');
-  var tabEls={}; [].forEach.call(root.querySelectorAll('.epm-tab'),function(t){tabEls[t.getAttribute('data-v')]=t;});
-  var R=[['Dorothy Cynthia Mutiso','DEM237',59500,29000],['Moses Hassan Kioko','DEM238',50000,0],['Kamau David Kamau','DEM240',52000,52000],['Felicity Nafula Nzomo','DEM239',67000,67000],['Kenneth Nicholas Makau','DEM236',52000,39500]];
-  var E=[{i:0,amt:30500},{i:1,amt:20000},{i:4,amt:12500}];
-  var S, trs, token=0, started=false, instant=false;
-  function fmt(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
-  function st(r){return r.p>=r.t?'PAID':(r.p>0?'PARTIAL':'UNPAID');}
-  function anim(el,from,to,dur){
-    if(instant||from===to){el.textContent='KES '+fmt(to);return;}
-    var t0=null,my=token;
-    requestAnimationFrame(function f(ts){
-      if(my!==token) return; if(t0===null) t0=ts;
-      var k=Math.min(1,(ts-t0)/dur), e=1-Math.pow(1-k,3);
-      el.textContent='KES '+fmt(from+(to-from)*e);
-      if(k<1) requestAnimationFrame(f);
-    });
-  }
-  function build(){
-    S={rows:R.map(function(r){return {n:r[0],a:r[1],t:r[2],p:r[3]};}),col:28480500,out:6743500};
-    body.innerHTML=''; trs=[];
-    S.rows.forEach(function(r){
-      var tr=document.createElement('tr');
-      tr.innerHTML='<td>'+r.n+'</td><td>'+r.a+'</td><td>THIRD</td><td>Tuition Fees</td><td>KES '+fmt(r.t)+'</td><td class="epm-pd">KES '+fmt(r.p)+'</td><td class="epm-bl">KES '+fmt(r.t-r.p)+'</td><td><span class="epm-chip '+st(r)+'">'+st(r)+'</span></td><td><span class="epm-act">Actions \u25BE</span></td>';
-      body.appendChild(tr); trs.push(tr);
-    });
-    cCol.textContent='KES '+fmt(S.col); cOut.textContent='KES '+fmt(S.out);
-  }
-  function chip(i,pop){var c=trs[i].querySelector('.epm-chip'),s=st(S.rows[i]); c.className='epm-chip '+s+(pop?' pop':''); c.textContent=s;}
-  function say(cls,t){feed.className='epm-feed'+(cls?' '+cls:''); feed.innerHTML=''; var s=document.createElement('span'); s.textContent=t; feed.appendChild(s);}
-  function pay(i,amt){
-    var r=S.rows[i], tr=trs[i], pd=tr.querySelector('.epm-pd'), bl=tr.querySelector('.epm-bl');
-    var p0=r.p, c0=S.col, o0=S.out; r.p+=amt; S.col+=amt; S.out-=amt;
-    if(!instant) tr.classList.add('flash');
-    anim(pd,p0,r.p,700); anim(bl,r.t-p0,r.t-r.p,700); anim(cCol,c0,S.col,900); anim(cOut,o0,S.out,900);
-    if(instant){chip(i,false);return;}
-    setTimeout(function(){chip(i,true);},700);
-    setTimeout(function(){tr.classList.remove('flash');},1400);
-  }
-  function setTab(v){
-    for(var k in tabEls) tabEls[k].classList.toggle('on',k===v);
-    [].forEach.call(root.querySelectorAll('.epm-v'),function(x){x.classList.remove('show');});
-    $('epm-v-'+v).classList.add('show');
-  }
-  function resetViews(){
-    ['epm-i-stu','epm-i-amt','epm-i-fs','epm-i-find'].forEach(function(i){var e=$(i); e.textContent=''; e.classList.remove('typing');});
-    $('epm-chk').classList.remove('on'); $('epm-save').className='epm-ind'; $('epm-save').textContent='Save Fee Structure';
-    $('epm-empty').hidden=false; $('epm-hit').hidden=true; $('epm-a1').classList.remove('sel');
-    $('epm-send').className='epm-ind'; $('epm-send').textContent='Send SMS Reminders';
-    $('epm-now').className='epm-b2 amber'; $('epm-now').textContent='Send Reminders Now';
-    [].forEach.call(root.querySelectorAll('#epm-aud-body tr'),function(r){r.className='epm-hide';});
-  }
-  function wait(ms,my){return new Promise(function(res,rej){setTimeout(function(){my===token?res():rej('x');},ms);});}
-  function moveTo(el,my,dx){
-    var a=app.getBoundingClientRect(), r=el.getBoundingClientRect();
-    var x=r.left-a.left+Math.min(r.width*0.55,r.width-8)+(dx||0), y=r.top-a.top+r.height*0.5;
-    cur.style.transform='translate('+x+'px,'+y+'px)'; return wait(800,my);
-  }
-  function click(el,my){
-    cur.classList.remove('click'); void cur.offsetWidth; cur.classList.add('click'); el.classList.add('press');
-    setTimeout(function(){el.classList.remove('press'); cur.classList.remove('click');},400); return wait(260,my);
-  }
-  async function type(el,text,my){
-    el.classList.add('typing');
-    for(var i=1;i<=text.length;i++){el.textContent=text.slice(0,i); await wait(42,my);}
-    el.classList.remove('typing');
-  }
-  async function visit(v,my,fn){
-    await moveTo(tabEls[v],my); await click(tabEls[v],my); setTab(v); await wait(300,my);
-    if(fn) await fn(); await wait(550,my);
-  }
-  async function tour(my){
-    cur.style.transition='none'; cur.style.transform='translate('+Math.round(app.clientWidth*0.6)+'px,'+Math.round(app.clientHeight*0.45)+'px)';
-    void cur.offsetWidth; cur.style.transition=''; cur.classList.add('vis');
-    await wait(600,my);
-    for(var k=0;k<E.length;k++){
-      var e=E[k], r=S.rows[e.i];
-      say('pay','M-Pesa payment received: KES '+fmt(e.amt)+' for '+r.a+', '+r.n); await wait(600,my);
-      pay(e.i,e.amt); await wait(1200,my);
-    }
-    say('','Balances, statuses and totals are up to date.'); await wait(500,my);
-    await visit('add',my,async function(){
-      var s=$('epm-i-stu'), a=$('epm-i-amt');
-      await moveTo(s,my); await click(s,my); await type(s,'DEM240  Kamau David Kamau',my);
-      await moveTo(a,my); await click(a,my); await type(a,'52000',my);
-      await moveTo($('epm-chk'),my,-60); await click($('epm-chk'),my); $('epm-chk').classList.add('on');
-    });
-    await visit('str',my,async function(){
-      var f=$('epm-i-fs'), sv=$('epm-save');
-      await moveTo(f,my); await click(f,my); await type(f,'52000',my);
-      await moveTo(sv,my); await click(sv,my); sv.classList.add('sent'); sv.textContent='Fee structure saved';
-    });
-    await visit('edit',my,async function(){
-      var f=$('epm-i-find'), r=S.rows[1];
-      await moveTo(f,my); await click(f,my); await type(f,'DEM238',my); await wait(300,my);
-      $('epm-empty').hidden=true; var h=$('epm-hit'); h.hidden=false;
-      h.innerHTML='<b>'+r.n+'</b> &nbsp;'+r.a+' &middot; Tuition Fees &middot; THIRD<br><span style="font-size:.74rem">Total KES '+fmt(r.t)+' &nbsp; <span class="epm-pd">Paid KES '+fmt(r.p)+'</span> &nbsp; <span class="epm-bl">Balance KES '+fmt(r.t-r.p)+'</span></span> &nbsp; <span class="epm-chip '+st(r)+'">'+st(r)+'</span>';
-    });
-    await visit('sms',my,async function(){
-      var a=$('epm-a1'), sd=$('epm-send');
-      await moveTo(a,my); await click(a,my); a.classList.add('sel'); await wait(300,my);
-      await moveTo(sd,my); await click(sd,my); sd.textContent='Sending\u2026'; await wait(600,my);
-      sd.classList.add('sent'); sd.textContent='Sent to 399 parents';
-    });
-    await visit('auto',my,async function(){
-      var n=$('epm-now');
-      await moveTo(n,my); await click(n,my); n.classList.add('sent'); n.textContent='Reminders sent';
-    });
-    await visit('aud',my,async function(){
-      var rows=root.querySelectorAll('#epm-aud-body tr');
-      for(var i=0;i<rows.length;i++){rows[i].className='epm-in'; await wait(400,my);}
-    });
-    await moveTo(tabEls.rec,my); await click(tabEls.rec,my); setTab('rec'); await wait(900,my);
-  }
-  function finish(){
-    var m='Tour finished. Payments applied, reminders sent and every change recorded in the audit trail.';
-    cur.classList.remove('vis'); say('','Balances, statuses and totals are up to date.'); sr.textContent=m;
-    btn.disabled=false; btn.removeAttribute('aria-busy'); btn.textContent='Replay tour';
-  }
-  function run(inst){
-    token++; var my=token; instant=inst; build(); resetViews(); setTab('rec'); say('','Waiting for the next payment\u2026'); sr.textContent='';
-    btn.disabled=true; btn.setAttribute('aria-busy','true');
-    if(inst){E.forEach(function(e){pay(e.i,e.amt);}); finish(); return;}
-    tour(my).then(finish,function(e){if(e!=='x') finish();});
-  }
-  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  build();
-  btn.addEventListener('click',function(){run(reduce);});
-  function go(){if(started) return; started=true; run(reduce);}
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(function(es,ob){if(es[0].isIntersecting){go(); ob.disconnect();}},{threshold:.3}).observe(root);
-  } else { go(); }
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
-})();
-(function(){
-  function init(){
-  var root=document.getElementById('ep-fin'); if(!root) return;
-  var $=function(i){return document.getElementById(i);};
-  var app=$('epr-app'), cur=$('epr-cur'), btn=$('epr-go'), sr=$('epr-sr'), arc=$('epr-arc'), pct=$('epr-pct');
-  var tabEls={}; [].forEach.call(root.querySelectorAll('.epr-tab'),function(t){tabEls[t.getAttribute('data-v')]=t;});
-  var token=0, started=false, instant=false, L=157.08;
-  var DF=[['DEM123','Nduku Mutua','Form 3 Blue','63,000','15,000','63,000'],['DEM186','Wesley Muthama','Form 4 Green','61,500','9,500','61,500'],['DEM013','Esther Atieno','Grade 10 Green','60,000','15,000','60,000'],['DEM215','Grace Waweru','Form 4 Blue','60,000','8,000','60,000'],['DEM042','Wafula Wafula','Grade 10 Blue','60,000','15,000','60,000']];
-  var CL=[['Form 3 Blue',40,2131500,1491000,640500,70.0],['Form 3 Green',40,2089000,1453500,635500,69.6],['Form 4 Blue',40,2269500,1615500,654000,71.2],['Form 4 Green',40,2279500,1564000,715500,68.6],['Grade 10 Blue',40,2014000,1448500,565500,71.9],['Grade 10 Green',40,1987000,1390500,596500,70.0]];
-  var TB=[['1000','Cash in Hand','2,190,227.00',''],['1010','M-Pesa Account','23,594,492.00',''],['1020','Bank Account','','2,441,955.00'],['1021','Tuition Account (Bank)','486,560.00',''],['4000','Fee Income','','28,480,500.00'],['4010','Canteen Income','','726,219.00'],['5070','Procurement (Purchase Orders)','5,863,955.00',''],['','Total','36,987,234.00','36,987,234.00']];
-  var CB=[['','','Balance b/f','','','','0.00'],['2026-01-05','DEMO-2026-T1','Government capitation - Term 1, tranche 1 (1 vote head)','Tuition Account (Bank)','497,280.00','','497,280.00'],['2026-01-05','DEMO-2026-T1','Government capitation - Term 1, tranche 1 (7 vote heads)','Operations Account (Bank)','1,572,000.00','','2,069,280.00'],['2026-03-07','PV-INV-2026-D01','Invoice INV-2026-D01 - ABC Supplies Ltd','Tuition Account (Bank)','','412,000.00','2,257,280.00'],['2026-03-15','PV-INV-2026-D10','Invoice INV-2026-D10 - Greenview Stationers','Operations Account (Bank)','','310,000.00','1,947,280.00']];
-  function fmt(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
-  function el(t,c,x){var e=document.createElement(t); if(c)e.className=c; if(x!=null)e.textContent=x; return e;}
-  function row(tb,cells,cls,rcols,mcols,xs){var tr=el('tr','hid'+(cls?' '+cls:'')); if(xs) tr.setAttribute('data-xs',''); cells.forEach(function(c,i){var td=el('td',(rcols.indexOf(i)>-1?'r':'')+(mcols.indexOf(i)>-1?' epr-m':''),c); tr.appendChild(td);}); tb.appendChild(tr); return tr;}
-  // defaulters
-  var dtb=$('epr-dtb'), dtr=[];
-  DF.forEach(function(d,i){
-    var tr=el('tr'); tr.setAttribute('data-s',(d[0]+' '+d[1]+' '+d[2]).toLowerCase());
-    tr.appendChild(el('td','',d[0])); tr.appendChild(el('td','',d[1])); tr.appendChild(el('td','epr-m',d[2])); tr.appendChild(el('td','epr-red','KES '+d[3]));
-    tr.appendChild(el('td','epr-or epr-m','KES '+d[4])); tr.appendChild(el('td','epr-m','KES '+d[5])); tr.appendChild(el('td','epr-red epr-m','Never'));
-    var a=el('td'); a.appendChild(el('span','epr-wa','WhatsApp')); tr.appendChild(a); dtb.appendChild(tr); dtr.push(tr);
-  });
-  // classes: chart + table
-  var chart=$('epr-chart'), ctb=$('epr-ctb'), bars=[], rates=[];
-  CL.forEach(function(c){
-    var r=el('div','epr-cr'); r.appendChild(el('b','',c[0])); var b=el('div'); var g=el('div','g'), rd=el('div','rd'); b.appendChild(g); b.appendChild(rd); r.appendChild(b); chart.appendChild(r); bars.push([g,rd,c]);
-    var tr=el('tr'); tr.appendChild(el('td','',c[0])); tr.appendChild(el('td','epr-m',String(c[1]))); tr.appendChild(el('td','epr-m','KES '+fmt(c[2]))); tr.appendChild(el('td','epr-gr','KES '+fmt(c[3]))); tr.appendChild(el('td','epr-red','KES '+fmt(c[4])));
-    var rt=el('td'); var rb=el('span','epr-rate'); var ri=el('i'); rb.appendChild(ri); rt.appendChild(rb); rt.appendChild(document.createTextNode(c[5].toFixed(1)+'%')); tr.appendChild(rt); ctb.appendChild(tr); rates.push([ri,c[5]]);
-  });
-  // trial balance + cash book (rows start hidden)
-  var tbb=$('epr-tbb'), tbr=TB.map(function(c,i){return row(tbb,c,c[1]==='Total'?'tot':'',[2,3],[],i===3||i===5);});
-  var cbb=$('epr-cbb'), cbr=CB.map(function(c,i){var tr=row(cbb,c,'',[4,5,6],[1,3],i===3); return tr;});
-  function anim(e,to,dur,pre,suf){
-    if(instant||!dur){e.textContent=pre+fmt(to)+suf;return;}
-    var t0=null,my=token;
-    requestAnimationFrame(function f(ts){
-      if(my!==token) return; if(t0===null) t0=ts;
-      var k=Math.min(1,(ts-t0)/dur), v=1-Math.pow(1-k,3);
-      e.textContent=pre+fmt(to*v)+suf; if(k<1) requestAnimationFrame(f);
-    });
-  }
-  function gauge(p,animate){arc.style.transition=animate?'stroke-dashoffset 1.4s ease-out':'none'; arc.style.strokeDashoffset=String(L*(1-p/100));}
-  function countUp(){
-    [].forEach.call(root.querySelectorAll('[data-n]'),function(e){anim(e,+e.getAttribute('data-n'),1400,'KES ','');});
-    anim(pct,70,1400,'','%'); gauge(70.2,!instant);
-  }
-  function grow(){bars.forEach(function(b,i){setTimeout(function(){b[0].style.width=(b[2][3]/1800000*100)+'%'; b[1].style.width=(b[2][4]/1800000*100)+'%'; rates[i][0].style.width=rates[i][1]+'%';},instant?0:i*140);});}
-  function setTab(v){
-    for(var k in tabEls) tabEls[k].classList.toggle('on',k===v);
-    [].forEach.call(root.querySelectorAll('.epr-v'),function(x){x.classList.remove('show');});
-    $('epr-v-'+v).classList.add('show');
-  }
-  function showRows(list){list.forEach(function(r){r.className=r.className.replace('hid','show');});}
-  function resetAll(){
-    [].forEach.call(root.querySelectorAll('[data-n]'),function(e){e.textContent='KES 0';}); pct.textContent='0%'; gauge(0,false);
-    var q=$('epr-q'); q.textContent=''; q.classList.remove('typing'); dtr.forEach(function(r){r.classList.remove('hid'); r.querySelector('.epr-wa').className='epr-wa'; r.querySelector('.epr-wa').textContent='WhatsApp';});
-    bars.forEach(function(b,i){b[0].style.width='0'; b[1].style.width='0'; rates[i][0].style.width='0';});
-    tbr.concat(cbr).forEach(function(r){r.className=r.className.replace('show','hid');});
-    $('epr-tbt').hidden=true; $('epr-cbt').hidden=true; $('epr-n1').hidden=false; $('epr-n2').hidden=false; $('epr-bal').hidden=true; setTab('ov');
-  }
-  function wait(ms,my){return new Promise(function(res,rej){setTimeout(function(){my===token?res():rej('x');},ms);});}
-  function moveTo(e,my,dx){
-    var a=app.getBoundingClientRect(), r=e.getBoundingClientRect();
-    var x=r.left-a.left+Math.min(r.width*0.55,r.width-8)+(dx||0), y=r.top-a.top+r.height*0.5;
-    cur.style.transform='translate('+x+'px,'+y+'px)'; return wait(560,my);
-  }
-  function click(e,my){
-    cur.classList.remove('click'); void cur.offsetWidth; cur.classList.add('click'); e.classList.add('press');
-    setTimeout(function(){e.classList.remove('press'); cur.classList.remove('click');},400); return wait(220,my);
-  }
-  async function visit(v,my,fn){
-    await moveTo(tabEls[v],my); await click(tabEls[v],my); setTab(v); await wait(300,my);
-    if(fn) await fn(); await wait(450,my);
-  }
-  async function tour(my){
-    cur.style.transition='none'; cur.style.transform='translate('+Math.round(app.clientWidth*0.5)+'px,'+Math.round(app.clientHeight*0.6)+'px)';
-    void cur.offsetWidth; cur.style.transition=''; cur.classList.add('vis'); await wait(500,my);
-    var rf=$('epr-ref'); await moveTo(rf,my); await click(rf,my); countUp(); await wait(1900,my);
-    await visit('df',my,async function(){
-      var q=$('epr-q'), txt='Muthama'; await moveTo(q,my); await click(q,my); q.classList.add('typing');
-      for(var i=1;i<=txt.length;i++){q.textContent=txt.slice(0,i); var s=q.textContent.toLowerCase(); dtr.forEach(function(r){r.classList.toggle('hid',r.getAttribute('data-s').indexOf(s)<0);}); await wait(80,my);}
-      q.classList.remove('typing'); await wait(250,my);
-      var wa=dtr[1].querySelector('.epr-wa'); await moveTo(wa,my); await click(wa,my); wa.classList.add('sent'); wa.textContent='Sent \u2713'; await wait(500,my);
-    });
-    await visit('cl',my,async function(){grow(); await wait(1700,my);});
-    await visit('tb',my,async function(){
-      var g=$('epr-gen1'); await moveTo(g,my); await click(g,my); $('epr-n1').hidden=true; $('epr-tbt').hidden=false;
-      for(var i=0;i<tbr.length;i++){showRows([tbr[i]]); await wait(150,my);}
-      $('epr-bal').hidden=false; await wait(500,my);
-    });
-    await visit('cb',my,async function(){
-      var g=$('epr-gen2'); await moveTo(g,my); await click(g,my); $('epr-n2').hidden=true; $('epr-cbt').hidden=false;
-      for(var i=0;i<cbr.length;i++){showRows([cbr[i]]); await wait(220,my);}
-      await wait(400,my);
-    });
-    await moveTo(tabEls.ov,my); await click(tabEls.ov,my); setTab('ov'); await wait(700,my);
-  }
-  function finish(){
-    cur.classList.remove('vis'); var m='Tour finished. Collection rate 70%, one defaulter reminded, trial balance in balance.';
-    sr.textContent=m; btn.disabled=false; btn.removeAttribute('aria-busy'); btn.textContent='Replay tour';
-  }
-  function run(inst){
-    token++; var my=token; instant=inst; resetAll(); sr.textContent=''; btn.disabled=true; btn.setAttribute('aria-busy','true');
-    if(inst){countUp(); grow(); showRows(tbr); showRows(cbr); $('epr-tbt').hidden=false; $('epr-cbt').hidden=false; $('epr-n1').hidden=true; $('epr-n2').hidden=true; $('epr-bal').hidden=false; finish(); return;}
-    tour(my).then(finish,function(e){if(e!=='x') finish();});
-  }
-  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  resetAll();
-  btn.addEventListener('click',function(){run(reduce);});
-  function go(){if(started) return; started=true; run(reduce);}
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(function(es,ob){if(es[0].isIntersecting){go(); ob.disconnect();}},{threshold:.3}).observe(root);
-  } else { go(); }
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
-})();
-</script>
-<!-- EP:SCRIPT:END -->
-<section class="sec" id="features">
-      <div class="sec-inner">
-        <h2 class="sec-title">Everything your school needs, in one place.</h2>
-        <div class="idx-list">
-          {features.map((f) => (
-            <a class="idx-row" href={f.href ?? '/#features'} aria-label={f.title}>
-              <span class="idx-name">{f.title}</span>
-              <span class="idx-text">{f.text}</span>
-              {f.href && <span class="idx-arrow" aria-hidden="true">→</span>}
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- PORTALS -->
-    <!-- EP:FIN:START -->
-<section id="ep-fin" aria-labelledby="epr-title">
-  <div class="epr-wrap">
-    <div class="epr-copy">
-      <h2 id="epr-title">Financial reports, from collection rate to cash book.</h2>
-      <p>Follow the cursor through the reports your bursar and principal use: overview, defaulters, classes, trial balance and cash book.</p>
-      <ul class="epr-pts">
-        <li>See billed, collected and outstanding fees, with the collection rate, at a glance.</li>
-        <li>Find defaulters and send a WhatsApp reminder from the same row.</li>
-        <li>Compare classes side by side on what was billed, collected and is still owed.</li>
-        <li>Generate a trial balance and cash book for any period, and download them as Excel (CSV) or PDF.</li>
-      </ul>
-      <button class="epr-go" type="button" id="epr-go">Replay tour</button>
-    </div>
-    <div>
-      <div class="epr-app" id="epr-app" role="img" aria-label="Animated tour of the financial reports: the overview counts up, a defaulter is found and sent a WhatsApp reminder, classes are compared, then a trial balance and cash book are generated">
-        <div aria-hidden="true">
-          <div class="epr-top">
-            <div><b>Financial Reports</b><small>Fee collection analytics, defaulters &amp; payment breakdown</small></div>
-            <div class="epr-sel"><div class="epr-xs"><label>YEAR</label><div class="epr-inp">2026</div></div><div class="epr-xs"><label>TERM</label><div class="epr-inp">Term 3</div></div><div class="epr-xs"><label>CLASS</label><div class="epr-inp">All Classes</div></div><span class="epr-b green" id="epr-ref">Refresh</span></div>
-          </div>
-          <div class="epr-tabs">
-            <span class="epr-tab on" data-v="ov">Overview</span><span class="epr-tab" data-v="df">Defaulters<em>143</em></span><span class="epr-tab" data-v="cl">Classes</span><span class="epr-tab" data-v="tb">Trial Balance</span><span class="epr-tab" data-v="cb">Cash Book</span>
-          </div>
-          <div class="epr-views">
-            <div class="epr-v show" id="epr-v-ov"><div class="epr-ovg">
-              <div class="epr-gauge"><svg viewBox="0 0 120 72"><path d="M10 62 A50 50 0 0 1 110 62" fill="none" stroke="#E5E7EB" stroke-width="10" stroke-linecap="round"/><path id="epr-arc" d="M10 62 A50 50 0 0 1 110 62" fill="none" stroke="#F59E0B" stroke-width="10" stroke-linecap="round" stroke-dasharray="157.08" stroke-dashoffset="157.08"/></svg><b id="epr-pct">0%</b><span>Collection Rate</span></div>
-              <div class="epr-kp">
-                <div class="epr-k" style="--kc:#1F2A44"><span>Total Billed</span><b data-n="12770500">KES 0</b><small>240 students</small></div>
-                <div class="epr-k" style="--kc:#22C55E"><span>Collected</span><b data-n="8963000">KES 0</b><small>70.2% of billed</small></div>
-                <div class="epr-k" style="--kc:#EF4444"><span>Outstanding</span><b data-n="3807500">KES 0</b><small>143 defaulters</small></div>
-                <div class="epr-k epr-xs" style="--kc:#22C55E"><span>Canteen Income</span><b data-n="0">KES 0</b><small>this term</small></div>
-                <div class="epr-k epr-xs" style="--kc:#22C55E"><span>Government Capitation</span><b data-n="1067712">KES 0</b><small>this term</small></div>
-                <div class="epr-k epr-xs" style="--kc:#EF4444"><span>Procurement Spend</span><b data-n="1051000">KES 0</b><small>this term</small></div>
-                <div class="epr-k epr-xs" style="--kc:#EF4444"><span>Payroll Expenditure</span><b data-n="0">KES 0</b><small>this term</small></div>
-                <div class="epr-k" style="--kc:#22C55E"><span>Net Position</span><b data-n="8979712">KES 0</b><small>fees + capitation + canteen &minus; expenses</small></div>
-                <div class="epr-k" style="--kc:#22C55E"><span>Via M-Pesa</span><b data-n="7422000">KES 0</b><small>468 transactions</small></div>
-                <div class="epr-k epr-xs" style="--kc:#3B82F6"><span>Via Cash</span><b data-n="489500">KES 0</b><small>32 transactions</small></div>
-                <div class="epr-k epr-xs" style="--kc:#1F2A44"><span>Via Bank</span><b data-n="1051500">KES 0</b><small>66 transactions</small></div>
-              </div></div></div>
-            <div class="epr-v" id="epr-v-df"><div class="epr-box">
-              <div class="epr-dh"><div><b>Fee Defaulters</b><small>25 students with outstanding balances</small></div><div class="epr-inp" id="epr-q" data-ph="Search name, admission no, class..."></div><span class="epr-b blue epr-m">Export CSV</span></div>
-              <div class="epr-sc"><table class="epr-t" id="epr-dt"><thead><tr><th>Adm No</th><th>Student Name</th><th class="epr-m">Class</th><th>Total Owed</th><th class="epr-m">Carried Fwd</th><th class="epr-m">This Term</th><th class="epr-m">Last Payment</th><th>Actions</th></tr></thead><tbody id="epr-dtb"></tbody></table></div>
-            </div></div>
-            <div class="epr-v" id="epr-v-cl"><div class="epr-box"><div id="epr-chart"></div><div class="epr-ax"><span>0k</span><span>450k</span><span>900k</span><span>1350k</span><span>1800k</span></div>
-              <div class="epr-sc"><table class="epr-t"><thead><tr><th>Class</th><th class="epr-m">Students</th><th class="epr-m">Billed</th><th>Collected</th><th>Outstanding</th><th>Rate</th></tr></thead><tbody id="epr-ctb"></tbody></table></div></div></div>
-            <div class="epr-v" id="epr-v-tb"><div class="epr-box">
-              <div class="epr-ctl"><div><label>FROM</label><div class="epr-inp">01/01/2026</div></div><div><label>TO</label><div class="epr-inp">11/06/2026</div></div><span class="epr-b green" id="epr-gen1">Generate</span><span class="sp"></span><span class="epr-b blue epr-m">Download Excel (CSV)</span><span class="epr-b dark epr-m">Download PDF</span></div>
-              <p class="epr-h">Trial Balance</p><p class="epr-sub">For the period 2026-01-01 to 2026-11-06</p>
-              <div class="epr-note0" id="epr-n1">Choose a period, then press Generate.</div>
-              <div class="epr-sc"><table class="epr-t" id="epr-tbt" hidden><thead><tr><th>Code</th><th>Account</th><th class="r">Debit (KES)</th><th class="r">Credit (KES)</th></tr></thead><tbody id="epr-tbb"></tbody></table></div>
-              <div class="epr-bal" id="epr-bal" hidden>Debits equal credits - trial balance is in balance.</div>
-            </div></div>
-            <div class="epr-v" id="epr-v-cb"><div class="epr-box">
-              <div class="epr-ctl"><div><label>FROM</label><div class="epr-inp">01/01/2026</div></div><div><label>TO</label><div class="epr-inp">11/06/2026</div></div><div class="epr-m"><label>ACCOUNT</label><div class="epr-inp">All accounts</div></div><span class="epr-b green" id="epr-gen2">Generate</span><span class="sp"></span><span class="epr-b blue epr-m">Download Excel (CSV)</span><span class="epr-b dark epr-m">Download PDF</span></div>
-              <p class="epr-h">Cash Book</p><p class="epr-sub">All accounts | 2026-01-01 to 2026-11-06 | 1,874 entries</p>
-              <div class="epr-note0" id="epr-n2">Choose a period, then press Generate.</div>
-              <div class="epr-sc"><table class="epr-t" id="epr-cbt" hidden><thead><tr><th>Date</th><th class="epr-m">Ref</th><th>Description</th><th class="epr-m">Account</th><th class="r">Receipts</th><th class="r">Payments</th><th class="r">Balance</th></tr></thead><tbody id="epr-cbb"></tbody></table></div>
-            </div></div>
-          </div>
-        </div>
-        <div class="epr-cur" id="epr-cur"><i></i><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.8L9 19z" fill="#111" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
-      </div>
-      <div class="epr-sr" id="epr-sr" role="status"></div>
-      <p class="epr-note">An illustration using a sample school and sample figures.</p>
-    </div>
-  </div>
-</section>
-<!-- EP:FIN:END -->
-<section class="sec sec--tint" id="portals">
-      <div class="sec-inner">
-        <h2 class="sec-title">A portal for every role.</h2>
-        <div class="idx-list">
-          {portals.map((p) => (
-            <a class="idx-row" href={p.href ?? '/#portals'}>
-              <span class="idx-name">{p.name}</span>
-              <span class="idx-text">{p.text}</span>
-              {p.href && <span class="idx-arrow" aria-hidden="true">→</span>}
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- PRICING -->
-    <!-- EP:FEES:START -->
-<section id="ep-fees" aria-labelledby="epm-title">
+</div>
+      <div class="ept-pane" id="ep-fees" role="tabpanel" aria-labelledby="ept-t-fees" hidden>
   <div class="epm-wrap">
     <div class="epm-copy">
-      <h2 id="epm-title">Fee management from payment to audit trail.</h2>
+      <h3 id="epm-title">Fee management from payment to audit trail.</h3>
       <p>Follow the cursor through the same screens your bursar uses: fee records, new fees, fee structures, payments, SMS and automatic reminders, and the audit trail.</p>
       <ul class="epm-pts">
         <li>Payments land on the right student and update the totals straight away.</li>
@@ -1129,7 +665,6 @@ const faqJsonLd = JSON.stringify({
         <li>Reminders go out by SMS and WhatsApp, on demand or on a schedule.</li>
         <li>Every change is written to an audit trail that can&rsquo;t be edited or deleted.</li>
       </ul>
-      <button class="epm-go" type="button" id="epm-go">Replay tour</button>
     </div>
     <div>
       <div class="epm-app" id="epm-app" role="img" aria-label="Animated tour of the fee management screens: a cursor visits fee records, add fee, fee structure, edit payments, SMS reminders, automatic reminders and the audit trail">
@@ -1198,9 +733,567 @@ const faqJsonLd = JSON.stringify({
       <p class="epm-note">An illustration using sample students and figures.</p>
     </div>
   </div>
+</div>
+      <div class="ept-pane" id="ep-fin" role="tabpanel" aria-labelledby="ept-t-fin" hidden>
+  <div class="epr-wrap">
+    <div class="epr-copy">
+      <h3 id="epr-title">Financial reports, from collection rate to cash book.</h3>
+      <p>Follow the cursor through the reports your bursar and principal use: overview, defaulters, classes, trial balance and cash book.</p>
+      <ul class="epr-pts">
+        <li>See billed, collected and outstanding fees, with the collection rate, at a glance.</li>
+        <li>Find defaulters and send a WhatsApp reminder from the same row.</li>
+        <li>Compare classes side by side on what was billed, collected and is still owed.</li>
+        <li>Generate a trial balance and cash book for any period, and download them as Excel (CSV) or PDF.</li>
+      </ul>
+    </div>
+    <div>
+      <div class="epr-app" id="epr-app" role="img" aria-label="Animated tour of the financial reports: the overview counts up, a defaulter is found and sent a WhatsApp reminder, classes are compared, then a trial balance and cash book are generated">
+        <div aria-hidden="true">
+          <div class="epr-top">
+            <div><b>Financial Reports</b><small>Fee collection analytics, defaulters &amp; payment breakdown</small></div>
+            <div class="epr-sel"><div class="epr-xs"><label>YEAR</label><div class="epr-inp">2026</div></div><div class="epr-xs"><label>TERM</label><div class="epr-inp">Term 3</div></div><div class="epr-xs"><label>CLASS</label><div class="epr-inp">All Classes</div></div><span class="epr-b green" id="epr-ref">Refresh</span></div>
+          </div>
+          <div class="epr-tabs">
+            <span class="epr-tab on" data-v="ov">Overview</span><span class="epr-tab" data-v="df">Defaulters<em>143</em></span><span class="epr-tab" data-v="cl">Classes</span><span class="epr-tab" data-v="tb">Trial Balance</span><span class="epr-tab" data-v="cb">Cash Book</span>
+          </div>
+          <div class="epr-views">
+            <div class="epr-v show" id="epr-v-ov"><div class="epr-ovg">
+              <div class="epr-gauge"><svg viewBox="0 0 120 72"><path d="M10 62 A50 50 0 0 1 110 62" fill="none" stroke="#E5E7EB" stroke-width="10" stroke-linecap="round"/><path id="epr-arc" d="M10 62 A50 50 0 0 1 110 62" fill="none" stroke="#F59E0B" stroke-width="10" stroke-linecap="round" stroke-dasharray="157.08" stroke-dashoffset="157.08"/></svg><b id="epr-pct">0%</b><span>Collection Rate</span></div>
+              <div class="epr-kp">
+                <div class="epr-k" style="--kc:#1F2A44"><span>Total Billed</span><b data-n="12770500">KES 0</b><small>240 students</small></div>
+                <div class="epr-k" style="--kc:#22C55E"><span>Collected</span><b data-n="8963000">KES 0</b><small>70.2% of billed</small></div>
+                <div class="epr-k" style="--kc:#EF4444"><span>Outstanding</span><b data-n="3807500">KES 0</b><small>143 defaulters</small></div>
+                <div class="epr-k epr-xs" style="--kc:#22C55E"><span>Canteen Income</span><b data-n="0">KES 0</b><small>this term</small></div>
+                <div class="epr-k epr-xs" style="--kc:#22C55E"><span>Government Capitation</span><b data-n="1067712">KES 0</b><small>this term</small></div>
+                <div class="epr-k epr-xs" style="--kc:#EF4444"><span>Procurement Spend</span><b data-n="1051000">KES 0</b><small>this term</small></div>
+                <div class="epr-k epr-xs" style="--kc:#EF4444"><span>Payroll Expenditure</span><b data-n="0">KES 0</b><small>this term</small></div>
+                <div class="epr-k" style="--kc:#22C55E"><span>Net Position</span><b data-n="8979712">KES 0</b><small>fees + capitation + canteen &minus; expenses</small></div>
+                <div class="epr-k" style="--kc:#22C55E"><span>Via M-Pesa</span><b data-n="7422000">KES 0</b><small>468 transactions</small></div>
+                <div class="epr-k epr-xs" style="--kc:#3B82F6"><span>Via Cash</span><b data-n="489500">KES 0</b><small>32 transactions</small></div>
+                <div class="epr-k epr-xs" style="--kc:#1F2A44"><span>Via Bank</span><b data-n="1051500">KES 0</b><small>66 transactions</small></div>
+              </div></div></div>
+            <div class="epr-v" id="epr-v-df"><div class="epr-box">
+              <div class="epr-dh"><div><b>Fee Defaulters</b><small>25 students with outstanding balances</small></div><div class="epr-inp" id="epr-q" data-ph="Search name, admission no, class..."></div><span class="epr-b blue epr-m">Export CSV</span></div>
+              <div class="epr-sc"><table class="epr-t" id="epr-dt"><thead><tr><th>Adm No</th><th>Student Name</th><th class="epr-m">Class</th><th>Total Owed</th><th class="epr-m">Carried Fwd</th><th class="epr-m">This Term</th><th class="epr-m">Last Payment</th><th>Actions</th></tr></thead><tbody id="epr-dtb"></tbody></table></div>
+            </div></div>
+            <div class="epr-v" id="epr-v-cl"><div class="epr-box"><div id="epr-chart"></div><div class="epr-ax"><span>0k</span><span>450k</span><span>900k</span><span>1350k</span><span>1800k</span></div>
+              <div class="epr-sc"><table class="epr-t"><thead><tr><th>Class</th><th class="epr-m">Students</th><th class="epr-m">Billed</th><th>Collected</th><th>Outstanding</th><th>Rate</th></tr></thead><tbody id="epr-ctb"></tbody></table></div></div></div>
+            <div class="epr-v" id="epr-v-tb"><div class="epr-box">
+              <div class="epr-ctl"><div><label>FROM</label><div class="epr-inp">01/01/2026</div></div><div><label>TO</label><div class="epr-inp">11/06/2026</div></div><span class="epr-b green" id="epr-gen1">Generate</span><span class="sp"></span><span class="epr-b blue epr-m">Download Excel (CSV)</span><span class="epr-b dark epr-m">Download PDF</span></div>
+              <p class="epr-h">Trial Balance</p><p class="epr-sub">For the period 2026-01-01 to 2026-11-06</p>
+              <div class="epr-note0" id="epr-n1">Choose a period, then press Generate.</div>
+              <div class="epr-sc"><table class="epr-t" id="epr-tbt" hidden><thead><tr><th>Code</th><th>Account</th><th class="r">Debit (KES)</th><th class="r">Credit (KES)</th></tr></thead><tbody id="epr-tbb"></tbody></table></div>
+              <div class="epr-bal" id="epr-bal" hidden>Debits equal credits - trial balance is in balance.</div>
+            </div></div>
+            <div class="epr-v" id="epr-v-cb"><div class="epr-box">
+              <div class="epr-ctl"><div><label>FROM</label><div class="epr-inp">01/01/2026</div></div><div><label>TO</label><div class="epr-inp">11/06/2026</div></div><div class="epr-m"><label>ACCOUNT</label><div class="epr-inp">All accounts</div></div><span class="epr-b green" id="epr-gen2">Generate</span><span class="sp"></span><span class="epr-b blue epr-m">Download Excel (CSV)</span><span class="epr-b dark epr-m">Download PDF</span></div>
+              <p class="epr-h">Cash Book</p><p class="epr-sub">All accounts | 2026-01-01 to 2026-11-06 | 1,874 entries</p>
+              <div class="epr-note0" id="epr-n2">Choose a period, then press Generate.</div>
+              <div class="epr-sc"><table class="epr-t" id="epr-cbt" hidden><thead><tr><th>Date</th><th class="epr-m">Ref</th><th>Description</th><th class="epr-m">Account</th><th class="r">Receipts</th><th class="r">Payments</th><th class="r">Balance</th></tr></thead><tbody id="epr-cbb"></tbody></table></div>
+            </div></div>
+          </div>
+        </div>
+        <div class="epr-cur" id="epr-cur"><i></i><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.8L9 19z" fill="#111" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="epr-sr" id="epr-sr" role="status"></div>
+      <p class="epr-note">An illustration using a sample school and sample figures.</p>
+    </div>
+  </div>
+</div>
+    </div>
+    <div class="ept-cta">
+      <p>Like what you see?</p>
+      <a class="ept-b pri" href="#register">Start free, no card needed</a>
+      <a class="ept-b" href="https://app.edupath.co.ke/login?demo=1">Try the live demo</a>
+      <a class="ept-b wa" href="https://wa.me/254711606968?text=Hello%20Edupath%2C%20I%27d%20like%20a%20walkthrough" target="_blank" rel="noopener">Chat on WhatsApp</a>
+    </div>
+  </div>
 </section>
-<!-- EP:FEES:END -->
-<section class="sec" id="pricing">
+<!-- EP:SOLVE:END -->
+<!-- EP:SCRIPT:START -->
+<script is:inline>(function(){
+  function init(){
+  var root=document.getElementById('ep-solve'); if(!root) return;
+  var $=function(i){return document.getElementById(i);};
+  var panel=$('eps-panel'), cur=$('eps-cur'), modal=$('eps-modal'), grid=$('eps-grid'), log=$('eps-log'), sl=$('eps-sl'), sr=$('eps-sr'), ghost=$('eps-ghost');
+  var D=['Monday','Tuesday','Wednesday','Thursday','Friday'];
+  var P=[['08:00','08:40'],['08:45','09:25'],['09:30','10:10'],['10:30','11:10'],['11:15','11:55'],['12:00','12:40'],['13:20','14:00'],['14:05','14:45'],['14:50','15:30']];
+  var BR={3:'10:10 - 10:30',6:'12:40 - 13:20'};
+  var S={
+    MAT:['Mathematics','David Kamau','#EA580C','Math'], KIS:['Kiswahili','Fatuma Hassan','#0D9488','Kisw'], PHY:['Physics','Kiprop Ruto','#DC2626','Phys'],
+    BIO:['Biology','Otieno Odhiambo','#A23FE0','Bio'], CS:['Computer Studies','Beatrice Ndungu','#16A34A','CS'], ENG:['English','Grace Wanjiku','#6D5BD0','Eng'],
+    PE:['Physical Education','Samuel Mwenda','#D97706','PE'], CHE:['Chemistry','Otieno Odhiambo','#0891B2','Chem']
+  };
+  var G=[
+    ['MAT','ENG','KIS','PE','PHY','CHE','BIO','CS','MAT'],
+    ['KIS','PE','PHY','CHE','BIO','CS','MAT','ENG','KIS'],
+    ['PHY','CHE','BIO','CS','MAT','ENG','KIS','PE','PHY'],
+    ['BIO','CS','MAT','ENG','KIS','PE','PHY','CHE','BIO'],
+    ['CS','MAT','ENG','KIS','PE','PHY','CHE','BIO','CS']
+  ];
+  var CL=[7,20,33], cells={}, order=[], total=45, token=0, started=false, instant=false, lastMsg='';
+  function el(t,c,x){var e=document.createElement(t); if(c)e.className=c; if(x!=null)e.textContent=x; return e;}
+  var tb={}; [].forEach.call(root.querySelectorAll('.eps-tb'),function(t){tb[t.getAttribute('data-t')]=t;});
+
+  // timetable grid
+  grid.appendChild(el('div','eps-h','Period'));
+  D.forEach(function(d){grid.appendChild(el('div','eps-h',d));});
+  for(var r=0;r<9;r++){
+    if(BR[r]){grid.appendChild(el('div','eps-brk','Break')); grid.appendChild(el('div','eps-brkt',BR[r]));}
+    var per=el('div','eps-per'), pb=el('b'); pb.appendChild(el('span','eps-f','Period '+(r+1))); pb.appendChild(el('span','eps-s','P'+(r+1)));
+    per.appendChild(pb); per.appendChild(el('span','eps-t',P[r][0]+' - '+P[r][1])); grid.appendChild(per);
+    for(var c=0;c<5;c++){var cell=el('div','eps-cell'); cells[r+'-'+c]=cell; grid.appendChild(cell);}
+  }
+  for(var i=0;i<45;i++){var k=(i*7)%45; order.push([k%9,Math.floor(k/9)]);}
+  // availability grid
+  var av=$('eps-av'), avc=[]; av.appendChild(el('div','',''));
+  ['Mon','Tue','Wed','Thu','Fri'].forEach(function(d){av.appendChild(el('div','',d));});
+  for(var r2=0;r2<6;r2++){av.appendChild(el('div','','P'+(r2+1))); for(var c2=0;c2<5;c2++){var a=el('div','eps-ac'); avc.push(a); av.appendChild(a);}}
+  // requirement rows, counted from the timetable itself
+  var cnt={}; G.forEach(function(day){day.forEach(function(x){cnt[x]=(cnt[x]||0)+1;});});
+  var rq=$('eps-rq'); Object.keys(S).forEach(function(k,i){var row=el('div','eps-rr'+(i>3?' eps-xs':'')); row.appendChild(el('b','',S[k][0])); row.appendChild(el('span','',S[k][1])); row.appendChild(el('span','',cnt[k]+' periods')); rq.appendChild(row);});
+  rq.appendChild(el('div','eps-sum','8 subjects, 45 of 45 periods'));
+  // move-lessons board (Mon-Wed, periods 1-3)
+  var mb=$('eps-mb'), mc=[];
+  function mini(e,code){e.className='eps-mc ml'; e.style.setProperty('--c',S[code][2]); e.innerHTML=''; e.appendChild(el('b','',S[code][0])); e.appendChild(el('i','',S[code][1]));}
+  function mini0(e,go){e.className='eps-mc'+(go?' go':''); e.style.removeProperty('--c'); e.innerHTML='';}
+  function buildBoard(){
+    mb.innerHTML=''; mc=[]; mb.appendChild(el('div','',''));
+    ['Mon','Tue','Wed'].forEach(function(d){mb.appendChild(el('div','',d));});
+    for(var r=0;r<3;r++){mb.appendChild(el('div','','P'+(r+1))); mc[r]=[]; for(var c=0;c<3;c++){var e=el('div','eps-mc'); mc[r][c]=e; mb.appendChild(e); if(r===1&&c===2) mini0(e,true); else mini(e,G[c][r]);}}
+  }
+  function fill(key,code,bad){
+    var s=S[code], e=cells[key]; e.innerHTML=''; e.style.setProperty('--c',bad?'#B91C1C':s[2]); e.className='eps-cell '+(bad?'bad':'on');
+    var nb=el('b'); nb.appendChild(el('span','eps-f',s[0])); nb.appendChild(el('span','eps-s',s[3])); e.appendChild(nb); e.appendChild(el('i','',s[1]));
+  }
+  function clear(key){var e=cells[key]; e.className='eps-cell'; e.innerHTML=''; e.style.removeProperty('--c');}
+  function slot(o){return D[o[1]].slice(0,3)+' '+P[o[0]][0];}
+  function say(cls,t){log.textContent=t; log.className='eps-log'+(cls?' '+cls:'');}
+  function resetAll(){
+    for(var k in cells) clear(k); sl.textContent='0/45'; say('','Waiting for the timetable to be generated\u2026');
+    modal.classList.remove('on'); [].forEach.call(root.querySelectorAll('.eps-d'),function(d){d.classList.remove('on');});
+    $('eps-brkrow').classList.remove('hl');
+    ['eps-rn','eps-rs','eps-csel'].forEach(function(i){var e=$(i); e.textContent=''; e.classList.remove('typing');});
+    $('eps-asel').textContent='-- Select --'; $('eps-rnew').hidden=true; av.hidden=true; avc.forEach(function(a){a.classList.remove('off');});
+    rq.hidden=true; $('eps-fch').hidden=false; $('eps-fres').hidden=true; $('eps-g1').classList.remove('on');
+    buildBoard(); ghost.hidden=true; $('eps-cv0').hidden=false; $('eps-cv1').hidden=true;
+    $('eps-rp0').hidden=false; $('eps-rp1').hidden=true; $('eps-fixb').textContent='Find the smallest fix';
+    $('eps-h0').hidden=false; $('eps-h1').hidden=true; $('eps-pb').textContent='Print or save as PDF';
+  }
+  var paused=false, gates=[];
+  function release(){var g=gates.splice(0); g.forEach(function(f){f();});}
+  function wait(ms,my){return new Promise(function(res,rej){setTimeout(function(){if(my!==token) return rej('x'); if(!paused) return res(); gates.push(function(){my===token?res():rej('x');});},ms);});}
+  function moveTo(e,my,dx){
+    var a=panel.getBoundingClientRect(), r=e.getBoundingClientRect();
+    var x=r.left-a.left+Math.min(r.width*0.55,r.width-8)+(dx||0), y=r.top-a.top+r.height*0.5;
+    cur.style.transform='translate('+x+'px,'+y+'px)'; return wait(560,my);
+  }
+  function click(e,my){
+    cur.classList.remove('click'); void cur.offsetWidth; cur.classList.add('click'); e.classList.add('press');
+    setTimeout(function(){e.classList.remove('press'); cur.classList.remove('click');},400); return wait(200,my);
+  }
+  async function type(e,text,my){e.classList.add('typing'); for(var i=1;i<=text.length;i++){e.textContent=text.slice(0,i); await wait(38,my);} e.classList.remove('typing');}
+  function open(k){[].forEach.call(root.querySelectorAll('.eps-d'),function(d){d.classList.remove('on');}); $('eps-d-'+k).classList.add('on'); modal.classList.add('on');}
+  function close(){modal.classList.remove('on');}
+  async function tool(k,my,fn){
+    await moveTo(tb[k],my); await click(tb[k],my); open(k); await wait(300,my);
+    if(fn) await fn(); await wait(200,my); close(); await wait(150,my);
+  }
+  async function generate(my){
+    var caught=0; say('','Generating timetable\u2026');
+    for(var i=0;i<order.length;i++){
+      var o=order[i], key=o[0]+'-'+o[1], code=G[o[1]][o[0]], s=S[code];
+      if(CL.indexOf(i)>-1){
+        var w=null; for(var j=order.length-1;j>i;j--){if(order[j][0]+'-'+order[j][1]!==key){w=order[j];break;}}
+        var wk=w[0]+'-'+w[1], why=(code==='CHE'||code==='PHY'||code==='BIO')?'the lab is booked by another class':(code==='CS')?'the computer room is booked by another class':s[1]+' is already teaching another class';
+        fill(wk,code,true); say('bad','Clash on '+slot(w)+': '+why+'. Moving '+s[0]+'\u2026'); await wait(750,my);
+        clear(wk); fill(key,code); caught++; say('','Moved '+s[0]+' to '+slot(o)+'.'); await wait(200,my);
+      } else { fill(key,code); say('','Placed '+s[0]+' on '+slot(o)+'.'); }
+      sl.textContent=(i+1)+'/45'; await wait(38,my);
+    }
+    lastMsg='All 45 lessons placed. '+caught+' clashes caught and fixed. 0 clashes in the final timetable.'; say('',lastMsg);
+  }
+  async function tour(my){
+    cur.style.transition='none'; cur.style.transform='translate('+Math.round(panel.clientWidth*0.62)+'px,'+Math.round(panel.clientHeight*0.3)+'px)';
+    void cur.offsetWidth; cur.style.transition=''; cur.classList.add('vis'); await wait(500,my);
+    await tool('bell',my,async function(){var r=$('eps-brkrow'); await moveTo(r,my); await click(r,my); r.classList.add('hl'); await wait(350,my);});
+    await tool('rooms',my,async function(){
+      var n=$('eps-rn'), s=$('eps-rs'), a=$('eps-radd');
+      await moveTo(n,my); await click(n,my); await type(n,'Lab C',my);
+      await moveTo(s,my); await click(s,my); await type(s,'40',my);
+      await moveTo(a,my); await click(a,my); $('eps-rnew').hidden=false; await wait(350,my);
+    });
+    await tool('avail',my,async function(){
+      var sel=$('eps-asel'); await moveTo(sel,my); await click(sel,my); sel.textContent='Kiprop Ruto'; av.hidden=false; await wait(200,my);
+      var c=avc[3*5+4]; await moveTo(c,my); await click(c,my); c.classList.add('off'); await wait(350,my);
+    });
+    await tool('req',my,async function(){
+      var sel=$('eps-csel'); await moveTo(sel,my); await click(sel,my); sel.textContent='Grade 10 Green (Grade 10)'; rq.hidden=false; await wait(700,my);
+    });
+    await tool('feas',my,async function(){await wait(700,my); $('eps-fch').hidden=true; $('eps-fres').hidden=false; await wait(700,my);});
+    await tool('gen',my,async function(){
+      var c=$('eps-g1'), g=$('eps-gobtn'); await moveTo(c,my); await click(c,my); c.classList.add('on'); await wait(200,my);
+      await moveTo(g,my); await click(g,my);
+    });
+    await generate(my); await wait(500,my);
+    await tool('move',my,async function(){
+      var src=mc[0][0], dst=mc[1][2];
+      await moveTo(src,my); ghost.textContent=S.MAT[0]; ghost.style.setProperty('--c',S.MAT[2]); mini0(src,false); ghost.hidden=false; await wait(200,my);
+      await moveTo(dst,my); ghost.hidden=true; mini(dst,'MAT'); await wait(450,my);
+    });
+    await tool('cover',my,async function(){var b=$('eps-recb'); await moveTo(b,my); await click(b,my); $('eps-cv0').hidden=true; $('eps-cv1').hidden=false; await wait(600,my);});
+    await tool('repair',my,async function(){var b=$('eps-fixb'); await moveTo(b,my); await click(b,my); $('eps-rp0').hidden=true; $('eps-rp1').hidden=false; await wait(600,my);});
+    await tool('hist',my,async function(){await wait(350,my); $('eps-h0').hidden=true; $('eps-h1').hidden=false; await moveTo($('eps-rstr'),my); await wait(350,my);});
+    await tool('print',my,async function(){var b=$('eps-pb'); await moveTo(b,my); await click(b,my); b.textContent='Preparing PDF\u2026'; await wait(500,my); b.textContent='PDF ready'; await wait(250,my);});
+    await moveTo(tb.gen,my); await wait(300,my);
+  }
+  function finish(){
+    cur.classList.remove('vis'); say('',lastMsg); sr.textContent='Tour finished. '+lastMsg;
+    if(window.EPTours&&window.EPTours.onDone) window.EPTours.onDone('solve');
+  }
+  function run(inst){
+    token++; var my=token; instant=inst; resetAll(); sr.textContent=''; if(inst){order.forEach(function(o){fill(o[0]+'-'+o[1],G[o[1]][o[0]]);}); sl.textContent='45/45'; lastMsg='All 45 lessons placed. 0 clashes in the final timetable.'; finish(); return;}
+    tour(my).then(finish,function(e){if(e!=='x') finish();});
+  }
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  resetAll();
+  window.EPTours=window.EPTours||{};
+  window.EPTours.solve={
+    start:function(){run(reduce);},
+    stop:function(){token++; paused=false; release(); cur.classList.remove('vis'); modal.classList.remove('on'); ghost.hidden=true;},
+    pause:function(){paused=true;}, resume:function(){paused=false; release();}
+  };
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+})();
+(function(){
+  function init(){
+  var root=document.getElementById('ep-fees'); if(!root) return;
+  var $=function(i){return document.getElementById(i);};
+  var app=$('epm-app'), cur=$('epm-cur'), body=$('epm-body'), feed=$('epm-feed'), cCol=$('epm-col'), cOut=$('epm-out'), sr=$('epm-sr');
+  var tabEls={}; [].forEach.call(root.querySelectorAll('.epm-tab'),function(t){tabEls[t.getAttribute('data-v')]=t;});
+  var R=[['Dorothy Cynthia Mutiso','DEM237',59500,29000],['Moses Hassan Kioko','DEM238',50000,0],['Kamau David Kamau','DEM240',52000,52000],['Felicity Nafula Nzomo','DEM239',67000,67000],['Kenneth Nicholas Makau','DEM236',52000,39500]];
+  var E=[{i:0,amt:30500},{i:1,amt:20000},{i:4,amt:12500}];
+  var S, trs, token=0, started=false, instant=false;
+  function fmt(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+  function st(r){return r.p>=r.t?'PAID':(r.p>0?'PARTIAL':'UNPAID');}
+  function anim(el,from,to,dur){
+    if(instant||from===to){el.textContent='KES '+fmt(to);return;}
+    var t0=null,my=token;
+    requestAnimationFrame(function f(ts){
+      if(my!==token) return; if(t0===null) t0=ts;
+      var k=Math.min(1,(ts-t0)/dur), e=1-Math.pow(1-k,3);
+      el.textContent='KES '+fmt(from+(to-from)*e);
+      if(k<1) requestAnimationFrame(f);
+    });
+  }
+  function build(){
+    S={rows:R.map(function(r){return {n:r[0],a:r[1],t:r[2],p:r[3]};}),col:28480500,out:6743500};
+    body.innerHTML=''; trs=[];
+    S.rows.forEach(function(r){
+      var tr=document.createElement('tr');
+      tr.innerHTML='<td>'+r.n+'</td><td>'+r.a+'</td><td>THIRD</td><td>Tuition Fees</td><td>KES '+fmt(r.t)+'</td><td class="epm-pd">KES '+fmt(r.p)+'</td><td class="epm-bl">KES '+fmt(r.t-r.p)+'</td><td><span class="epm-chip '+st(r)+'">'+st(r)+'</span></td><td><span class="epm-act">Actions \u25BE</span></td>';
+      body.appendChild(tr); trs.push(tr);
+    });
+    cCol.textContent='KES '+fmt(S.col); cOut.textContent='KES '+fmt(S.out);
+  }
+  function chip(i,pop){var c=trs[i].querySelector('.epm-chip'),s=st(S.rows[i]); c.className='epm-chip '+s+(pop?' pop':''); c.textContent=s;}
+  function say(cls,t){feed.className='epm-feed'+(cls?' '+cls:''); feed.innerHTML=''; var s=document.createElement('span'); s.textContent=t; feed.appendChild(s);}
+  function pay(i,amt){
+    var r=S.rows[i], tr=trs[i], pd=tr.querySelector('.epm-pd'), bl=tr.querySelector('.epm-bl');
+    var p0=r.p, c0=S.col, o0=S.out; r.p+=amt; S.col+=amt; S.out-=amt;
+    if(!instant) tr.classList.add('flash');
+    anim(pd,p0,r.p,700); anim(bl,r.t-p0,r.t-r.p,700); anim(cCol,c0,S.col,900); anim(cOut,o0,S.out,900);
+    if(instant){chip(i,false);return;}
+    setTimeout(function(){chip(i,true);},700);
+    setTimeout(function(){tr.classList.remove('flash');},1400);
+  }
+  function setTab(v){
+    for(var k in tabEls) tabEls[k].classList.toggle('on',k===v);
+    [].forEach.call(root.querySelectorAll('.epm-v'),function(x){x.classList.remove('show');});
+    $('epm-v-'+v).classList.add('show');
+  }
+  function resetViews(){
+    ['epm-i-stu','epm-i-amt','epm-i-fs','epm-i-find'].forEach(function(i){var e=$(i); e.textContent=''; e.classList.remove('typing');});
+    $('epm-chk').classList.remove('on'); $('epm-save').className='epm-ind'; $('epm-save').textContent='Save Fee Structure';
+    $('epm-empty').hidden=false; $('epm-hit').hidden=true; $('epm-a1').classList.remove('sel');
+    $('epm-send').className='epm-ind'; $('epm-send').textContent='Send SMS Reminders';
+    $('epm-now').className='epm-b2 amber'; $('epm-now').textContent='Send Reminders Now';
+    [].forEach.call(root.querySelectorAll('#epm-aud-body tr'),function(r){r.className='epm-hide';});
+  }
+  var paused=false, gates=[];
+  function release(){var g=gates.splice(0); g.forEach(function(f){f();});}
+  function wait(ms,my){return new Promise(function(res,rej){setTimeout(function(){if(my!==token) return rej('x'); if(!paused) return res(); gates.push(function(){my===token?res():rej('x');});},ms);});}
+  function moveTo(el,my,dx){
+    var a=app.getBoundingClientRect(), r=el.getBoundingClientRect();
+    var x=r.left-a.left+Math.min(r.width*0.55,r.width-8)+(dx||0), y=r.top-a.top+r.height*0.5;
+    cur.style.transform='translate('+x+'px,'+y+'px)'; return wait(800,my);
+  }
+  function click(el,my){
+    cur.classList.remove('click'); void cur.offsetWidth; cur.classList.add('click'); el.classList.add('press');
+    setTimeout(function(){el.classList.remove('press'); cur.classList.remove('click');},400); return wait(260,my);
+  }
+  async function type(el,text,my){
+    el.classList.add('typing');
+    for(var i=1;i<=text.length;i++){el.textContent=text.slice(0,i); await wait(42,my);}
+    el.classList.remove('typing');
+  }
+  async function visit(v,my,fn){
+    await moveTo(tabEls[v],my); await click(tabEls[v],my); setTab(v); await wait(300,my);
+    if(fn) await fn(); await wait(550,my);
+  }
+  async function tour(my){
+    cur.style.transition='none'; cur.style.transform='translate('+Math.round(app.clientWidth*0.6)+'px,'+Math.round(app.clientHeight*0.45)+'px)';
+    void cur.offsetWidth; cur.style.transition=''; cur.classList.add('vis');
+    await wait(600,my);
+    for(var k=0;k<E.length;k++){
+      var e=E[k], r=S.rows[e.i];
+      say('pay','M-Pesa payment received: KES '+fmt(e.amt)+' for '+r.a+', '+r.n); await wait(600,my);
+      pay(e.i,e.amt); await wait(1200,my);
+    }
+    say('','Balances, statuses and totals are up to date.'); await wait(500,my);
+    await visit('add',my,async function(){
+      var s=$('epm-i-stu'), a=$('epm-i-amt');
+      await moveTo(s,my); await click(s,my); await type(s,'DEM240  Kamau David Kamau',my);
+      await moveTo(a,my); await click(a,my); await type(a,'52000',my);
+      await moveTo($('epm-chk'),my,-60); await click($('epm-chk'),my); $('epm-chk').classList.add('on');
+    });
+    await visit('str',my,async function(){
+      var f=$('epm-i-fs'), sv=$('epm-save');
+      await moveTo(f,my); await click(f,my); await type(f,'52000',my);
+      await moveTo(sv,my); await click(sv,my); sv.classList.add('sent'); sv.textContent='Fee structure saved';
+    });
+    await visit('edit',my,async function(){
+      var f=$('epm-i-find'), r=S.rows[1];
+      await moveTo(f,my); await click(f,my); await type(f,'DEM238',my); await wait(300,my);
+      $('epm-empty').hidden=true; var h=$('epm-hit'); h.hidden=false;
+      h.innerHTML='<b>'+r.n+'</b> &nbsp;'+r.a+' &middot; Tuition Fees &middot; THIRD<br><span style="font-size:.74rem">Total KES '+fmt(r.t)+' &nbsp; <span class="epm-pd">Paid KES '+fmt(r.p)+'</span> &nbsp; <span class="epm-bl">Balance KES '+fmt(r.t-r.p)+'</span></span> &nbsp; <span class="epm-chip '+st(r)+'">'+st(r)+'</span>';
+    });
+    await visit('sms',my,async function(){
+      var a=$('epm-a1'), sd=$('epm-send');
+      await moveTo(a,my); await click(a,my); a.classList.add('sel'); await wait(300,my);
+      await moveTo(sd,my); await click(sd,my); sd.textContent='Sending\u2026'; await wait(600,my);
+      sd.classList.add('sent'); sd.textContent='Sent to 399 parents';
+    });
+    await visit('auto',my,async function(){
+      var n=$('epm-now');
+      await moveTo(n,my); await click(n,my); n.classList.add('sent'); n.textContent='Reminders sent';
+    });
+    await visit('aud',my,async function(){
+      var rows=root.querySelectorAll('#epm-aud-body tr');
+      for(var i=0;i<rows.length;i++){rows[i].className='epm-in'; await wait(400,my);}
+    });
+    await moveTo(tabEls.rec,my); await click(tabEls.rec,my); setTab('rec'); await wait(900,my);
+  }
+  function finish(){
+    var m='Tour finished. Payments applied, reminders sent and every change recorded in the audit trail.';
+    cur.classList.remove('vis'); say('','Balances, statuses and totals are up to date.'); sr.textContent=m;
+    if(window.EPTours&&window.EPTours.onDone) window.EPTours.onDone('fees');
+  }
+  function run(inst){
+    token++; var my=token; instant=inst; build(); resetViews(); setTab('rec'); say('','Waiting for the next payment\u2026'); sr.textContent='';
+    if(inst){E.forEach(function(e){pay(e.i,e.amt);}); finish(); return;}
+    tour(my).then(finish,function(e){if(e!=='x') finish();});
+  }
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  build();
+  window.EPTours=window.EPTours||{};
+  window.EPTours.fees={
+    start:function(){run(reduce);},
+    stop:function(){token++; paused=false; release(); cur.classList.remove('vis');},
+    pause:function(){paused=true;}, resume:function(){paused=false; release();}
+  };
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+})();
+(function(){
+  function init(){
+  var root=document.getElementById('ep-fin'); if(!root) return;
+  var $=function(i){return document.getElementById(i);};
+  var app=$('epr-app'), cur=$('epr-cur'), sr=$('epr-sr'), arc=$('epr-arc'), pct=$('epr-pct');
+  var tabEls={}; [].forEach.call(root.querySelectorAll('.epr-tab'),function(t){tabEls[t.getAttribute('data-v')]=t;});
+  var token=0, started=false, instant=false, L=157.08;
+  var DF=[['DEM123','Nduku Mutua','Form 3 Blue','63,000','15,000','63,000'],['DEM186','Wesley Muthama','Form 4 Green','61,500','9,500','61,500'],['DEM013','Esther Atieno','Grade 10 Green','60,000','15,000','60,000'],['DEM215','Grace Waweru','Form 4 Blue','60,000','8,000','60,000'],['DEM042','Wafula Wafula','Grade 10 Blue','60,000','15,000','60,000']];
+  var CL=[['Form 3 Blue',40,2131500,1491000,640500,70.0],['Form 3 Green',40,2089000,1453500,635500,69.6],['Form 4 Blue',40,2269500,1615500,654000,71.2],['Form 4 Green',40,2279500,1564000,715500,68.6],['Grade 10 Blue',40,2014000,1448500,565500,71.9],['Grade 10 Green',40,1987000,1390500,596500,70.0]];
+  var TB=[['1000','Cash in Hand','2,190,227.00',''],['1010','M-Pesa Account','23,594,492.00',''],['1020','Bank Account','','2,441,955.00'],['1021','Tuition Account (Bank)','486,560.00',''],['4000','Fee Income','','28,480,500.00'],['4010','Canteen Income','','726,219.00'],['5070','Procurement (Purchase Orders)','5,863,955.00',''],['','Total','36,987,234.00','36,987,234.00']];
+  var CB=[['','','Balance b/f','','','','0.00'],['2026-01-05','DEMO-2026-T1','Government capitation - Term 1, tranche 1 (1 vote head)','Tuition Account (Bank)','497,280.00','','497,280.00'],['2026-01-05','DEMO-2026-T1','Government capitation - Term 1, tranche 1 (7 vote heads)','Operations Account (Bank)','1,572,000.00','','2,069,280.00'],['2026-03-07','PV-INV-2026-D01','Invoice INV-2026-D01 - ABC Supplies Ltd','Tuition Account (Bank)','','412,000.00','2,257,280.00'],['2026-03-15','PV-INV-2026-D10','Invoice INV-2026-D10 - Greenview Stationers','Operations Account (Bank)','','310,000.00','1,947,280.00']];
+  function fmt(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+  function el(t,c,x){var e=document.createElement(t); if(c)e.className=c; if(x!=null)e.textContent=x; return e;}
+  function row(tb,cells,cls,rcols,mcols,xs){var tr=el('tr','hid'+(cls?' '+cls:'')); if(xs) tr.setAttribute('data-xs',''); cells.forEach(function(c,i){var td=el('td',(rcols.indexOf(i)>-1?'r':'')+(mcols.indexOf(i)>-1?' epr-m':''),c); tr.appendChild(td);}); tb.appendChild(tr); return tr;}
+  // defaulters
+  var dtb=$('epr-dtb'), dtr=[];
+  DF.forEach(function(d,i){
+    var tr=el('tr'); tr.setAttribute('data-s',(d[0]+' '+d[1]+' '+d[2]).toLowerCase());
+    tr.appendChild(el('td','',d[0])); tr.appendChild(el('td','',d[1])); tr.appendChild(el('td','epr-m',d[2])); tr.appendChild(el('td','epr-red','KES '+d[3]));
+    tr.appendChild(el('td','epr-or epr-m','KES '+d[4])); tr.appendChild(el('td','epr-m','KES '+d[5])); tr.appendChild(el('td','epr-red epr-m','Never'));
+    var a=el('td'); a.appendChild(el('span','epr-wa','WhatsApp')); tr.appendChild(a); dtb.appendChild(tr); dtr.push(tr);
+  });
+  // classes: chart + table
+  var chart=$('epr-chart'), ctb=$('epr-ctb'), bars=[], rates=[];
+  CL.forEach(function(c){
+    var r=el('div','epr-cr'); r.appendChild(el('b','',c[0])); var b=el('div'); var g=el('div','g'), rd=el('div','rd'); b.appendChild(g); b.appendChild(rd); r.appendChild(b); chart.appendChild(r); bars.push([g,rd,c]);
+    var tr=el('tr'); tr.appendChild(el('td','',c[0])); tr.appendChild(el('td','epr-m',String(c[1]))); tr.appendChild(el('td','epr-m','KES '+fmt(c[2]))); tr.appendChild(el('td','epr-gr','KES '+fmt(c[3]))); tr.appendChild(el('td','epr-red','KES '+fmt(c[4])));
+    var rt=el('td'); var rb=el('span','epr-rate'); var ri=el('i'); rb.appendChild(ri); rt.appendChild(rb); rt.appendChild(document.createTextNode(c[5].toFixed(1)+'%')); tr.appendChild(rt); ctb.appendChild(tr); rates.push([ri,c[5]]);
+  });
+  // trial balance + cash book (rows start hidden)
+  var tbb=$('epr-tbb'), tbr=TB.map(function(c,i){return row(tbb,c,c[1]==='Total'?'tot':'',[2,3],[],i===3||i===5);});
+  var cbb=$('epr-cbb'), cbr=CB.map(function(c,i){var tr=row(cbb,c,'',[4,5,6],[1,3],i===3); return tr;});
+  function anim(e,to,dur,pre,suf){
+    if(instant||!dur){e.textContent=pre+fmt(to)+suf;return;}
+    var t0=null,my=token;
+    requestAnimationFrame(function f(ts){
+      if(my!==token) return; if(t0===null) t0=ts;
+      var k=Math.min(1,(ts-t0)/dur), v=1-Math.pow(1-k,3);
+      e.textContent=pre+fmt(to*v)+suf; if(k<1) requestAnimationFrame(f);
+    });
+  }
+  function gauge(p,animate){arc.style.transition=animate?'stroke-dashoffset 1.4s ease-out':'none'; arc.style.strokeDashoffset=String(L*(1-p/100));}
+  function countUp(){
+    [].forEach.call(root.querySelectorAll('[data-n]'),function(e){anim(e,+e.getAttribute('data-n'),1400,'KES ','');});
+    anim(pct,70,1400,'','%'); gauge(70.2,!instant);
+  }
+  function grow(){bars.forEach(function(b,i){setTimeout(function(){b[0].style.width=(b[2][3]/1800000*100)+'%'; b[1].style.width=(b[2][4]/1800000*100)+'%'; rates[i][0].style.width=rates[i][1]+'%';},instant?0:i*140);});}
+  function setTab(v){
+    for(var k in tabEls) tabEls[k].classList.toggle('on',k===v);
+    [].forEach.call(root.querySelectorAll('.epr-v'),function(x){x.classList.remove('show');});
+    $('epr-v-'+v).classList.add('show');
+  }
+  function showRows(list){list.forEach(function(r){r.className=r.className.replace('hid','show');});}
+  function resetAll(){
+    [].forEach.call(root.querySelectorAll('[data-n]'),function(e){e.textContent='KES 0';}); pct.textContent='0%'; gauge(0,false);
+    var q=$('epr-q'); q.textContent=''; q.classList.remove('typing'); dtr.forEach(function(r){r.classList.remove('hid'); r.querySelector('.epr-wa').className='epr-wa'; r.querySelector('.epr-wa').textContent='WhatsApp';});
+    bars.forEach(function(b,i){b[0].style.width='0'; b[1].style.width='0'; rates[i][0].style.width='0';});
+    tbr.concat(cbr).forEach(function(r){r.className=r.className.replace('show','hid');});
+    $('epr-tbt').hidden=true; $('epr-cbt').hidden=true; $('epr-n1').hidden=false; $('epr-n2').hidden=false; $('epr-bal').hidden=true; setTab('ov');
+  }
+  var paused=false, gates=[];
+  function release(){var g=gates.splice(0); g.forEach(function(f){f();});}
+  function wait(ms,my){return new Promise(function(res,rej){setTimeout(function(){if(my!==token) return rej('x'); if(!paused) return res(); gates.push(function(){my===token?res():rej('x');});},ms);});}
+  function moveTo(e,my,dx){
+    var a=app.getBoundingClientRect(), r=e.getBoundingClientRect();
+    var x=r.left-a.left+Math.min(r.width*0.55,r.width-8)+(dx||0), y=r.top-a.top+r.height*0.5;
+    cur.style.transform='translate('+x+'px,'+y+'px)'; return wait(560,my);
+  }
+  function click(e,my){
+    cur.classList.remove('click'); void cur.offsetWidth; cur.classList.add('click'); e.classList.add('press');
+    setTimeout(function(){e.classList.remove('press'); cur.classList.remove('click');},400); return wait(220,my);
+  }
+  async function visit(v,my,fn){
+    await moveTo(tabEls[v],my); await click(tabEls[v],my); setTab(v); await wait(300,my);
+    if(fn) await fn(); await wait(450,my);
+  }
+  async function tour(my){
+    cur.style.transition='none'; cur.style.transform='translate('+Math.round(app.clientWidth*0.5)+'px,'+Math.round(app.clientHeight*0.6)+'px)';
+    void cur.offsetWidth; cur.style.transition=''; cur.classList.add('vis'); await wait(500,my);
+    var rf=$('epr-ref'); await moveTo(rf,my); await click(rf,my); countUp(); await wait(1900,my);
+    await visit('df',my,async function(){
+      var q=$('epr-q'), txt='Muthama'; await moveTo(q,my); await click(q,my); q.classList.add('typing');
+      for(var i=1;i<=txt.length;i++){q.textContent=txt.slice(0,i); var s=q.textContent.toLowerCase(); dtr.forEach(function(r){r.classList.toggle('hid',r.getAttribute('data-s').indexOf(s)<0);}); await wait(80,my);}
+      q.classList.remove('typing'); await wait(250,my);
+      var wa=dtr[1].querySelector('.epr-wa'); await moveTo(wa,my); await click(wa,my); wa.classList.add('sent'); wa.textContent='Sent \u2713'; await wait(500,my);
+    });
+    await visit('cl',my,async function(){grow(); await wait(1700,my);});
+    await visit('tb',my,async function(){
+      var g=$('epr-gen1'); await moveTo(g,my); await click(g,my); $('epr-n1').hidden=true; $('epr-tbt').hidden=false;
+      for(var i=0;i<tbr.length;i++){showRows([tbr[i]]); await wait(150,my);}
+      $('epr-bal').hidden=false; await wait(500,my);
+    });
+    await visit('cb',my,async function(){
+      var g=$('epr-gen2'); await moveTo(g,my); await click(g,my); $('epr-n2').hidden=true; $('epr-cbt').hidden=false;
+      for(var i=0;i<cbr.length;i++){showRows([cbr[i]]); await wait(220,my);}
+      await wait(400,my);
+    });
+    await moveTo(tabEls.ov,my); await click(tabEls.ov,my); setTab('ov'); await wait(700,my);
+  }
+  function finish(){
+    cur.classList.remove('vis'); var m='Tour finished. Collection rate 70%, one defaulter reminded, trial balance in balance.';
+    sr.textContent=m; if(window.EPTours&&window.EPTours.onDone) window.EPTours.onDone('fin');
+  }
+  function run(inst){
+    token++; var my=token; instant=inst; resetAll(); sr.textContent=''; if(inst){countUp(); grow(); showRows(tbr); showRows(cbr); $('epr-tbt').hidden=false; $('epr-cbt').hidden=false; $('epr-n1').hidden=true; $('epr-n2').hidden=true; $('epr-bal').hidden=false; finish(); return;}
+    tour(my).then(finish,function(e){if(e!=='x') finish();});
+  }
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  resetAll();
+  window.EPTours=window.EPTours||{};
+  window.EPTours.fin={
+    start:function(){run(reduce);},
+    stop:function(){token++; paused=false; release(); cur.classList.remove('vis');},
+    pause:function(){paused=true;}, resume:function(){paused=false; release();}
+  };
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+})();
+(function(){
+  function init(){
+    var root=document.getElementById('ep-tour'); if(!root) return;
+    var $=function(i){return document.getElementById(i);};
+    var K=['solve','fees','fin'], P={solve:$('ep-solve'),fees:$('ep-fees'),fin:$('ep-fin')}, tabs={};
+    K.forEach(function(k){tabs[k]=$('ept-t-'+k);});
+    var pb=$('ept-pause'), rb=$('ept-replay'), T=window.EPTours=window.EPTours||{};
+    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var cur=null, paused=false, chain=false, held=false, started=false, timer=0;
+    if(reduce) pb.hidden=true;
+    function label(){pb.textContent=paused?'Resume':'Pause'; pb.setAttribute('aria-pressed',paused?'true':'false');}
+    function select(k,viaChain){
+      clearTimeout(timer);
+      if(cur&&T[cur]) T[cur].stop();
+      if(cur&&cur!==k) P[cur].hidden=true;
+      K.forEach(function(x){var on=x===k; tabs[x].setAttribute('aria-selected',on?'true':'false'); tabs[x].tabIndex=on?0:-1;});
+      P[k].hidden=false; cur=k; paused=false; held=false; label(); if(!viaChain) chain=false;
+      if(T[k]) T[k].start();
+    }
+    T.onDone=function(k){
+      if(reduce||!chain||k!==cur) return;
+      var i=K.indexOf(k);
+      if(i<K.length-1) timer=setTimeout(function(){if(chain) select(K[i+1],true);},1500); else chain=false;
+    };
+    K.forEach(function(k,i){
+      tabs[k].addEventListener('click',function(){select(k,false);});
+      tabs[k].addEventListener('keydown',function(e){
+        var j=-1; if(e.key==='ArrowRight') j=(i+1)%K.length; else if(e.key==='ArrowLeft') j=(i+K.length-1)%K.length; else if(e.key==='Home') j=0; else if(e.key==='End') j=K.length-1;
+        if(j>-1){e.preventDefault(); tabs[K[j]].focus(); select(K[j],false);}
+      });
+    });
+    pb.addEventListener('click',function(){
+      if(!cur||!T[cur]) return; paused=!paused; held=false;
+      if(paused) T[cur].pause(); else T[cur].resume(); label();
+    });
+    rb.addEventListener('click',function(){select(cur||'solve',false);});
+    function vis(v){
+      if(!cur||!T[cur]) return;
+      if(!v&&!paused){T[cur].pause(); held=true;}
+      else if(v&&held){held=false; if(!paused) T[cur].resume();}
+    }
+    function begin(){if(started) return; started=true; chain=!reduce; select('solve',true);}
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){
+        var on=es[0].intersectionRatio>=0.15;
+        if(on&&!started) begin(); else vis(on);
+      },{threshold:[0,0.15]}).observe(root);
+    } else { begin(); }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+})();
+</script>
+<!-- EP:SCRIPT:END -->
+<section class="sec sec--tint" id="portals">
+      <div class="sec-inner">
+        <h2 class="sec-title">A portal for every role.</h2>
+        <div class="idx-list">
+          {portals.map((p) => (
+            <a class="idx-row" href={p.href ?? '/#portals'}>
+              <span class="idx-name">{p.name}</span>
+              <span class="idx-text">{p.text}</span>
+              {p.href && <span class="idx-arrow" aria-hidden="true">→</span>}
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="sec" id="pricing">
       <div class="sec-inner">
         <h2 class="sec-title">Simple, transparent pricing.</h2>
         <p class="sec-note">Billed per term in Kenyan Shillings · Annual billing saves one term.</p>

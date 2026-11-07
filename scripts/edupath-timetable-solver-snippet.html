@@ -1,6 +1,6 @@
 <!--
   Edupath drop-in snippet
-  Part 1: "Watch it solve" timetable section  (id="ep-solve")
+  Part 1: "See it in action" tabbed product tour (id="ep-tour": timetables, fees, reports)
   Part 2: New FAQ answers                     (id="ep-faq-new")
   Paste anywhere inside <body>. Everything is scoped under .eps- / .epf- so it won't touch your existing CSS.
   Save the file as UTF-8.
@@ -8,11 +8,11 @@
 <style>
 #ep-solve,#ep-faq-new{--t:#0D9488;--td:#0F766E;--tdd:#134E4A;--tt:#F0FDFA;--tb:#CCE7E3;--ink:#0F2F2C;--mut:#4B6B67;--bad:#B91C1C;--badbg:#FEE2E2;--ind:#5A55E0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);box-sizing:border-box}
 #ep-solve *,#ep-faq-new *{box-sizing:border-box}
-#ep-solve{background:var(--tt);padding:72px 20px}
+#ep-solve{padding:0}
 #ep-solve [hidden]{display:none!important}
 .eps-wrap{max-width:1120px;margin:0 auto;display:grid;gap:36px;grid-template-columns:1fr;align-items:center}
 @media(min-width:1000px){.eps-wrap{grid-template-columns:4fr 8fr;gap:44px}}
-.eps-copy h2{font-size:clamp(1.7rem,3.2vw,2.35rem);line-height:1.15;margin:0 0 14px;color:var(--tdd);letter-spacing:-.01em}
+.eps-copy h3{font-size:clamp(1.4rem,2.6vw,1.9rem);line-height:1.15;margin:0 0 14px;color:var(--tdd);letter-spacing:-.01em}
 .eps-copy p{margin:0 0 18px;line-height:1.6;color:var(--mut);max-width:46ch}
 .eps-pts{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:10px}
 .eps-pts li{display:flex;gap:10px;line-height:1.45;font-size:.95rem}
@@ -128,7 +128,6 @@
 @keyframes epsBlink{50%{opacity:0}}
 @media(prefers-reduced-motion:reduce){.eps-cell.on,.eps-cell.bad,.eps-modal.on,.eps-d.on,.eps-li.new,.eps-hr{animation:none}.eps-cur{display:none}}
 @media(max-width:640px){
-#ep-solve{padding:48px 16px}
 .eps-panel{padding:10px}
 .eps-stats{grid-template-columns:1fr 1fr}
 .eps-tb{font-size:.62rem;padding:6px 8px}
@@ -164,102 +163,13 @@
 </style>
 
 <!-- ============ PART 1: WATCH IT SOLVE ============ -->
-<section id="ep-solve" aria-labelledby="eps-title">
-  <div class="eps-wrap">
-    <div class="eps-copy">
-      <h2 id="eps-title">Timetables built around your school&rsquo;s rules.</h2>
-      <p>Follow the cursor through the same screens your timetable officer uses: bell schedule, rooms, availability and requirements, a feasibility check, then generate, adjust, repair and print.</p>
-      <ul class="eps-pts">
-        <li>Set your bell schedule, rooms, teacher availability and what each class needs.</li>
-        <li>Check feasibility first: it compares what classes and teachers need with the time they have.</li>
-        <li>Teachers and classes are never double-booked, and double lessons never span a break.</li>
-        <li>Move lessons, cover absent teachers, repair problems, and restore earlier versions.</li>
-      </ul>
-      <button class="eps-btn" type="button" id="eps-go">Replay tour</button>
-    </div>
-    <div>
-      <div class="eps-panel" id="eps-panel" role="img" aria-label="Animated tour of the timetable screens: a cursor opens the bell schedule, rooms, availability, requirements and feasibility check, generates a clash-free timetable, then moves lessons, covers an absence, repairs, shows history and prints">
-        <div aria-hidden="true">
-          <div class="eps-hd"><div><b>Manage Timetables</b><span>Timetable Management</span></div><div class="yr"><span>2026<br>Term 2</span></div></div>
-          <div class="eps-stats">
-            <div class="eps-sc a"><b>6</b><span>Total Classes</span></div>
-            <div class="eps-sc b"><b>12</b><span>Teachers</span></div>
-            <div class="eps-sc c"><b>17</b><span>Subjects</span></div>
-            <div class="eps-sc d"><b id="eps-sl">0/45</b><span>Slots Filled</span></div>
-          </div>
-          <div class="eps-view"><span>Viewing:</span><div class="eps-inp">Grade 10 Green (Grade 10)</div></div>
-          <div class="eps-tbar" id="eps-tbar">
-            <span class="eps-tb" data-t="bell">Bell schedule</span><span class="eps-tb" data-t="rooms">Rooms</span><span class="eps-tb" data-t="avail">Availability</span><span class="eps-tb" data-t="req">Requirements</span><span class="eps-tb" data-t="feas">Check feasibility</span><span class="eps-tb mv" data-t="move">Move lessons</span><span class="eps-tb gn" data-t="gen">Generate timetable</span><span class="eps-tb" data-t="cover">Cover</span><span class="eps-tb" data-t="repair">Repair</span><span class="eps-tb" data-t="hist">History</span><span class="eps-tb" data-t="print">Print / Export</span>
-          </div>
-          <p class="eps-hint">Click any cell to add/edit - Click x to clear</p>
-          <div class="eps-scroll"><div class="eps-grid" id="eps-grid"></div></div>
-          <div class="eps-log" id="eps-log">Press Replay tour to watch it again.</div>
-        </div>
-        <div class="eps-modal" id="eps-modal" aria-hidden="true"><div class="eps-dlg">
-          <div class="eps-d" id="eps-d-bell"><h4>Bell schedule</h4><p class="eps-dd">Lesson numbers are fixed because timetable slots refer to them. Changing a lesson&rsquo;s times updates every slot in that period, for all classes.</p>
-            <table class="eps-tb2"><thead><tr><th>No.</th><th>Type</th><th>Label</th><th>Start</th><th>End</th></tr></thead><tbody>
-              <tr><td>#1</td><td>Lesson</td><td>Period 1</td><td>08:00 AM</td><td>08:40 AM</td></tr>
-              <tr><td>#2</td><td>Lesson</td><td>Period 2</td><td>08:45 AM</td><td>09:25 AM</td></tr>
-              <tr class="eps-xs"><td>#3</td><td>Lesson</td><td>Period 3</td><td>09:30 AM</td><td>10:10 AM</td></tr>
-              <tr id="eps-brkrow"><td>-</td><td>Break</td><td>Break</td><td>10:10 AM</td><td>10:30 AM</td></tr>
-              <tr><td>#5</td><td>Lesson</td><td>Period 4</td><td>10:30 AM</td><td>11:10 AM</td></tr></tbody></table>
-            <div class="eps-ft"><span class="eps-b2">+ Lesson</span><span class="eps-b2">+ Break</span></div></div>
-          <div class="eps-d" id="eps-d-rooms"><h4>Rooms</h4><p class="eps-dd">Renaming a room also renames it on every timetable slot that uses it. A room that is in use cannot be deleted.</p>
-            <div class="eps-add"><div class="eps-inp" id="eps-rn" data-ph="New room name"></div><div class="eps-inp">CLASSROOM</div><div class="eps-inp" id="eps-rs" data-ph="Seats"></div><span class="eps-b2 dk" id="eps-radd">+ Add room</span></div>
-            <div id="eps-rl"><div class="eps-li new" id="eps-rnew" hidden><span>Lab C</span><span>CLASSROOM</span><span>x</span></div>
-              <div class="eps-li"><span>Lab A</span><span>CLASSROOM</span><span>x</span></div><div class="eps-li"><span>Lab B</span><span>CLASSROOM</span><span>x</span></div><div class="eps-li eps-xs"><span>Music Room</span><span>CLASSROOM</span><span>x</span></div><div class="eps-li eps-xs"><span>Room 1</span><span>CLASSROOM</span><span>x</span></div></div></div>
-          <div class="eps-d" id="eps-d-avail"><h4>Availability</h4><p class="eps-dd">Green cells are available. Click a cell, a day or a period to mark it unavailable. Nothing is blocked until you save.</p>
-            <div class="eps-pills"><span class="eps-pill on">Teachers</span><span class="eps-pill">Classes</span><span class="eps-pill">Rooms</span><div class="eps-inp" id="eps-asel" style="flex:1;min-width:120px">-- Select --</div></div>
-            <div class="eps-av" id="eps-av" hidden></div></div>
-          <div class="eps-d" id="eps-d-req"><h4>Teaching requirements</h4><p class="eps-dd">What each class needs per week: subject, teacher, number of periods, and how many of them are double lessons (two periods back to back).</p>
-            <div class="eps-inp" id="eps-csel" data-ph="-- Select class --"></div><div id="eps-rq" hidden></div></div>
-          <div class="eps-d" id="eps-d-feas"><h4>Feasibility check</h4><p class="eps-dd">Compares what each class and teacher needs against the time they are available.</p>
-            <div class="eps-ch" id="eps-fch">Checking&hellip;</div>
-            <div id="eps-fres" hidden><div class="eps-ok">Every checked class and teacher has enough available time.</div><div class="eps-k">CLASSES (2 OF 2 FINE)</div><div style="font-size:.74rem">Nothing to flag.</div><div class="eps-k">TEACHERS (9 OF 9 FINE)</div><div style="font-size:.74rem">Nothing to flag.</div></div>
-            <div class="eps-ft"><span class="eps-b2">Show everything</span><span class="eps-b2">Run again</span></div></div>
-          <div class="eps-d" id="eps-d-gen"><h4>Generate timetable</h4><p class="eps-dd">Builds lessons from each class&rsquo;s teaching requirements. Teachers and classes are never double-booked, availability is respected, and double lessons never span a break. You review the result before anything is saved.</p>
-            <div class="eps-k" style="margin-top:0">CLASSES</div>
-            <div class="eps-cls"><div class="eps-cc" id="eps-g1"><i></i><b>Grade 10 Green</b>8 subjects, 45 of 45 periods</div><div class="eps-cc"><i></i><b>Grade 10 Blue</b>8 subjects, 45 of 45 periods</div><div class="eps-cc eps-xs"><i></i><b>Form 3 Green</b>No requirements yet</div><div class="eps-cc eps-xs"><i></i><b>Form 3 Blue</b>8 subjects, 45 of 45 periods</div></div>
-            <div class="eps-rad on">Build from scratch</div><div class="eps-rad eps-xs">Keep existing lessons and fill the gaps</div>
-            <div class="eps-ft"><span class="eps-b2 gr" id="eps-gobtn">Generate timetable</span></div></div>
-          <div class="eps-d" id="eps-d-move"><h4>Timetable board</h4>
-            <div class="eps-pills"><span class="eps-pill on">By class</span><span class="eps-pill">By teacher</span><span class="eps-pill">By room</span></div>
-            <p class="eps-dd">Drag a lesson, or click one and then click a green cell. Green cells are moves with no clashes and nobody marked unavailable.</p>
-            <div class="eps-mb" id="eps-mb"></div></div>
-          <div class="eps-d" id="eps-d-cover"><h4>Teacher cover</h4><p class="eps-dd">Record who is away, then pick a free teacher for each lesson. Teachers who teach the subject come first, then those who know the class, and anyone who has already covered a lot this week is ranked lower.</p>
-            <div class="eps-pills"><span class="eps-pill">&lt;</span><div class="eps-inp">11/06/2026</div><span class="eps-pill">&gt;</span><span class="eps-pill">Today</span><b style="font-size:.76rem">Friday 6 November 2026</b></div>
-            <div id="eps-cv0" style="font-size:.72rem;color:#8A94A6">No lessons need cover on this date. Use &ldquo;Record an absence&rdquo; when a teacher is away.</div>
-            <div class="eps-bx" id="eps-cv1" hidden><b>Physics, Period 7: Kiprop Ruto is away</b>Cover: Collins Wafula<small>A free teacher, picked from the ranked list.</small></div>
-            <div class="eps-ft"><span class="eps-b2" id="eps-recb">Record an absence</span></div></div>
-          <div class="eps-d" id="eps-d-repair"><h4>Repair timetable</h4><p class="eps-dd">Finds lessons that are now in trouble, for example after you marked a teacher unavailable, and moves only those to the nearest free periods. Everything else stays where it is.</p>
-            <div id="eps-rp0"><div class="eps-bx"><b>2 lessons are in trouble</b>The teacher is booked for two subjects at once<small>Form 4 Green, Biology, Otieno Odhiambo, Fri Period 7</small><small>Grade 10 Blue, Geography, Njeri Mwangi, Fri Period 7</small></div>
-              <div class="eps-rad on">Leave other lessons where they are</div><div class="eps-rad eps-xs">Allow small improvements</div></div>
-            <div class="eps-bx" id="eps-rp1" hidden><b>2 lessons moved</b>Moved to the nearest free periods.<small>Everything else stayed where it was.</small></div>
-            <div class="eps-ft"><span class="eps-b2 gr" id="eps-fixb">Find the smallest fix</span></div></div>
-          <div class="eps-d" id="eps-d-hist"><h4>Timetable history</h4><p class="eps-dd">A version is saved automatically every time a timetable is generated, repaired, imported from Excel or restored. Restoring one puts back what those classes had before that change. The last 20 are kept.</p>
-            <div id="eps-h0" style="font-size:.72rem;color:#8A94A6">No saved versions yet. They appear here after you generate or repair a timetable.</div>
-            <div id="eps-h1" hidden><div class="eps-hr"><span><b>Repaired</b> Grade 10 Green</span><span>Just now</span><span class="eps-b2" id="eps-rstr">Restore</span></div><div class="eps-hr"><span><b>Generated</b> Grade 10 Green</span><span>Just now</span><span class="eps-b2">Restore</span></div></div></div>
-          <div class="eps-d" id="eps-d-print"><h4>Print or export timetables</h4><p class="eps-dd">Pick classes or teachers, then print them (choose Save as PDF in the print dialog) or download an Excel file. Each class or teacher gets its own page.</p>
-            <div class="eps-pills"><span class="eps-pill on">By class</span><span class="eps-pill">By teacher</span><div class="eps-inp" style="flex:1;min-width:100px" data-ph="Search class&hellip;"></div></div>
-            <div class="eps-k" style="margin-top:0">6 OF 6 CLASSES SELECTED</div>
-            <div class="eps-li" style="grid-template-columns:1fr auto"><span>Form 3 Blue (Form 3)</span><span>45 lessons</span></div><div class="eps-li" style="grid-template-columns:1fr auto"><span>Grade 10 Green (Grade 10)</span><span>45 lessons</span></div><div class="eps-li eps-xs" style="grid-template-columns:1fr auto"><span>Grade 10 Blue (Grade 10)</span><span>45 lessons</span></div>
-            <div class="eps-ft"><span class="eps-b2">Excel</span><span class="eps-b2 dk" id="eps-pb" style="background:#3B6FE0;border-color:#3B6FE0">Print or save as PDF</span></div></div>
-        </div></div>
-        <div class="eps-cur" id="eps-cur"><i></i><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.8L9 19z" fill="#111" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg><div class="eps-ghost" id="eps-ghost" hidden></div></div>
-      </div>
-      <div class="eps-sr" id="eps-sr" role="status"></div>
-      <p class="eps-note">An illustration using a sample school and sample figures.</p>
-    </div>
-  </div>
-</section>
-
 <style>
-#ep-fees{--ind:#5A55E0;--lav:#EEF0FB;--ink:#0F2F2C;--mut:#5B6B7A;--t:#0D9488;--tdd:#134E4A;background:#F6F7FD;padding:72px 20px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);box-sizing:border-box}
+#ep-fees{--ind:#5A55E0;--lav:#EEF0FB;--ink:#0F2F2C;--mut:#5B6B7A;--t:#0D9488;--tdd:#134E4A;padding:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);box-sizing:border-box}
 #ep-fees *{box-sizing:border-box}
 #ep-fees [hidden]{display:none!important}
 .epm-wrap{max-width:1120px;margin:0 auto;display:grid;gap:36px;grid-template-columns:1fr;align-items:center}
 @media(min-width:1000px){.epm-wrap{grid-template-columns:4fr 8fr;gap:44px}}
-.epm-copy h2{font-size:clamp(1.7rem,3.2vw,2.35rem);line-height:1.15;margin:0 0 14px;color:var(--tdd);letter-spacing:-.01em}
+.epm-copy h3{font-size:clamp(1.4rem,2.6vw,1.9rem);line-height:1.15;margin:0 0 14px;color:var(--tdd);letter-spacing:-.01em}
 .epm-copy p{margin:0 0 18px;line-height:1.6;color:var(--mut);max-width:46ch}
 .epm-pts{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:10px}
 .epm-pts li{display:flex;gap:10px;line-height:1.45;font-size:.95rem}
@@ -351,7 +261,6 @@
 @keyframes epmBlink{50%{opacity:0}}
 @media(prefers-reduced-motion:reduce){.epm-feed span,.epm-chip.pop,.epm-v.show,.epm-at tr.epm-in{animation:none}.epm-cur{display:none}}
 @media(max-width:640px){
-#ep-fees{padding:48px 16px}
 .epm-app{padding:10px}
 .epm-scroll{overflow:visible}
 .epm-tbl,.epm-at{min-width:0}
@@ -365,96 +274,13 @@
 }
 </style>
 
-<!-- ============ PART 1b: FEE MANAGEMENT TOUR ============ -->
-<section id="ep-fees" aria-labelledby="epm-title">
-  <div class="epm-wrap">
-    <div class="epm-copy">
-      <h2 id="epm-title">Fee management from payment to audit trail.</h2>
-      <p>Follow the cursor through the same screens your bursar uses: fee records, new fees, fee structures, payments, SMS and automatic reminders, and the audit trail.</p>
-      <ul class="epm-pts">
-        <li>Payments land on the right student and update the totals straight away.</li>
-        <li>Set a termly fee structure and every active student in the grade is billed automatically.</li>
-        <li>Reminders go out by SMS and WhatsApp, on demand or on a schedule.</li>
-        <li>Every change is written to an audit trail that can&rsquo;t be edited or deleted.</li>
-      </ul>
-      <button class="epm-go" type="button" id="epm-go">Replay tour</button>
-    </div>
-    <div>
-      <div class="epm-app" id="epm-app" role="img" aria-label="Animated tour of the fee management screens: a cursor visits fee records, add fee, fee structure, edit payments, SMS reminders, automatic reminders and the audit trail">
-        <div aria-hidden="true">
-          <div class="epm-cards">
-            <div class="epm-card"><span>Total Fee Records</span><b id="epm-rec">720</b></div>
-            <div class="epm-card"><span>Total Collected</span><b class="g" id="epm-col">KES 28,480,500</b></div>
-            <div class="epm-card"><span>Outstanding Balance</span><b class="r" id="epm-out">KES 6,743,500</b></div>
-          </div>
-          <div class="epm-tabs">
-            <span class="epm-tab on" data-v="rec">Fee Records</span><span class="epm-tab" data-v="add">Add Fee</span><span class="epm-tab" data-v="str">Fee Structure</span><span class="epm-tab" data-v="edit">Edit Fee / Payments</span><span class="epm-tab" data-v="sms">SMS Reminders</span><span class="epm-tab" data-v="auto">Auto Reminders</span><span class="epm-tab" data-v="aud">Audit Trail</span>
-          </div>
-          <div class="epm-views">
-            <div class="epm-v show" id="epm-v-rec">
-              <div class="epm-feed" id="epm-feed"><span>Waiting for the next payment&hellip;</span></div>
-              <div class="epm-scroll"><table class="epm-tbl"><thead><tr><th>Students</th><th>Admission No.</th><th>Term</th><th>Fee Structure</th><th>Total</th><th>Paid</th><th>Balance</th><th>Status</th><th>Action</th></tr></thead><tbody id="epm-body"></tbody></table></div>
-            </div>
-            <div class="epm-v" id="epm-v-add"><div class="epm-box">
-              <h4>Add Fee Record</h4>
-              <label>Student *</label><div class="epm-inp" id="epm-i-stu" data-ph="Search student by name or admission number&hellip;"></div>
-              <div class="epm-two"><div><label>Term *</label><div class="epm-inp">First Term</div></div><div><label>Academic Year *</label><div class="epm-inp">2026</div></div></div>
-              <div class="epm-two"><div><label>Fee Type *</label><div class="epm-inp">Tuition</div></div><div><label>Total Amount (KES) *</label><div class="epm-inp" id="epm-i-amt" data-ph="e.g. 15000"></div></div></div>
-              <div class="epm-bf"><b>Balance Carried Forward (B/F) and Prepayment Credit</b><div class="epm-chk" id="epm-chk"><i></i>Auto-detect B/F &mdash; automatically sum all unpaid balances for this student</div></div>
-            </div></div>
-            <div class="epm-v" id="epm-v-str"><div class="epm-box">
-              <h4>Termly Fee Structure</h4>
-              <p class="epm-d">Set the fee amount per grade and fee type for a term. On the term&rsquo;s start date, every active student in that grade is automatically billed &mdash; with any unpaid balance from the previous term added, and any available credit applied automatically.</p>
-              <div class="epm-row"><div><label>Academic Year</label><div class="epm-inp">2026</div></div><div><label>Term</label><div class="epm-inp">First</div></div><span class="epm-b2">Load Existing</span></div>
-              <div class="epm-row"><div><label>Grade Level</label><div class="epm-inp">GRADE_10</div></div><div><label>Fee Type</label><div class="epm-inp">TUITION</div></div><div><label>Amount (KES)</label><div class="epm-inp" id="epm-i-fs"></div></div></div>
-              <span class="epm-b2 dark">+ Add Row</span><div style="margin-top:12px"><span class="epm-ind" id="epm-save">Save Fee Structure</span></div>
-            </div></div>
-            <div class="epm-v" id="epm-v-edit">
-              <div class="epm-box"><div class="epm-k">FIND A FEE RECORD</div><div class="epm-inp" id="epm-i-find" data-ph="Search by student name or admission number"></div></div>
-              <div class="epm-box" style="text-align:center;color:#5B6B7A;font-size:.78rem;padding:22px 14px">
-                <span id="epm-empty">Search for a student above, or use &ldquo;Edit Fee / Payments&rdquo; in a row&rsquo;s Actions menu.</span>
-                <div id="epm-hit" hidden style="text-align:left;color:#111"></div>
-              </div>
-            </div>
-            <div class="epm-v" id="epm-v-sms">
-              <div class="epm-aud3"><div class="epm-aud o" id="epm-a1"><b>Overdue Balances</b>Send to all overdue records</div><div class="epm-aud a"><b>All Outstanding</b>Send to all with any balance</div><div class="epm-aud c"><b>Custom Selection</b>Pick specific students</div></div>
-              <div class="epm-box"><h4>Compose SMS</h4><div class="epm-inp">Balance Due Reminder</div>
-                <div class="epm-ta" style="margin-top:8px">Dear Parent, &#123;name&#125; has an outstanding fee balance of KES &#123;balance&#125;. Please clear this at the earliest. - &#123;school&#125;</div>
-                <div class="epm-foot"><span>114 chars</span><span>1 SMS</span></div>
-                <div class="epm-foot"><span>399 overdue</span><span class="epm-ind" id="epm-send">Send SMS Reminders</span></div>
-              </div>
-            </div>
-            <div class="epm-v" id="epm-v-auto"><div class="epm-box">
-              <h4>Automated Fee Reminders</h4><p class="epm-d">Reminders are sent automatically via WhatsApp and SMS</p>
-              <div class="epm-two2"><div class="epm-pnl g"><b>Daily Reminders</b>8:00 AM EAT<br>Overdue + due within 7 days</div><div class="epm-pnl bl"><b>Weekly Summary</b>Every Monday 7:00 AM<br>Fee collection summary to admins</div></div>
-              <div class="epm-pnl y"><b>Manual Trigger</b>Send WhatsApp reminders now to all parents with overdue or upcoming fee balances
-                <div class="epm-btns"><span class="epm-b2">View Summary</span><span class="epm-b2 amber" id="epm-now">Send Reminders Now</span></div></div>
-            </div></div>
-            <div class="epm-v" id="epm-v-aud"><div class="epm-box">
-              <h4>Audit Trail</h4><p class="epm-d">Who changed what, when and why. Entries can&rsquo;t be edited or deleted.</p>
-              <div class="epm-scroll"><table class="epm-at"><thead><tr><th>When</th><th>Who</th><th>Action</th><th>Student</th><th>What changed</th><th>Reason</th></tr></thead><tbody id="epm-aud-body">
-                <tr class="epm-hide" data-new><td>Just now</td><td>System</td><td><span class="epm-tag">payment</span></td><td>DEM237</td><td>Balance KES 30,500 &rarr; KES 0</td><td>M-Pesa payment</td></tr>
-                <tr class="epm-hide" data-new><td>21 Oct 2026, 22:57</td><td>System</td><td><span class="epm-tag">payment edit</span></td><td>&mdash;</td><td>Amount KES 17,000 &rarr; KES 19,000</td><td>&mdash;</td></tr>
-                <tr class="epm-hide" data-new><td>21 Oct 2026, 22:22</td><td>System</td><td><span class="epm-tag">fee record edit</span></td><td>&mdash;</td><td>Balance KES 58,000 &rarr; KES 50,000</td><td>8000 paid in third term not entered</td></tr>
-              </tbody></table></div>
-            </div></div>
-          </div>
-        </div>
-        <div class="epm-cur" id="epm-cur"><i></i><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.8L9 19z" fill="#111" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
-      </div>
-      <div class="epm-sr" id="epm-sr" role="status"></div>
-      <p class="epm-note">An illustration using sample students and figures.</p>
-    </div>
-  </div>
-</section>
-
 <style>
-#ep-fin{--ink:#0F2F2C;--mut:#5B6B7A;--tdd:#134E4A;--t:#0D9488;background:#F5F9F8;padding:72px 20px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);box-sizing:border-box}
+#ep-fin{--ink:#0F2F2C;--mut:#5B6B7A;--tdd:#134E4A;--t:#0D9488;padding:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);box-sizing:border-box}
 #ep-fin *{box-sizing:border-box}
 #ep-fin [hidden]{display:none!important}
 .epr-wrap{max-width:1120px;margin:0 auto;display:grid;gap:36px;grid-template-columns:1fr;align-items:center}
 @media(min-width:1000px){.epr-wrap{grid-template-columns:4fr 8fr;gap:44px}}
-.epr-copy h2{font-size:clamp(1.7rem,3.2vw,2.35rem);line-height:1.15;margin:0 0 14px;color:var(--tdd);letter-spacing:-.01em}
+.epr-copy h3{font-size:clamp(1.4rem,2.6vw,1.9rem);line-height:1.15;margin:0 0 14px;color:var(--tdd);letter-spacing:-.01em}
 .epr-copy p{margin:0 0 18px;line-height:1.6;color:var(--mut);max-width:46ch}
 .epr-pts{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:10px}
 .epr-pts li{display:flex;gap:10px;line-height:1.45;font-size:.95rem}
@@ -532,7 +358,6 @@
 @keyframes eprBlink{50%{opacity:0}}
 @media(prefers-reduced-motion:reduce){.epr-v.show,.epr-t tr.show,.epr-bal{animation:none}.epr-cur{display:none}.epr-cr div div,.epr-rate i{transition:none}}
 @media(max-width:640px){
-#ep-fin{padding:48px 16px}
 .epr-app{padding:10px}
 .epr-ovg{grid-template-columns:1fr}
 .epr-kp{grid-template-columns:1fr 1fr}
@@ -549,11 +374,217 @@
 }
 </style>
 
-<!-- ============ PART 1c: FINANCIAL REPORTS TOUR ============ -->
-<section id="ep-fin" aria-labelledby="epr-title">
+<style>
+#ep-tour{--t:#0D9488;--td:#0F766E;--tdd:#134E4A;--tt:#F0FDFA;--tb:#CCE7E3;--ink:#0F2F2C;--mut:#4B6B67;background:var(--tt);padding:72px 20px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);box-sizing:border-box}
+#ep-tour *{box-sizing:border-box}
+.ept-in{max-width:1120px;margin:0 auto}
+.ept-hd{text-align:center;max-width:720px;margin:0 auto 22px}
+.ept-hd h2{font-size:clamp(1.9rem,3.6vw,2.7rem);line-height:1.12;margin:0 0 10px;color:var(--tdd);letter-spacing:-.015em}
+.ept-hd p{margin:0;color:var(--mut);line-height:1.6}
+.ept-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:26px}
+.ept-tabs{display:inline-flex;gap:4px;background:#fff;border:1px solid var(--tb);border-radius:12px;padding:4px;flex-wrap:wrap}
+.ept-tab{appearance:none;border:0;background:transparent;font:inherit;font-weight:600;font-size:.9rem;color:#2B4A47;padding:10px 16px;border-radius:9px;cursor:pointer;min-height:44px}
+.ept-tab[aria-selected="true"]{background:var(--t);color:#fff}
+.ept-tab:hover:not([aria-selected="true"]){background:var(--tt)}
+.ept-ctl{display:flex;gap:8px}
+.ept-ctl button{appearance:none;border:1px solid var(--tb);background:#fff;font:inherit;font-weight:600;font-size:.85rem;color:var(--tdd);padding:10px 16px;border-radius:10px;cursor:pointer;min-height:44px;min-width:88px}
+.ept-ctl button:hover{background:var(--tt)}
+#ep-tour :focus-visible{outline:3px solid var(--tdd);outline-offset:3px}
+.ept-cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;margin-top:30px;text-align:center}
+.ept-cta p{width:100%;margin:0 0 4px;font-weight:600;color:var(--tdd)}
+.ept-b{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 22px;border-radius:10px;font-weight:600;text-decoration:none;border:1.5px solid var(--t);color:var(--td);background:#fff}
+.ept-b.pri{background:var(--t);color:#fff}
+.ept-b.wa{border-color:#25D366;color:#15803D}
+.ept-b:hover{filter:brightness(.96)}
+@media(max-width:640px){#ep-tour{padding:48px 16px}.ept-bar{justify-content:center}.ept-tab{padding:9px 12px;font-size:.82rem}.ept-b{width:100%}}
+</style>
+
+<section id="ep-tour" aria-labelledby="ept-title">
+  <div class="ept-in">
+    <div class="ept-hd">
+      <h2 id="ept-title">See it in action.</h2>
+      <p>Pick a part of Edupath and watch the screens your team would use, on sample school data.</p>
+    </div>
+    <div class="ept-bar">
+      <div class="ept-tabs" role="tablist" aria-label="Product tours">
+        <button class="ept-tab" role="tab" type="button" id="ept-t-solve" aria-selected="true" aria-controls="ep-solve">Timetables</button>
+        <button class="ept-tab" role="tab" type="button" id="ept-t-fees" aria-selected="false" aria-controls="ep-fees" tabindex="-1">Fees</button>
+        <button class="ept-tab" role="tab" type="button" id="ept-t-fin" aria-selected="false" aria-controls="ep-fin" tabindex="-1">Reports</button>
+      </div>
+      <div class="ept-ctl"><button type="button" id="ept-pause" aria-pressed="false">Pause</button><button type="button" id="ept-replay">Replay</button></div>
+    </div>
+    <div class="ept-panes">
+      <div class="ept-pane" id="ep-solve" role="tabpanel" aria-labelledby="ept-t-solve">
+  <div class="eps-wrap">
+    <div class="eps-copy">
+      <h3 id="eps-title">Timetables built around your school&rsquo;s rules.</h3>
+      <p>Follow the cursor through the same screens your timetable officer uses: bell schedule, rooms, availability and requirements, a feasibility check, then generate, adjust, repair and print.</p>
+      <ul class="eps-pts">
+        <li>Set your bell schedule, rooms, teacher availability and what each class needs.</li>
+        <li>Check feasibility first: it compares what classes and teachers need with the time they have.</li>
+        <li>Teachers and classes are never double-booked, and double lessons never span a break.</li>
+        <li>Move lessons, cover absent teachers, repair problems, and restore earlier versions.</li>
+      </ul>
+    </div>
+    <div>
+      <div class="eps-panel" id="eps-panel" role="img" aria-label="Animated tour of the timetable screens: a cursor opens the bell schedule, rooms, availability, requirements and feasibility check, generates a clash-free timetable, then moves lessons, covers an absence, repairs, shows history and prints">
+        <div aria-hidden="true">
+          <div class="eps-hd"><div><b>Manage Timetables</b><span>Timetable Management</span></div><div class="yr"><span>2026<br>Term 2</span></div></div>
+          <div class="eps-stats">
+            <div class="eps-sc a"><b>6</b><span>Total Classes</span></div>
+            <div class="eps-sc b"><b>12</b><span>Teachers</span></div>
+            <div class="eps-sc c"><b>17</b><span>Subjects</span></div>
+            <div class="eps-sc d"><b id="eps-sl">0/45</b><span>Slots Filled</span></div>
+          </div>
+          <div class="eps-view"><span>Viewing:</span><div class="eps-inp">Grade 10 Green (Grade 10)</div></div>
+          <div class="eps-tbar" id="eps-tbar">
+            <span class="eps-tb" data-t="bell">Bell schedule</span><span class="eps-tb" data-t="rooms">Rooms</span><span class="eps-tb" data-t="avail">Availability</span><span class="eps-tb" data-t="req">Requirements</span><span class="eps-tb" data-t="feas">Check feasibility</span><span class="eps-tb mv" data-t="move">Move lessons</span><span class="eps-tb gn" data-t="gen">Generate timetable</span><span class="eps-tb" data-t="cover">Cover</span><span class="eps-tb" data-t="repair">Repair</span><span class="eps-tb" data-t="hist">History</span><span class="eps-tb" data-t="print">Print / Export</span>
+          </div>
+          <p class="eps-hint">Click any cell to add/edit - Click x to clear</p>
+          <div class="eps-scroll"><div class="eps-grid" id="eps-grid"></div></div>
+          <div class="eps-log" id="eps-log">Press Replay tour to watch it again.</div>
+        </div>
+        <div class="eps-modal" id="eps-modal" aria-hidden="true"><div class="eps-dlg">
+          <div class="eps-d" id="eps-d-bell"><h4>Bell schedule</h4><p class="eps-dd">Lesson numbers are fixed because timetable slots refer to them. Changing a lesson&rsquo;s times updates every slot in that period, for all classes.</p>
+            <table class="eps-tb2"><thead><tr><th>No.</th><th>Type</th><th>Label</th><th>Start</th><th>End</th></tr></thead><tbody>
+              <tr><td>#1</td><td>Lesson</td><td>Period 1</td><td>08:00 AM</td><td>08:40 AM</td></tr>
+              <tr><td>#2</td><td>Lesson</td><td>Period 2</td><td>08:45 AM</td><td>09:25 AM</td></tr>
+              <tr class="eps-xs"><td>#3</td><td>Lesson</td><td>Period 3</td><td>09:30 AM</td><td>10:10 AM</td></tr>
+              <tr id="eps-brkrow"><td>-</td><td>Break</td><td>Break</td><td>10:10 AM</td><td>10:30 AM</td></tr>
+              <tr><td>#5</td><td>Lesson</td><td>Period 4</td><td>10:30 AM</td><td>11:10 AM</td></tr></tbody></table>
+            <div class="eps-ft"><span class="eps-b2">+ Lesson</span><span class="eps-b2">+ Break</span></div></div>
+          <div class="eps-d" id="eps-d-rooms"><h4>Rooms</h4><p class="eps-dd">Renaming a room also renames it on every timetable slot that uses it. A room that is in use cannot be deleted.</p>
+            <div class="eps-add"><div class="eps-inp" id="eps-rn" data-ph="New room name"></div><div class="eps-inp">CLASSROOM</div><div class="eps-inp" id="eps-rs" data-ph="Seats"></div><span class="eps-b2 dk" id="eps-radd">+ Add room</span></div>
+            <div id="eps-rl"><div class="eps-li new" id="eps-rnew" hidden><span>Lab C</span><span>CLASSROOM</span><span>x</span></div>
+              <div class="eps-li"><span>Lab A</span><span>CLASSROOM</span><span>x</span></div><div class="eps-li"><span>Lab B</span><span>CLASSROOM</span><span>x</span></div><div class="eps-li eps-xs"><span>Music Room</span><span>CLASSROOM</span><span>x</span></div><div class="eps-li eps-xs"><span>Room 1</span><span>CLASSROOM</span><span>x</span></div></div></div>
+          <div class="eps-d" id="eps-d-avail"><h4>Availability</h4><p class="eps-dd">Green cells are available. Click a cell, a day or a period to mark it unavailable. Nothing is blocked until you save.</p>
+            <div class="eps-pills"><span class="eps-pill on">Teachers</span><span class="eps-pill">Classes</span><span class="eps-pill">Rooms</span><div class="eps-inp" id="eps-asel" style="flex:1;min-width:120px">-- Select --</div></div>
+            <div class="eps-av" id="eps-av" hidden></div></div>
+          <div class="eps-d" id="eps-d-req"><h4>Teaching requirements</h4><p class="eps-dd">What each class needs per week: subject, teacher, number of periods, and how many of them are double lessons (two periods back to back).</p>
+            <div class="eps-inp" id="eps-csel" data-ph="-- Select class --"></div><div id="eps-rq" hidden></div></div>
+          <div class="eps-d" id="eps-d-feas"><h4>Feasibility check</h4><p class="eps-dd">Compares what each class and teacher needs against the time they are available.</p>
+            <div class="eps-ch" id="eps-fch">Checking&hellip;</div>
+            <div id="eps-fres" hidden><div class="eps-ok">Every checked class and teacher has enough available time.</div><div class="eps-k">CLASSES (2 OF 2 FINE)</div><div style="font-size:.74rem">Nothing to flag.</div><div class="eps-k">TEACHERS (9 OF 9 FINE)</div><div style="font-size:.74rem">Nothing to flag.</div></div>
+            <div class="eps-ft"><span class="eps-b2">Show everything</span><span class="eps-b2">Run again</span></div></div>
+          <div class="eps-d" id="eps-d-gen"><h4>Generate timetable</h4><p class="eps-dd">Builds lessons from each class&rsquo;s teaching requirements. Teachers and classes are never double-booked, availability is respected, and double lessons never span a break. You review the result before anything is saved.</p>
+            <div class="eps-k" style="margin-top:0">CLASSES</div>
+            <div class="eps-cls"><div class="eps-cc" id="eps-g1"><i></i><b>Grade 10 Green</b>8 subjects, 45 of 45 periods</div><div class="eps-cc"><i></i><b>Grade 10 Blue</b>8 subjects, 45 of 45 periods</div><div class="eps-cc eps-xs"><i></i><b>Form 3 Green</b>No requirements yet</div><div class="eps-cc eps-xs"><i></i><b>Form 3 Blue</b>8 subjects, 45 of 45 periods</div></div>
+            <div class="eps-rad on">Build from scratch</div><div class="eps-rad eps-xs">Keep existing lessons and fill the gaps</div>
+            <div class="eps-ft"><span class="eps-b2 gr" id="eps-gobtn">Generate timetable</span></div></div>
+          <div class="eps-d" id="eps-d-move"><h4>Timetable board</h4>
+            <div class="eps-pills"><span class="eps-pill on">By class</span><span class="eps-pill">By teacher</span><span class="eps-pill">By room</span></div>
+            <p class="eps-dd">Drag a lesson, or click one and then click a green cell. Green cells are moves with no clashes and nobody marked unavailable.</p>
+            <div class="eps-mb" id="eps-mb"></div></div>
+          <div class="eps-d" id="eps-d-cover"><h4>Teacher cover</h4><p class="eps-dd">Record who is away, then pick a free teacher for each lesson. Teachers who teach the subject come first, then those who know the class, and anyone who has already covered a lot this week is ranked lower.</p>
+            <div class="eps-pills"><span class="eps-pill">&lt;</span><div class="eps-inp">11/06/2026</div><span class="eps-pill">&gt;</span><span class="eps-pill">Today</span><b style="font-size:.76rem">Friday 6 November 2026</b></div>
+            <div id="eps-cv0" style="font-size:.72rem;color:#8A94A6">No lessons need cover on this date. Use &ldquo;Record an absence&rdquo; when a teacher is away.</div>
+            <div class="eps-bx" id="eps-cv1" hidden><b>Physics, Period 7: Kiprop Ruto is away</b>Cover: Collins Wafula<small>A free teacher, picked from the ranked list.</small></div>
+            <div class="eps-ft"><span class="eps-b2" id="eps-recb">Record an absence</span></div></div>
+          <div class="eps-d" id="eps-d-repair"><h4>Repair timetable</h4><p class="eps-dd">Finds lessons that are now in trouble, for example after you marked a teacher unavailable, and moves only those to the nearest free periods. Everything else stays where it is.</p>
+            <div id="eps-rp0"><div class="eps-bx"><b>2 lessons are in trouble</b>The teacher is booked for two subjects at once<small>Form 4 Green, Biology, Otieno Odhiambo, Fri Period 7</small><small>Grade 10 Blue, Geography, Njeri Mwangi, Fri Period 7</small></div>
+              <div class="eps-rad on">Leave other lessons where they are</div><div class="eps-rad eps-xs">Allow small improvements</div></div>
+            <div class="eps-bx" id="eps-rp1" hidden><b>2 lessons moved</b>Moved to the nearest free periods.<small>Everything else stayed where it was.</small></div>
+            <div class="eps-ft"><span class="eps-b2 gr" id="eps-fixb">Find the smallest fix</span></div></div>
+          <div class="eps-d" id="eps-d-hist"><h4>Timetable history</h4><p class="eps-dd">A version is saved automatically every time a timetable is generated, repaired, imported from Excel or restored. Restoring one puts back what those classes had before that change. The last 20 are kept.</p>
+            <div id="eps-h0" style="font-size:.72rem;color:#8A94A6">No saved versions yet. They appear here after you generate or repair a timetable.</div>
+            <div id="eps-h1" hidden><div class="eps-hr"><span><b>Repaired</b> Grade 10 Green</span><span>Just now</span><span class="eps-b2" id="eps-rstr">Restore</span></div><div class="eps-hr"><span><b>Generated</b> Grade 10 Green</span><span>Just now</span><span class="eps-b2">Restore</span></div></div></div>
+          <div class="eps-d" id="eps-d-print"><h4>Print or export timetables</h4><p class="eps-dd">Pick classes or teachers, then print them (choose Save as PDF in the print dialog) or download an Excel file. Each class or teacher gets its own page.</p>
+            <div class="eps-pills"><span class="eps-pill on">By class</span><span class="eps-pill">By teacher</span><div class="eps-inp" style="flex:1;min-width:100px" data-ph="Search class&hellip;"></div></div>
+            <div class="eps-k" style="margin-top:0">6 OF 6 CLASSES SELECTED</div>
+            <div class="eps-li" style="grid-template-columns:1fr auto"><span>Form 3 Blue (Form 3)</span><span>45 lessons</span></div><div class="eps-li" style="grid-template-columns:1fr auto"><span>Grade 10 Green (Grade 10)</span><span>45 lessons</span></div><div class="eps-li eps-xs" style="grid-template-columns:1fr auto"><span>Grade 10 Blue (Grade 10)</span><span>45 lessons</span></div>
+            <div class="eps-ft"><span class="eps-b2">Excel</span><span class="eps-b2 dk" id="eps-pb" style="background:#3B6FE0;border-color:#3B6FE0">Print or save as PDF</span></div></div>
+        </div></div>
+        <div class="eps-cur" id="eps-cur"><i></i><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.8L9 19z" fill="#111" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg><div class="eps-ghost" id="eps-ghost" hidden></div></div>
+      </div>
+      <div class="eps-sr" id="eps-sr" role="status"></div>
+      <p class="eps-note">An illustration using a sample school and sample figures.</p>
+    </div>
+  </div>
+</div>
+      <div class="ept-pane" id="ep-fees" role="tabpanel" aria-labelledby="ept-t-fees" hidden>
+  <div class="epm-wrap">
+    <div class="epm-copy">
+      <h3 id="epm-title">Fee management from payment to audit trail.</h3>
+      <p>Follow the cursor through the same screens your bursar uses: fee records, new fees, fee structures, payments, SMS and automatic reminders, and the audit trail.</p>
+      <ul class="epm-pts">
+        <li>Payments land on the right student and update the totals straight away.</li>
+        <li>Set a termly fee structure and every active student in the grade is billed automatically.</li>
+        <li>Reminders go out by SMS and WhatsApp, on demand or on a schedule.</li>
+        <li>Every change is written to an audit trail that can&rsquo;t be edited or deleted.</li>
+      </ul>
+    </div>
+    <div>
+      <div class="epm-app" id="epm-app" role="img" aria-label="Animated tour of the fee management screens: a cursor visits fee records, add fee, fee structure, edit payments, SMS reminders, automatic reminders and the audit trail">
+        <div aria-hidden="true">
+          <div class="epm-cards">
+            <div class="epm-card"><span>Total Fee Records</span><b id="epm-rec">720</b></div>
+            <div class="epm-card"><span>Total Collected</span><b class="g" id="epm-col">KES 28,480,500</b></div>
+            <div class="epm-card"><span>Outstanding Balance</span><b class="r" id="epm-out">KES 6,743,500</b></div>
+          </div>
+          <div class="epm-tabs">
+            <span class="epm-tab on" data-v="rec">Fee Records</span><span class="epm-tab" data-v="add">Add Fee</span><span class="epm-tab" data-v="str">Fee Structure</span><span class="epm-tab" data-v="edit">Edit Fee / Payments</span><span class="epm-tab" data-v="sms">SMS Reminders</span><span class="epm-tab" data-v="auto">Auto Reminders</span><span class="epm-tab" data-v="aud">Audit Trail</span>
+          </div>
+          <div class="epm-views">
+            <div class="epm-v show" id="epm-v-rec">
+              <div class="epm-feed" id="epm-feed"><span>Waiting for the next payment&hellip;</span></div>
+              <div class="epm-scroll"><table class="epm-tbl"><thead><tr><th>Students</th><th>Admission No.</th><th>Term</th><th>Fee Structure</th><th>Total</th><th>Paid</th><th>Balance</th><th>Status</th><th>Action</th></tr></thead><tbody id="epm-body"></tbody></table></div>
+            </div>
+            <div class="epm-v" id="epm-v-add"><div class="epm-box">
+              <h4>Add Fee Record</h4>
+              <label>Student *</label><div class="epm-inp" id="epm-i-stu" data-ph="Search student by name or admission number&hellip;"></div>
+              <div class="epm-two"><div><label>Term *</label><div class="epm-inp">First Term</div></div><div><label>Academic Year *</label><div class="epm-inp">2026</div></div></div>
+              <div class="epm-two"><div><label>Fee Type *</label><div class="epm-inp">Tuition</div></div><div><label>Total Amount (KES) *</label><div class="epm-inp" id="epm-i-amt" data-ph="e.g. 15000"></div></div></div>
+              <div class="epm-bf"><b>Balance Carried Forward (B/F) and Prepayment Credit</b><div class="epm-chk" id="epm-chk"><i></i>Auto-detect B/F &mdash; automatically sum all unpaid balances for this student</div></div>
+            </div></div>
+            <div class="epm-v" id="epm-v-str"><div class="epm-box">
+              <h4>Termly Fee Structure</h4>
+              <p class="epm-d">Set the fee amount per grade and fee type for a term. On the term&rsquo;s start date, every active student in that grade is automatically billed &mdash; with any unpaid balance from the previous term added, and any available credit applied automatically.</p>
+              <div class="epm-row"><div><label>Academic Year</label><div class="epm-inp">2026</div></div><div><label>Term</label><div class="epm-inp">First</div></div><span class="epm-b2">Load Existing</span></div>
+              <div class="epm-row"><div><label>Grade Level</label><div class="epm-inp">GRADE_10</div></div><div><label>Fee Type</label><div class="epm-inp">TUITION</div></div><div><label>Amount (KES)</label><div class="epm-inp" id="epm-i-fs"></div></div></div>
+              <span class="epm-b2 dark">+ Add Row</span><div style="margin-top:12px"><span class="epm-ind" id="epm-save">Save Fee Structure</span></div>
+            </div></div>
+            <div class="epm-v" id="epm-v-edit">
+              <div class="epm-box"><div class="epm-k">FIND A FEE RECORD</div><div class="epm-inp" id="epm-i-find" data-ph="Search by student name or admission number"></div></div>
+              <div class="epm-box" style="text-align:center;color:#5B6B7A;font-size:.78rem;padding:22px 14px">
+                <span id="epm-empty">Search for a student above, or use &ldquo;Edit Fee / Payments&rdquo; in a row&rsquo;s Actions menu.</span>
+                <div id="epm-hit" hidden style="text-align:left;color:#111"></div>
+              </div>
+            </div>
+            <div class="epm-v" id="epm-v-sms">
+              <div class="epm-aud3"><div class="epm-aud o" id="epm-a1"><b>Overdue Balances</b>Send to all overdue records</div><div class="epm-aud a"><b>All Outstanding</b>Send to all with any balance</div><div class="epm-aud c"><b>Custom Selection</b>Pick specific students</div></div>
+              <div class="epm-box"><h4>Compose SMS</h4><div class="epm-inp">Balance Due Reminder</div>
+                <div class="epm-ta" style="margin-top:8px">Dear Parent, &#123;name&#125; has an outstanding fee balance of KES &#123;balance&#125;. Please clear this at the earliest. - &#123;school&#125;</div>
+                <div class="epm-foot"><span>114 chars</span><span>1 SMS</span></div>
+                <div class="epm-foot"><span>399 overdue</span><span class="epm-ind" id="epm-send">Send SMS Reminders</span></div>
+              </div>
+            </div>
+            <div class="epm-v" id="epm-v-auto"><div class="epm-box">
+              <h4>Automated Fee Reminders</h4><p class="epm-d">Reminders are sent automatically via WhatsApp and SMS</p>
+              <div class="epm-two2"><div class="epm-pnl g"><b>Daily Reminders</b>8:00 AM EAT<br>Overdue + due within 7 days</div><div class="epm-pnl bl"><b>Weekly Summary</b>Every Monday 7:00 AM<br>Fee collection summary to admins</div></div>
+              <div class="epm-pnl y"><b>Manual Trigger</b>Send WhatsApp reminders now to all parents with overdue or upcoming fee balances
+                <div class="epm-btns"><span class="epm-b2">View Summary</span><span class="epm-b2 amber" id="epm-now">Send Reminders Now</span></div></div>
+            </div></div>
+            <div class="epm-v" id="epm-v-aud"><div class="epm-box">
+              <h4>Audit Trail</h4><p class="epm-d">Who changed what, when and why. Entries can&rsquo;t be edited or deleted.</p>
+              <div class="epm-scroll"><table class="epm-at"><thead><tr><th>When</th><th>Who</th><th>Action</th><th>Student</th><th>What changed</th><th>Reason</th></tr></thead><tbody id="epm-aud-body">
+                <tr class="epm-hide" data-new><td>Just now</td><td>System</td><td><span class="epm-tag">payment</span></td><td>DEM237</td><td>Balance KES 30,500 &rarr; KES 0</td><td>M-Pesa payment</td></tr>
+                <tr class="epm-hide" data-new><td>21 Oct 2026, 22:57</td><td>System</td><td><span class="epm-tag">payment edit</span></td><td>&mdash;</td><td>Amount KES 17,000 &rarr; KES 19,000</td><td>&mdash;</td></tr>
+                <tr class="epm-hide" data-new><td>21 Oct 2026, 22:22</td><td>System</td><td><span class="epm-tag">fee record edit</span></td><td>&mdash;</td><td>Balance KES 58,000 &rarr; KES 50,000</td><td>8000 paid in third term not entered</td></tr>
+              </tbody></table></div>
+            </div></div>
+          </div>
+        </div>
+        <div class="epm-cur" id="epm-cur"><i></i><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.8L9 19z" fill="#111" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="epm-sr" id="epm-sr" role="status"></div>
+      <p class="epm-note">An illustration using sample students and figures.</p>
+    </div>
+  </div>
+</div>
+      <div class="ept-pane" id="ep-fin" role="tabpanel" aria-labelledby="ept-t-fin" hidden>
   <div class="epr-wrap">
     <div class="epr-copy">
-      <h2 id="epr-title">Financial reports, from collection rate to cash book.</h2>
+      <h3 id="epr-title">Financial reports, from collection rate to cash book.</h3>
       <p>Follow the cursor through the reports your bursar and principal use: overview, defaulters, classes, trial balance and cash book.</p>
       <ul class="epr-pts">
         <li>See billed, collected and outstanding fees, with the collection rate, at a glance.</li>
@@ -561,7 +592,6 @@
         <li>Compare classes side by side on what was billed, collected and is still owed.</li>
         <li>Generate a trial balance and cash book for any period, and download them as Excel (CSV) or PDF.</li>
       </ul>
-      <button class="epr-go" type="button" id="epr-go">Replay tour</button>
     </div>
     <div>
       <div class="epr-app" id="epr-app" role="img" aria-label="Animated tour of the financial reports: the overview counts up, a defaulter is found and sent a WhatsApp reminder, classes are compared, then a trial balance and cash book are generated">
@@ -616,6 +646,15 @@
       <p class="epr-note">An illustration using a sample school and sample figures.</p>
     </div>
   </div>
+</div>
+    </div>
+    <div class="ept-cta">
+      <p>Like what you see?</p>
+      <a class="ept-b pri" href="#register">Start free, no card needed</a>
+      <a class="ept-b" href="https://app.edupath.co.ke/login?demo=1">Try the live demo</a>
+      <a class="ept-b wa" href="https://wa.me/254711606968?text=Hello%20Edupath%2C%20I%27d%20like%20a%20walkthrough" target="_blank" rel="noopener">Chat on WhatsApp</a>
+    </div>
+  </div>
 </section>
 
 <!-- ============ PART 2: NEW FAQ ANSWERS ============ -->
@@ -661,7 +700,7 @@
   function init(){
   var root=document.getElementById('ep-solve'); if(!root) return;
   var $=function(i){return document.getElementById(i);};
-  var panel=$('eps-panel'), cur=$('eps-cur'), modal=$('eps-modal'), grid=$('eps-grid'), log=$('eps-log'), sl=$('eps-sl'), sr=$('eps-sr'), btn=$('eps-go'), ghost=$('eps-ghost');
+  var panel=$('eps-panel'), cur=$('eps-cur'), modal=$('eps-modal'), grid=$('eps-grid'), log=$('eps-log'), sl=$('eps-sl'), sr=$('eps-sr'), ghost=$('eps-ghost');
   var D=['Monday','Tuesday','Wednesday','Thursday','Friday'];
   var P=[['08:00','08:40'],['08:45','09:25'],['09:30','10:10'],['10:30','11:10'],['11:15','11:55'],['12:00','12:40'],['13:20','14:00'],['14:05','14:45'],['14:50','15:30']];
   var BR={3:'10:10 - 10:30',6:'12:40 - 13:20'};
@@ -726,7 +765,9 @@
     $('eps-rp0').hidden=false; $('eps-rp1').hidden=true; $('eps-fixb').textContent='Find the smallest fix';
     $('eps-h0').hidden=false; $('eps-h1').hidden=true; $('eps-pb').textContent='Print or save as PDF';
   }
-  function wait(ms,my){return new Promise(function(res,rej){setTimeout(function(){my===token?res():rej('x');},ms);});}
+  var paused=false, gates=[];
+  function release(){var g=gates.splice(0); g.forEach(function(f){f();});}
+  function wait(ms,my){return new Promise(function(res,rej){setTimeout(function(){if(my!==token) return rej('x'); if(!paused) return res(); gates.push(function(){my===token?res():rej('x');});},ms);});}
   function moveTo(e,my,dx){
     var a=panel.getBoundingClientRect(), r=e.getBoundingClientRect();
     var x=r.left-a.left+Math.min(r.width*0.55,r.width-8)+(dx||0), y=r.top-a.top+r.height*0.5;
@@ -793,20 +834,20 @@
   }
   function finish(){
     cur.classList.remove('vis'); say('',lastMsg); sr.textContent='Tour finished. '+lastMsg;
-    btn.disabled=false; btn.removeAttribute('aria-busy'); btn.textContent='Replay tour';
+    if(window.EPTours&&window.EPTours.onDone) window.EPTours.onDone('solve');
   }
   function run(inst){
-    token++; var my=token; instant=inst; resetAll(); sr.textContent=''; btn.disabled=true; btn.setAttribute('aria-busy','true');
-    if(inst){order.forEach(function(o){fill(o[0]+'-'+o[1],G[o[1]][o[0]]);}); sl.textContent='45/45'; lastMsg='All 45 lessons placed. 0 clashes in the final timetable.'; finish(); return;}
+    token++; var my=token; instant=inst; resetAll(); sr.textContent=''; if(inst){order.forEach(function(o){fill(o[0]+'-'+o[1],G[o[1]][o[0]]);}); sl.textContent='45/45'; lastMsg='All 45 lessons placed. 0 clashes in the final timetable.'; finish(); return;}
     tour(my).then(finish,function(e){if(e!=='x') finish();});
   }
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   resetAll();
-  btn.addEventListener('click',function(){run(reduce);});
-  function auto(){if(started) return; started=true; run(reduce);}
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(function(es,ob){if(es[0].isIntersecting){auto(); ob.disconnect();}},{threshold:.25}).observe(root);
-  } else { auto(); }
+  window.EPTours=window.EPTours||{};
+  window.EPTours.solve={
+    start:function(){run(reduce);},
+    stop:function(){token++; paused=false; release(); cur.classList.remove('vis'); modal.classList.remove('on'); ghost.hidden=true;},
+    pause:function(){paused=true;}, resume:function(){paused=false; release();}
+  };
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
 })();
@@ -817,7 +858,7 @@
   function init(){
   var root=document.getElementById('ep-fees'); if(!root) return;
   var $=function(i){return document.getElementById(i);};
-  var app=$('epm-app'), cur=$('epm-cur'), body=$('epm-body'), feed=$('epm-feed'), cCol=$('epm-col'), cOut=$('epm-out'), sr=$('epm-sr'), btn=$('epm-go');
+  var app=$('epm-app'), cur=$('epm-cur'), body=$('epm-body'), feed=$('epm-feed'), cCol=$('epm-col'), cOut=$('epm-out'), sr=$('epm-sr');
   var tabEls={}; [].forEach.call(root.querySelectorAll('.epm-tab'),function(t){tabEls[t.getAttribute('data-v')]=t;});
   var R=[['Dorothy Cynthia Mutiso','DEM237',59500,29000],['Moses Hassan Kioko','DEM238',50000,0],['Kamau David Kamau','DEM240',52000,52000],['Felicity Nafula Nzomo','DEM239',67000,67000],['Kenneth Nicholas Makau','DEM236',52000,39500]];
   var E=[{i:0,amt:30500},{i:1,amt:20000},{i:4,amt:12500}];
@@ -868,7 +909,9 @@
     $('epm-now').className='epm-b2 amber'; $('epm-now').textContent='Send Reminders Now';
     [].forEach.call(root.querySelectorAll('#epm-aud-body tr'),function(r){r.className='epm-hide';});
   }
-  function wait(ms,my){return new Promise(function(res,rej){setTimeout(function(){my===token?res():rej('x');},ms);});}
+  var paused=false, gates=[];
+  function release(){var g=gates.splice(0); g.forEach(function(f){f();});}
+  function wait(ms,my){return new Promise(function(res,rej){setTimeout(function(){if(my!==token) return rej('x'); if(!paused) return res(); gates.push(function(){my===token?res():rej('x');});},ms);});}
   function moveTo(el,my,dx){
     var a=app.getBoundingClientRect(), r=el.getBoundingClientRect();
     var x=r.left-a.left+Math.min(r.width*0.55,r.width-8)+(dx||0), y=r.top-a.top+r.height*0.5;
@@ -933,21 +976,21 @@
   function finish(){
     var m='Tour finished. Payments applied, reminders sent and every change recorded in the audit trail.';
     cur.classList.remove('vis'); say('','Balances, statuses and totals are up to date.'); sr.textContent=m;
-    btn.disabled=false; btn.removeAttribute('aria-busy'); btn.textContent='Replay tour';
+    if(window.EPTours&&window.EPTours.onDone) window.EPTours.onDone('fees');
   }
   function run(inst){
     token++; var my=token; instant=inst; build(); resetViews(); setTab('rec'); say('','Waiting for the next payment\u2026'); sr.textContent='';
-    btn.disabled=true; btn.setAttribute('aria-busy','true');
     if(inst){E.forEach(function(e){pay(e.i,e.amt);}); finish(); return;}
     tour(my).then(finish,function(e){if(e!=='x') finish();});
   }
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   build();
-  btn.addEventListener('click',function(){run(reduce);});
-  function go(){if(started) return; started=true; run(reduce);}
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(function(es,ob){if(es[0].isIntersecting){go(); ob.disconnect();}},{threshold:.3}).observe(root);
-  } else { go(); }
+  window.EPTours=window.EPTours||{};
+  window.EPTours.fees={
+    start:function(){run(reduce);},
+    stop:function(){token++; paused=false; release(); cur.classList.remove('vis');},
+    pause:function(){paused=true;}, resume:function(){paused=false; release();}
+  };
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
 })();
@@ -958,7 +1001,7 @@
   function init(){
   var root=document.getElementById('ep-fin'); if(!root) return;
   var $=function(i){return document.getElementById(i);};
-  var app=$('epr-app'), cur=$('epr-cur'), btn=$('epr-go'), sr=$('epr-sr'), arc=$('epr-arc'), pct=$('epr-pct');
+  var app=$('epr-app'), cur=$('epr-cur'), sr=$('epr-sr'), arc=$('epr-arc'), pct=$('epr-pct');
   var tabEls={}; [].forEach.call(root.querySelectorAll('.epr-tab'),function(t){tabEls[t.getAttribute('data-v')]=t;});
   var token=0, started=false, instant=false, L=157.08;
   var DF=[['DEM123','Nduku Mutua','Form 3 Blue','63,000','15,000','63,000'],['DEM186','Wesley Muthama','Form 4 Green','61,500','9,500','61,500'],['DEM013','Esther Atieno','Grade 10 Green','60,000','15,000','60,000'],['DEM215','Grace Waweru','Form 4 Blue','60,000','8,000','60,000'],['DEM042','Wafula Wafula','Grade 10 Blue','60,000','15,000','60,000']];
@@ -1014,7 +1057,9 @@
     tbr.concat(cbr).forEach(function(r){r.className=r.className.replace('show','hid');});
     $('epr-tbt').hidden=true; $('epr-cbt').hidden=true; $('epr-n1').hidden=false; $('epr-n2').hidden=false; $('epr-bal').hidden=true; setTab('ov');
   }
-  function wait(ms,my){return new Promise(function(res,rej){setTimeout(function(){my===token?res():rej('x');},ms);});}
+  var paused=false, gates=[];
+  function release(){var g=gates.splice(0); g.forEach(function(f){f();});}
+  function wait(ms,my){return new Promise(function(res,rej){setTimeout(function(){if(my!==token) return rej('x'); if(!paused) return res(); gates.push(function(){my===token?res():rej('x');});},ms);});}
   function moveTo(e,my,dx){
     var a=app.getBoundingClientRect(), r=e.getBoundingClientRect();
     var x=r.left-a.left+Math.min(r.width*0.55,r.width-8)+(dx||0), y=r.top-a.top+r.height*0.5;
@@ -1053,20 +1098,74 @@
   }
   function finish(){
     cur.classList.remove('vis'); var m='Tour finished. Collection rate 70%, one defaulter reminded, trial balance in balance.';
-    sr.textContent=m; btn.disabled=false; btn.removeAttribute('aria-busy'); btn.textContent='Replay tour';
+    sr.textContent=m; if(window.EPTours&&window.EPTours.onDone) window.EPTours.onDone('fin');
   }
   function run(inst){
-    token++; var my=token; instant=inst; resetAll(); sr.textContent=''; btn.disabled=true; btn.setAttribute('aria-busy','true');
-    if(inst){countUp(); grow(); showRows(tbr); showRows(cbr); $('epr-tbt').hidden=false; $('epr-cbt').hidden=false; $('epr-n1').hidden=true; $('epr-n2').hidden=true; $('epr-bal').hidden=false; finish(); return;}
+    token++; var my=token; instant=inst; resetAll(); sr.textContent=''; if(inst){countUp(); grow(); showRows(tbr); showRows(cbr); $('epr-tbt').hidden=false; $('epr-cbt').hidden=false; $('epr-n1').hidden=true; $('epr-n2').hidden=true; $('epr-bal').hidden=false; finish(); return;}
     tour(my).then(finish,function(e){if(e!=='x') finish();});
   }
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   resetAll();
-  btn.addEventListener('click',function(){run(reduce);});
-  function go(){if(started) return; started=true; run(reduce);}
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(function(es,ob){if(es[0].isIntersecting){go(); ob.disconnect();}},{threshold:.3}).observe(root);
-  } else { go(); }
+  window.EPTours=window.EPTours||{};
+  window.EPTours.fin={
+    start:function(){run(reduce);},
+    stop:function(){token++; paused=false; release(); cur.classList.remove('vis');},
+    pause:function(){paused=true;}, resume:function(){paused=false; release();}
+  };
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+})();
+</script>
+
+<script>
+(function(){
+  function init(){
+    var root=document.getElementById('ep-tour'); if(!root) return;
+    var $=function(i){return document.getElementById(i);};
+    var K=['solve','fees','fin'], P={solve:$('ep-solve'),fees:$('ep-fees'),fin:$('ep-fin')}, tabs={};
+    K.forEach(function(k){tabs[k]=$('ept-t-'+k);});
+    var pb=$('ept-pause'), rb=$('ept-replay'), T=window.EPTours=window.EPTours||{};
+    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var cur=null, paused=false, chain=false, held=false, started=false, timer=0;
+    if(reduce) pb.hidden=true;
+    function label(){pb.textContent=paused?'Resume':'Pause'; pb.setAttribute('aria-pressed',paused?'true':'false');}
+    function select(k,viaChain){
+      clearTimeout(timer);
+      if(cur&&T[cur]) T[cur].stop();
+      if(cur&&cur!==k) P[cur].hidden=true;
+      K.forEach(function(x){var on=x===k; tabs[x].setAttribute('aria-selected',on?'true':'false'); tabs[x].tabIndex=on?0:-1;});
+      P[k].hidden=false; cur=k; paused=false; held=false; label(); if(!viaChain) chain=false;
+      if(T[k]) T[k].start();
+    }
+    T.onDone=function(k){
+      if(reduce||!chain||k!==cur) return;
+      var i=K.indexOf(k);
+      if(i<K.length-1) timer=setTimeout(function(){if(chain) select(K[i+1],true);},1500); else chain=false;
+    };
+    K.forEach(function(k,i){
+      tabs[k].addEventListener('click',function(){select(k,false);});
+      tabs[k].addEventListener('keydown',function(e){
+        var j=-1; if(e.key==='ArrowRight') j=(i+1)%K.length; else if(e.key==='ArrowLeft') j=(i+K.length-1)%K.length; else if(e.key==='Home') j=0; else if(e.key==='End') j=K.length-1;
+        if(j>-1){e.preventDefault(); tabs[K[j]].focus(); select(K[j],false);}
+      });
+    });
+    pb.addEventListener('click',function(){
+      if(!cur||!T[cur]) return; paused=!paused; held=false;
+      if(paused) T[cur].pause(); else T[cur].resume(); label();
+    });
+    rb.addEventListener('click',function(){select(cur||'solve',false);});
+    function vis(v){
+      if(!cur||!T[cur]) return;
+      if(!v&&!paused){T[cur].pause(); held=true;}
+      else if(v&&held){held=false; if(!paused) T[cur].resume();}
+    }
+    function begin(){if(started) return; started=true; chain=!reduce; select('solve',true);}
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){
+        var on=es[0].intersectionRatio>=0.15;
+        if(on&&!started) begin(); else vis(on);
+      },{threshold:[0,0.15]}).observe(root);
+    } else { begin(); }
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
 })();
