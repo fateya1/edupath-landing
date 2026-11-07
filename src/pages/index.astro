@@ -588,7 +588,9 @@ const faqJsonLd = JSON.stringify({
       </ul>
         <p class="ept-plan">Included in <b>Pro</b> and Enterprise. <a href="#pricing" data-link="compare_plans">Compare plans</a> <a href="/school-timetable-software" data-link="learn_more_timetables">Learn more</a></p>
     </div>
-    <div>
+    <div class="ept-slot" id="ept-slot-solve"></div>
+  </div>
+<template id="tpl-solve">
       <div class="eps-panel" id="eps-panel" role="img" aria-label="Animated tour of the timetable screens: a cursor opens the bell schedule, rooms, availability, requirements and feasibility check, generates a clash-free timetable, then moves lessons, covers an absence, repairs, shows history and prints">
         <div aria-hidden="true">
           <div class="eps-hd"><div><b>Manage Timetables</b><span>Timetable Management</span></div><div class="yr"><span>2026<br>Term 2</span></div></div>
@@ -660,9 +662,7 @@ const faqJsonLd = JSON.stringify({
       </div>
       <div class="eps-sr" id="eps-sr" role="status"></div>
       <p class="eps-note">An illustration using a sample school and sample figures.</p>
-    </div>
-  </div>
-</div>
+    </template></div>
       <div class="ept-pane" id="ep-fees" role="tabpanel" aria-labelledby="ept-t-fees" hidden>
   <div class="epm-wrap">
     <div class="epm-copy">
@@ -676,7 +676,9 @@ const faqJsonLd = JSON.stringify({
       </ul>
         <p class="ept-plan">Included in <b>all plans</b>. <a href="/mpesa-school-fees" data-link="learn_more_fees">Learn more</a></p>
     </div>
-    <div>
+    <div class="ept-slot" id="ept-slot-fees"></div>
+  </div>
+<template id="tpl-fees">
       <div class="epm-app" id="epm-app" role="img" aria-label="Animated tour of the fee management screens: a cursor visits fee records, add fee, fee structure, edit payments, SMS reminders, automatic reminders and the audit trail">
         <div aria-hidden="true">
           <div class="epm-cards">
@@ -741,9 +743,7 @@ const faqJsonLd = JSON.stringify({
       </div>
       <div class="epm-sr" id="epm-sr" role="status"></div>
       <p class="epm-note">An illustration using sample students and figures.</p>
-    </div>
-  </div>
-</div>
+    </template></div>
       <div class="ept-pane" id="ep-fin" role="tabpanel" aria-labelledby="ept-t-fin" hidden>
   <div class="epr-wrap">
     <div class="epr-copy">
@@ -757,7 +757,9 @@ const faqJsonLd = JSON.stringify({
       </ul>
         <p class="ept-plan">Included in <b>all plans</b>. <a href="/school-financial-reports" data-link="learn_more_reports">Learn more</a></p>
     </div>
-    <div>
+    <div class="ept-slot" id="ept-slot-fin"></div>
+  </div>
+<template id="tpl-fin">
       <div class="epr-app" id="epr-app" role="img" aria-label="Animated tour of the financial reports: the overview counts up, a defaulter is found and sent a WhatsApp reminder, classes are compared, then a trial balance and cash book are generated">
         <div aria-hidden="true">
           <div class="epr-top">
@@ -808,9 +810,7 @@ const faqJsonLd = JSON.stringify({
       </div>
       <div class="epr-sr" id="epr-sr" role="status"></div>
       <p class="epr-note">An illustration using a sample school and sample figures.</p>
-    </div>
-  </div>
-</div>
+    </template></div>
     </div>
     <div class="ept-cta">
       <p>Like what you see?</p>
@@ -975,7 +975,7 @@ const faqJsonLd = JSON.stringify({
     pause:function(){paused=true;}, resume:function(){paused=false; release();}
   };
   }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+  (window.EPBoot=window.EPBoot||{}).solve=init;
 })();
 (function(){
   function init(){
@@ -1115,7 +1115,7 @@ const faqJsonLd = JSON.stringify({
     pause:function(){paused=true;}, resume:function(){paused=false; release();}
   };
   }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+  (window.EPBoot=window.EPBoot||{}).fees=init;
 })();
 (function(){
   function init(){
@@ -1233,7 +1233,7 @@ const faqJsonLd = JSON.stringify({
     pause:function(){paused=true;}, resume:function(){paused=false; release();}
   };
   }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+  (window.EPBoot=window.EPBoot||{}).fin=init;
 })();
 (function(){
   function init(){
@@ -1244,6 +1244,13 @@ const faqJsonLd = JSON.stringify({
     var pb=$('ept-pause'), rb=$('ept-replay'), T=window.EPTours=window.EPTours||{};
     var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var cur=null, paused=false, chain=false, held=false, started=false, timer=0;
+    var CHAIN=['solve','fees','fin'];            // tours that autoplay one after another; tabs added later do not
+    var BOOT=window.EPBoot=window.EPBoot||{}, mounted={};
+    function ensure(k){                           // build a tour's panel the first time it is needed
+      if(mounted[k]) return;
+      var tpl=$('tpl-'+k), slot=$('ept-slot-'+k); if(!tpl||!slot||!BOOT[k]) return;
+      slot.appendChild(tpl.content.cloneNode(true)); mounted[k]=true; BOOT[k]();
+    }
     var NM={solve:'timetables',fees:'fees',fin:'reports'};
     function track(n,p){try{if(typeof gtag==='function') gtag('event',n,Object.assign({page_path:location.pathname},p||{}));}catch(e){}}
     root.addEventListener('click',function(e){
@@ -1258,15 +1265,15 @@ const faqJsonLd = JSON.stringify({
       if(cur&&T[cur]) T[cur].stop();
       K.forEach(function(x){if(x!==k) P[x].hidden=true;});
       K.forEach(function(x){var on=x===k; tabs[x].setAttribute('aria-selected',on?'true':'false'); tabs[x].tabIndex=on?0:-1;});
-      P[k].hidden=false; cur=k; paused=false; held=false; label(); if(!viaChain) chain=false;
+      P[k].hidden=false; ensure(k); cur=k; paused=false; held=false; label(); if(!viaChain) chain=false;
       track('tour_started',{tour:NM[k],trigger:why||(viaChain?'autoplay':'tab')});
       if(T[k]) T[k].start();
     }
     T.onDone=function(k){
       if(!reduce&&k===cur) track('tour_completed',{tour:NM[k]});
       if(reduce||!chain||k!==cur) return;
-      var i=K.indexOf(k);
-      if(i<K.length-1) timer=setTimeout(function(){if(chain) select(K[i+1],true,'chain');},1500); else chain=false;
+      var i=CHAIN.indexOf(k);
+      if(i>-1&&i<CHAIN.length-1) timer=setTimeout(function(){if(chain) select(CHAIN[i+1],true,'chain');},1500); else chain=false;
     };
     K.forEach(function(k,i){
       tabs[k].addEventListener('click',function(){select(k,false,'tab');});
@@ -1303,6 +1310,7 @@ const faqJsonLd = JSON.stringify({
     window.addEventListener('hashchange',function(){openHash(location.hash,true);});
     openHash(location.hash,true);
     if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){ if(es[0].isIntersecting) ensure('solve'); },{rootMargin:'800px 0px'}).observe(root);
       new IntersectionObserver(function(es){
         var on=es[0].intersectionRatio>=0.15;
         if(on&&!started) begin(); else vis(on);
