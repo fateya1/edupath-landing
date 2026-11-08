@@ -1,0 +1,137 @@
+---
+import FeaturePage from '../layouts/FeaturePage.astro';
+
+const faqs = [
+  ['Does Edupath connect directly to KEMIS?', 'No. KEMIS does not currently offer a public developer API, so schools register learners directly through the government portal. Edupath prepares your data for that registration and brings the UPI numbers back into Edupath once they are assigned.'],
+  ['What does the data completeness check look for?', 'It finds students missing a required field: date of birth, gender or birth certificate number. Students with gaps like these will likely fail KEMIS registration, so you can fix them before you visit the portal.'],
+  ['What is in the registration worksheet?', 'A CSV with every field KEMIS registration requires, pre-filled from your Edupath records. You use it alongside the government portal to copy and paste values instead of re-typing from scratch.'],
+  ['How do I bring UPI numbers back into Edupath?', 'Once KEMIS assigns UPI numbers, upload a two-column CSV with the headings admissionNumber and upiNumber, one learner per line. The header row is optional, and the numbers are loaded in bulk.'],
+  ['Which birth certificate number should I enter?', 'Published KEMIS guides say to use the official birth certificate entry number, not the printed serial number. Check this against the learner\'s certificate and the Ministry\'s latest guidance, because requirements can change.'],
+  ['What does importing UPI numbers do for my school?', 'It keeps one learner number against every admission number in Edupath, and it directly improves your Compliance Scorecard.'],
+];
+
+const jsonLd = JSON.stringify([
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'KEMIS Registration Readiness for Kenyan Schools',
+    description: 'Prepare learner data for KEMIS registration: check missing fields, export a registration worksheet and import UPI numbers in bulk.',
+    url: 'https://www.edupath.co.ke/kemis-registration-readiness',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
+  },
+]);
+---
+
+<FeaturePage
+  title="KEMIS Registration Readiness for Kenyan Schools | Edupath SMS"
+  description="Prepare learner data for KEMIS registration: check missing fields, export a pre-filled registration worksheet and import UPI numbers in bulk with Edupath SMS."
+  path="/kemis-registration-readiness"
+  ogTitle="KEMIS Registration Readiness | Edupath SMS"
+  ogDescription="Find learners with missing data before you register them on KEMIS, export a pre-filled worksheet, and bring UPI numbers back into Edupath in bulk."
+  jsonLd={jsonLd}
+  badge="KEMIS Readiness"
+  heading={"Get your learners ready for <span>KEMIS registration</span>"}
+  lead="KEMIS replaced NEMIS in January 2026, and schools register learners on the government portal. Edupath checks your learner records, exports a pre-filled registration worksheet and brings the UPI numbers back in bulk."
+  active="/kemis-registration-readiness"
+  ctaHeading="Get your learner records KEMIS-ready."
+  ctaText="Create a free account and see how Edupath prepares your data before you register on the portal. Set up in minutes."
+  ctaLabel="Create Free Account →"
+>
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">How It Works</div>
+      <h2>From learner records to UPI numbers in five steps.</h2>
+      <div class="fs-steps">
+        <div class="fs-step">
+          <div class="fs-step-num">1</div>
+          <div>
+            <h3>Check your learner data</h3>
+            <p>Run the data completeness check to see which students are missing a date of birth, gender or birth certificate number.</p>
+          </div>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-num">2</div>
+          <div>
+            <h3>Fix the gaps</h3>
+            <p>Collect the missing details from parents and correct the records in Edupath, before anyone logs in to the portal.</p>
+          </div>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-num">3</div>
+          <div>
+            <h3>Export the registration worksheet</h3>
+            <p>Download a CSV with every field KEMIS registration requires, pre-filled from your Edupath records.</p>
+          </div>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-num">4</div>
+          <div>
+            <h3>Register on the government portal</h3>
+            <p>KEMIS has no public developer API yet, so registration happens on the portal. Use the worksheet beside it to copy and paste values instead of re-typing.</p>
+          </div>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-num">5</div>
+          <div>
+            <h3>Import the UPI numbers</h3>
+            <p>When KEMIS assigns UPI numbers, upload a two-column CSV of admission numbers and UPI numbers to bring them into Edupath in bulk.</p>
+          </div>
+        </div>
+      </div>
+      <p style="margin-top:var(--space-xl)"><a class="btn btn--secondary" href="/#tour-kemis">Watch the KEMIS tour</a> &nbsp; <a class="btn btn--secondary" href="/blog/kemis-learner-registration-checklist-kenya/">Read the registration checklist</a></p>
+    </div>
+  </section>
+
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">Features</div>
+      <h2>The preparation on either side of the portal.</h2>
+      <div class="fs-grid">
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(63.7% 0.237 25.331 / 0.12)">🔍</div>
+          <h3>Data completeness check</h3>
+          <p>Finds students missing a date of birth, gender or birth certificate number, so you fix them before registration.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(60% 0.118 184.704 / 0.15)">📄</div>
+          <h3>Registration worksheet</h3>
+          <p>A CSV with every field KEMIS registration requires, pre-filled from Edupath records, to use alongside the portal.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(62.7% 0.194 149.214 / 0.12)">🔢</div>
+          <h3>Bulk UPI import</h3>
+          <p>Upload a two-column CSV of admission numbers and UPI numbers to bring the identifiers back into Edupath in one go.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(76.9% 0.188 70.08 / 0.18)">🗺️</div>
+          <h3>Field mapping reference</h3>
+          <p>See how Edupath fields correspond to KEMIS registration fields, updated as KEMIS documentation evolves.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(60% 0.118 184.704 / 0.15)">📋</div>
+          <h3>Compliance Scorecard</h3>
+          <p>Importing UPI numbers directly improves your Compliance Scorecard, so you can see how ready your records are.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">FAQ</div>
+      <h2>KEMIS readiness questions</h2>
+      <div class="fs-faq">
+        {faqs.map(([q, a]) => (
+          <div class="fs-faq-item">
+            <h3>{q}</h3>
+            <p>{a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</FeaturePage>

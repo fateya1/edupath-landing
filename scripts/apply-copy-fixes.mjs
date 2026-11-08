@@ -16,7 +16,9 @@
  *      cards through timetables, fees, accounts and payroll). Use --lead "your text" to set your own lead.
  *   6. (v4) A KEMIS Readiness card on the homepage (opens the KEMIS tour tab), and the attendance page's
  *      NEMIS wording updated to KEMIS (KEMIS replaced NEMIS in January 2026).
- *   7. Footer social icons: WhatsApp points at wa.me/254711606968. X and LinkedIn are removed unless
+ *   7. (v5) The KEMIS card links to the new /kemis-registration-readiness page, which is also added to the
+ *      footer Product list and the nav's Features highlight.
+ *   8. Footer social icons: WhatsApp points at wa.me/254711606968. X and LinkedIn are removed unless
  *      you pass real profile URLs (--x, --linkedin).
  *
  * Usage (run from the repo root):
@@ -113,9 +115,12 @@ else if (txt.index.includes(frOld)) edit('index', 'Financial Reports card', frOl
 else edit('index', 'Financial Reports card', fee, fee + '\n  ' + frNew);
 
 // 2b. KEMIS Readiness card, right after Financial Reports
-const kemisCard = "{ title: 'KEMIS Readiness', text: 'Check learner data, export a KEMIS registration worksheet and import UPI numbers back in bulk.', href: '/#tour-kemis' },";
-if (txt.index.includes("title: 'KEMIS Readiness'")) results.push('  already   KEMIS Readiness card');
-else edit('index', 'KEMIS Readiness card', frNew, frNew + '\n  ' + kemisCard);
+const kemisText = "text: 'Check learner data, export a KEMIS registration worksheet and import UPI numbers back in bulk.'";
+const kemisNew = `{ title: 'KEMIS Readiness', ${kemisText}, href: '/kemis-registration-readiness' },`;
+const kemisOld = `{ title: 'KEMIS Readiness', ${kemisText}, href: '/#tour-kemis' },`;
+if (txt.index.includes(kemisNew)) results.push('  already   KEMIS Readiness card');
+else if (txt.index.includes(kemisOld)) edit('index', 'KEMIS Readiness card', kemisOld, kemisNew);
+else edit('index', 'KEMIS Readiness card', frNew, frNew + '\n  ' + kemisNew);
 
 // 3. Unsourced claims
 edit('index', 'Trust strip: hours claim', '<span class="trust-item">SAVE 20+ HRS/WEEK</span>', '<span class="trust-item">FREE UP TO 200 STUDENTS</span>', 'FREE UP TO 200 STUDENTS');
@@ -160,10 +165,17 @@ edit('footer', 'Footer: product links',
   '<li><a href="/mpesa-school-fees">M-Pesa Fees</a></li>',
   '<li><a href="/mpesa-school-fees">M-Pesa Fees</a></li>\n          <li><a href="/school-timetable-software">Timetables</a></li>\n          <li><a href="/school-financial-reports">Financial Reports</a></li>',
   'href="/school-timetable-software"');
-edit('nav', 'Nav: highlight Features on the new pages',
-  "match: ['/cbe-school-management', '/mpesa-school-fees', '/parent-portal', '/school-attendance'] }",
-  "match: ['/cbe-school-management', '/mpesa-school-fees', '/parent-portal', '/school-attendance', '/school-timetable-software', '/school-financial-reports'] }",
-  "'/school-timetable-software', '/school-financial-reports'] }");
+edit('footer', 'Footer: KEMIS link',
+  '<li><a href="/school-financial-reports">Financial Reports</a></li>',
+  '<li><a href="/school-financial-reports">Financial Reports</a></li>\n          <li><a href="/kemis-registration-readiness">KEMIS Readiness</a></li>',
+  'href="/kemis-registration-readiness"');
+editAny('nav', 'Nav: highlight Features on the new pages',
+  [
+    "match: ['/cbe-school-management', '/mpesa-school-fees', '/parent-portal', '/school-attendance'] }",
+    "match: ['/cbe-school-management', '/mpesa-school-fees', '/parent-portal', '/school-attendance', '/school-timetable-software', '/school-financial-reports'] }",
+  ],
+  "match: ['/cbe-school-management', '/mpesa-school-fees', '/parent-portal', '/school-attendance', '/school-timetable-software', '/school-financial-reports', '/kemis-registration-readiness'] }",
+  "'/school-financial-reports', '/kemis-registration-readiness'] }");
 edit('analytics', 'Analytics: track views of the tour section',
   "const sections = ['#hero', '#features', '#portals', '#pricing', '#wa', '#register', '#testimonials', '#faq'];",
   "const sections = ['#hero', '#features', '#ep-tour', '#portals', '#pricing', '#wa', '#register', '#testimonials', '#faq'];",
