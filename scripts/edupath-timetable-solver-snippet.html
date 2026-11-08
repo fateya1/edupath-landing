@@ -406,6 +406,52 @@
 @media(max-width:640px){#ep-tour{padding:48px 16px}.ept-bar{justify-content:center}.ept-tab{padding:9px 12px;font-size:.82rem}.ept-b{width:100%}}
 </style>
 
+<style>
+#ep-kemis{--t:#0D9488;--tdd:#134E4A;--mut:#4B6B67;--ind:#5A55E0}
+#ep-kemis *{box-sizing:border-box}
+#ep-kemis [hidden]{display:none!important}
+.epk-wrap{max-width:1120px;margin:0 auto;display:grid;gap:36px;grid-template-columns:1fr;align-items:center}
+@media(min-width:1000px){.epk-wrap{grid-template-columns:4fr 8fr;gap:44px}}
+.epk-copy h3{font-size:clamp(1.4rem,2.6vw,1.9rem);line-height:1.15;margin:0 0 14px;color:var(--tdd);letter-spacing:-.01em}
+.epk-copy p{margin:0 0 18px;line-height:1.6;color:var(--mut);max-width:46ch}
+.epk-pts{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:10px}
+.epk-pts li{display:flex;gap:10px;line-height:1.45;font-size:.95rem}
+.epk-pts li::before{content:"\2713";flex:none;width:20px;height:20px;border-radius:50%;background:var(--t);color:#fff;font-size:.72rem;display:grid;place-items:center;margin-top:1px}
+.epk-app{position:relative;overflow:hidden;background:#fff;border:1px solid #DDE7E4;border-radius:16px;padding:16px;box-shadow:0 12px 32px rgba(19,78,74,.10)}
+.epk-h{font-size:1.05rem;font-weight:700;color:#111;margin:0 0 4px}
+.epk-d{margin:0 0 12px;font-size:.7rem;line-height:1.55;color:#8A94A6}
+.epk-c{border:1px solid #E6E8F5;border-radius:12px;padding:12px 14px;margin-bottom:10px;background:#fff;transition:box-shadow .3s,border-color .3s}
+.epk-c.hl{border-color:#A9A5F0;box-shadow:0 0 0 3px rgba(90,85,224,.14)}
+.epk-c b{display:block;font-size:.84rem;color:#111;margin-bottom:3px}
+.epk-c small{display:block;font-size:.66rem;line-height:1.5;color:#8A94A6}
+.epk-c code{font-size:.64rem;color:#334155;background:#F1F5F9;border-radius:4px;padding:1px 4px}
+.epk-btn{display:inline-block;margin-top:9px;background:var(--ind);color:#fff;font-weight:600;font-size:.72rem;padding:8px 14px;border-radius:8px;transition:transform .15s,background .3s}
+.epk-btn.done{background:#15803D}
+.press{transform:scale(.95)}
+.epk-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.epk-file{font-size:.72rem;color:#64748B;margin-top:9px}
+.epk-file.on{color:#111;font-weight:600}
+.epk-res{margin-top:9px;border-top:1px solid #EEF0F4;padding-top:8px;animation:epkIn .35s ease-out}
+.epk-res .t{font-size:.72rem;font-weight:700;color:#B45309;margin-bottom:5px}
+.epk-fix{display:flex;justify-content:space-between;gap:8px;font-size:.68rem;padding:4px 0;color:#111}
+.epk-fix span{color:#B91C1C;font-weight:600;white-space:nowrap}
+.epk-prev{margin-top:9px;font-size:.64rem;line-height:1.6;background:#F8FAFC;border:1px solid #E6E8F5;border-radius:8px;padding:7px 10px;font-family:ui-monospace,Menlo,Consolas,monospace;color:#334155;animation:epkIn .35s ease-out}
+.epk-ok{margin-top:9px;font-size:.72rem;font-weight:600;color:#15803D;background:#ECFDF3;border:1px solid #A7E3BF;border-radius:8px;padding:8px 10px;animation:epkIn .35s ease-out}
+.epk-map{margin-top:8px;display:grid;grid-template-columns:1fr 1fr;font-size:.6rem;letter-spacing:.06em;font-weight:700;color:#8A94A6;text-transform:uppercase;border-top:1px solid #EEF0F4;padding-top:7px;transition:background .3s}
+.epk-c.hl .epk-map{color:#4338CA}
+.epk-cur{position:absolute;left:0;top:0;z-index:9;pointer-events:none;transition:transform .6s cubic-bezier(.4,0,.2,1),opacity .4s;opacity:0}
+.epk-cur.vis{opacity:1}
+.epk-cur svg{display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
+.epk-cur i{position:absolute;left:-8px;top:-8px;width:20px;height:20px;border-radius:50%;border:2px solid var(--ind);opacity:0}
+.epk-cur.click i{animation:epkRip .45s ease-out}
+.epk-note{margin:10px 0 0;font-size:.78rem;color:var(--mut)}
+.epk-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@keyframes epkIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@keyframes epkRip{from{transform:scale(.3);opacity:.9}to{transform:scale(1.6);opacity:0}}
+@media(prefers-reduced-motion:reduce){.epk-res,.epk-prev,.epk-ok{animation:none}.epk-cur{display:none}}
+@media(max-width:640px){.epk-app{padding:12px}.epk-xs{display:none!important}}
+</style>
+
 <section id="ep-tour" aria-labelledby="ept-title">
   <div class="ept-in">
     <div class="ept-hd">
@@ -417,6 +463,7 @@
         <button class="ept-tab" role="tab" type="button" id="ept-t-solve" aria-selected="true" aria-controls="ep-solve">Timetables<span class="ept-pill">Pro</span></button>
         <button class="ept-tab" role="tab" type="button" id="ept-t-fees" aria-selected="false" aria-controls="ep-fees" tabindex="-1">Fees</button>
         <button class="ept-tab" role="tab" type="button" id="ept-t-fin" aria-selected="false" aria-controls="ep-fin" tabindex="-1">Reports</button>
+        <button class="ept-tab" role="tab" type="button" id="ept-t-kemis" aria-selected="false" aria-controls="ep-kemis" tabindex="-1">KEMIS</button>
       </div>
       <div class="ept-ctl"><button type="button" id="ept-pause" aria-pressed="false">Pause</button><button type="button" id="ept-replay">Replay</button></div>
     </div>
@@ -657,6 +704,37 @@
       <div class="epr-sr" id="epr-sr" role="status"></div>
       <p class="epr-note">An illustration using a sample school and sample figures.</p>
     </template></div>
+      <div class="ept-pane" id="ep-kemis" role="tabpanel" aria-labelledby="ept-t-kemis" hidden><div class="epk-wrap"><div class="epk-copy">
+        <h3 id="epk-title">Get your learners ready for KEMIS.</h3>
+        <p>KEMIS launched in January 2026 to replace NEMIS. Edupath helps you prepare accurate learner data for registration, then brings the UPI numbers back in.</p>
+        <ul class="epk-pts">
+          <li>Find students missing a date of birth, gender or birth certificate number before you register them.</li>
+          <li>Export a registration worksheet pre-filled from your Edupath records, to copy into the government portal.</li>
+          <li>Import the UPI numbers KEMIS assigns, in bulk, from a two-column CSV.</li>
+        </ul>
+        <p class="ept-plan">KEMIS has no public developer API yet, so registration itself still happens on the government portal.</p>
+      </div><div class="ept-slot" id="ept-slot-kemis"></div></div><template id="tpl-kemis"><div class="epk-app" id="epk-app" role="img" aria-label="Animated tour of the KEMIS readiness screen: a data completeness check lists learners missing required fields, a registration worksheet is exported, and a CSV of UPI numbers is imported back">
+        <div aria-hidden="true">
+          <p class="epk-h">KEMIS Integration Readiness</p>
+          <p class="epk-d">The Kenya Education Management Information System (KEMIS) launched January 2026 to replace NEMIS. It does not currently offer a public developer API &mdash; schools register learners directly through the government portal. These tools help you prepare accurate data for that manual registration and bring UPI numbers back into Edupath once assigned.</p>
+          <div class="epk-c" id="epk-c1"><b>Data Completeness Check</b><small>Students missing a required field (date of birth, gender, or birth certificate number) will likely fail KEMIS registration. Fix these before visiting the portal.</small>
+            <div class="epk-res" id="epk-res" hidden><div class="t">3 of 240 students need fixing first (sample)</div>
+              <div class="epk-fix"><div>Moses Hassan Kioko</div><span>Birth certificate number</span></div>
+              <div class="epk-fix"><div>Felicity Nafula Nzomo</div><span>Date of birth</span></div>
+              <div class="epk-fix"><div>Kenneth Nicholas Makau</div><span>Gender</span></div></div></div>
+          <div class="epk-c" id="epk-c2"><b>KEMIS Registration Worksheet</b><small>Download a CSV with every field KEMIS registration requires, pre-filled from Edupath records. Use this alongside the government portal to copy-paste values instead of re-typing from scratch.</small>
+            <span class="epk-btn" id="epk-exp">Export Worksheet CSV</span></div>
+          <div class="epk-c" id="epk-c3"><b>Import UPI Numbers from KEMIS</b><small>Once KEMIS assigns UPI numbers during registration, upload a two-column CSV (<code>admissionNumber,upiNumber</code>, one per line, header row optional) to bring them back into Edupath in bulk &mdash; this directly improves your Compliance Scorecard.</small>
+            <div class="epk-row"><span class="epk-btn" id="epk-choose">Choose File</span><span class="epk-file" id="epk-file">No file chosen</span></div>
+            <div class="epk-prev" id="epk-prev" hidden>admissionNumber,upiNumber<br>DEM236,&hellip;<br>DEM237,&hellip;</div>
+            <div class="epk-ok" id="epk-ok" hidden>UPI numbers imported. Your Compliance Scorecard is up to date.</div></div>
+          <div class="epk-c epk-xs" id="epk-c4"><b>Field Mapping Reference</b><small>How Edupath fields correspond to KEMIS registration fields. Updated as KEMIS documentation evolves.</small>
+            <div class="epk-map"><span>Edupath field</span><span>KEMIS field</span></div></div>
+        </div>
+        <div class="epk-cur" id="epk-cur"><i></i><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.8L9 19z" fill="#111" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="epk-sr" id="epk-sr" role="status"></div>
+      <p class="epk-note">An illustration using a sample school. The completeness results are sample data.</p></template></div>
     </div>
     <div class="ept-cta">
       <p>Like what you see?</p>
@@ -1130,9 +1208,69 @@
 <script>
 (function(){
   function init(){
+  var root=document.getElementById('ep-kemis'); if(!root) return;
+  var $=function(i){return document.getElementById(i);};
+  var app=$('epk-app'), cur=$('epk-cur'), sr=$('epk-sr');
+  var token=0, instant=false, paused=false, gates=[];
+  function release(){var g=gates.splice(0); g.forEach(function(f){f();});}
+  function wait(ms,my){return new Promise(function(res,rej){setTimeout(function(){if(my!==token) return rej('x'); if(!paused) return res(); gates.push(function(){my===token?res():rej('x');});},ms);});}
+  function moveTo(e,my,dx){
+    var a=app.getBoundingClientRect(), r=e.getBoundingClientRect();
+    var x=r.left-a.left+Math.min(r.width*0.5,r.width-8)+(dx||0), y=r.top-a.top+r.height*0.5;
+    cur.style.transform='translate('+x+'px,'+y+'px)'; return wait(560,my);
+  }
+  function click(e,my){
+    cur.classList.remove('click'); void cur.offsetWidth; cur.classList.add('click'); e.classList.add('press');
+    setTimeout(function(){e.classList.remove('press'); cur.classList.remove('click');},400); return wait(220,my);
+  }
+  function hl(id){[].forEach.call(root.querySelectorAll('.epk-c'),function(c){c.classList.toggle('hl',c.id===id);});}
+  function resetAll(){
+    hl(''); $('epk-res').hidden=true; $('epk-prev').hidden=true; $('epk-ok').hidden=true;
+    var x=$('epk-exp'); x.textContent='Export Worksheet CSV'; x.classList.remove('done');
+    var f=$('epk-file'); f.textContent='No file chosen'; f.classList.remove('on');
+  }
+  function showAll(){
+    $('epk-res').hidden=false; var x=$('epk-exp'); x.textContent='Worksheet downloaded'; x.classList.add('done');
+    var f=$('epk-file'); f.textContent='upi-numbers.csv'; f.classList.add('on'); $('epk-prev').hidden=false; $('epk-ok').hidden=false;
+  }
+  async function tour(my){
+    cur.style.transition='none'; cur.style.transform='translate('+Math.round(app.clientWidth*0.62)+'px,'+Math.round(app.clientHeight*0.12)+'px)';
+    void cur.offsetWidth; cur.style.transition=''; cur.classList.add('vis'); await wait(500,my);
+    var c1=$('epk-c1'); await moveTo(c1.querySelector('b'),my); hl('epk-c1'); await wait(500,my); $('epk-res').hidden=false; await wait(1500,my);
+    var ex=$('epk-exp'); hl('epk-c2'); await moveTo(ex,my); await click(ex,my); ex.textContent='Preparing\u2026'; await wait(700,my); ex.textContent='Worksheet downloaded'; ex.classList.add('done'); await wait(700,my);
+    var ch=$('epk-choose'); hl('epk-c3'); await moveTo(ch,my); await click(ch,my); var f=$('epk-file'); f.textContent='upi-numbers.csv'; f.classList.add('on'); await wait(500,my);
+    $('epk-prev').hidden=false; await wait(900,my); $('epk-ok').hidden=false; await wait(1200,my);
+    var c4=$('epk-c4'); if(c4&&c4.offsetParent!==null){hl('epk-c4'); await moveTo(c4.querySelector('b'),my); await wait(900,my);}
+    hl('');
+  }
+  function finish(){
+    cur.classList.remove('vis'); sr.textContent='Tour finished. Three learners flagged for missing data, a registration worksheet exported, and UPI numbers imported.';
+    if(window.EPTours&&window.EPTours.onDone) window.EPTours.onDone('kemis');
+  }
+  function run(inst){
+    token++; var my=token; instant=inst; resetAll(); sr.textContent='';
+    if(inst){showAll(); finish(); return;}
+    tour(my).then(finish,function(e){if(e!=='x') finish();});
+  }
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  resetAll();
+  window.EPTours=window.EPTours||{};
+  window.EPTours.kemis={
+    start:function(){run(reduce);},
+    stop:function(){token++; paused=false; release(); cur.classList.remove('vis');},
+    pause:function(){paused=true;}, resume:function(){paused=false; release();}
+  };
+  }
+  (window.EPBoot=window.EPBoot||{}).kemis=init;
+})();
+</script>
+
+<script>
+(function(){
+  function init(){
     var root=document.getElementById('ep-tour'); if(!root) return;
     var $=function(i){return document.getElementById(i);};
-    var K=['solve','fees','fin'], P={solve:$('ep-solve'),fees:$('ep-fees'),fin:$('ep-fin')}, tabs={};
+    var K=['solve','fees','fin','kemis'], P={solve:$('ep-solve'),fees:$('ep-fees'),fin:$('ep-fin'),kemis:$('ep-kemis')}, tabs={};
     K.forEach(function(k){tabs[k]=$('ept-t-'+k);});
     var pb=$('ept-pause'), rb=$('ept-replay'), T=window.EPTours=window.EPTours||{};
     var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1144,7 +1282,7 @@
       var tpl=$('tpl-'+k), slot=$('ept-slot-'+k); if(!tpl||!slot||!BOOT[k]) return;
       slot.appendChild(tpl.content.cloneNode(true)); mounted[k]=true; BOOT[k]();
     }
-    var NM={solve:'timetables',fees:'fees',fin:'reports'};
+    var NM={solve:'timetables',fees:'fees',fin:'reports',kemis:'kemis'};
     function track(n,p){try{if(typeof gtag==='function') gtag('event',n,Object.assign({page_path:location.pathname},p||{}));}catch(e){}}
     root.addEventListener('click',function(e){
       var a=e.target&&e.target.closest?e.target.closest('a[data-cta],a[data-link]'):null; if(!a) return;
@@ -1186,7 +1324,7 @@
       else if(v&&held){held=false; if(!paused) T[cur].resume();}
     }
     function begin(){if(started) return; started=true; chain=!reduce; select('solve',true,'autoplay');}
-    var H={'#tour-timetables':'solve','#tour-fees':'fees','#tour-reports':'fin'};
+    var H={'#tour-timetables':'solve','#tour-fees':'fees','#tour-reports':'fin','#tour-kemis':'kemis'};
     function openHash(h,scroll){
       var k=H[h]; if(!k) return false;
       started=true; chain=false; select(k,false,'link');

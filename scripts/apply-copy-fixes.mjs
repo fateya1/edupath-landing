@@ -14,7 +14,9 @@
  *      section-view tracking in analytics.js.
  *   5. (v3) Hero lead and homepage meta description describe the whole product (admissions and CBE report
  *      cards through timetables, fees, accounts and payroll). Use --lead "your text" to set your own lead.
- *   6. Footer social icons: WhatsApp points at wa.me/254711606968. X and LinkedIn are removed unless
+ *   6. (v4) A KEMIS Readiness card on the homepage (opens the KEMIS tour tab), and the attendance page's
+ *      NEMIS wording updated to KEMIS (KEMIS replaced NEMIS in January 2026).
+ *   7. Footer social icons: WhatsApp points at wa.me/254711606968. X and LinkedIn are removed unless
  *      you pass real profile URLs (--x, --linkedin).
  *
  * Usage (run from the repo root):
@@ -60,6 +62,7 @@ const files = {
   index: path.join(opt.root, 'src/pages/index.astro'),
   footer: path.join(opt.root, 'src/components/Footer.astro'),
   nav: path.join(opt.root, 'src/components/Nav.astro'),
+  attendance: path.join(opt.root, 'src/pages/school-attendance.astro'),
   analytics: path.join(opt.root, 'analytics.js'),
 };
 for (const f of Object.values(files)) if (!fs.existsSync(f)) die(`Not found: ${f}\nRun this from the repo root, or pass --root <dir>.`);
@@ -109,6 +112,11 @@ if (txt.index.includes("href: '/school-financial-reports' }")) results.push('  a
 else if (txt.index.includes(frOld)) edit('index', 'Financial Reports card', frOld, frNew);
 else edit('index', 'Financial Reports card', fee, fee + '\n  ' + frNew);
 
+// 2b. KEMIS Readiness card, right after Financial Reports
+const kemisCard = "{ title: 'KEMIS Readiness', text: 'Check learner data, export a KEMIS registration worksheet and import UPI numbers back in bulk.', href: '/#tour-kemis' },";
+if (txt.index.includes("title: 'KEMIS Readiness'")) results.push('  already   KEMIS Readiness card');
+else edit('index', 'KEMIS Readiness card', frNew, frNew + '\n  ' + kemisCard);
+
 // 3. Unsourced claims
 edit('index', 'Trust strip: hours claim', '<span class="trust-item">SAVE 20+ HRS/WEEK</span>', '<span class="trust-item">FREE UP TO 200 STUDENTS</span>', 'FREE UP TO 200 STUDENTS');
 edit('index', 'Trust strip: setup time', '<span class="trust-item">LIVE IN 5 MINUTES</span>', '<span class="trust-item">SET UP IN 5\u201315 MINUTES</span>', 'SET UP IN 5\u201315 MINUTES');
@@ -132,6 +140,20 @@ const META_NEW = 'description="Edupath SMS is an all-in-one school management sy
 if (txt.index.includes(META_NEW)) results.push('  already   Homepage meta description');
 else if (txt.index.includes(META_OLD)) edit('index', 'Homepage meta description', META_OLD, META_NEW);
 else results.push('  already   Homepage meta description (already changed)');
+
+// 3c. Attendance page: NEMIS -> KEMIS
+edit('attendance', 'Attendance page: report description',
+  'Useful for NEMIS compliance and parent meetings.</p>',
+  'Useful for school records, KEMIS preparation and parent meetings.</p>',
+  'Useful for school records, KEMIS preparation');
+edit('attendance', 'Attendance page: FAQ question',
+  '<h3>Can I generate attendance reports for NEMIS?</h3>',
+  '<h3>Can I generate attendance reports for KEMIS?</h3>',
+  '<h3>Can I generate attendance reports for KEMIS?</h3>');
+edit('attendance', 'Attendance page: FAQ answer',
+  'These can be exported and used for NEMIS reporting and compliance purposes.</p>',
+  'These can be exported for your records and for any reporting you are asked to provide, including to KEMIS, which replaces NEMIS.</p>',
+  'including to KEMIS, which replaces NEMIS.');
 
 // 4a. Footer product links, nav highlight, analytics section tracking
 edit('footer', 'Footer: product links',
