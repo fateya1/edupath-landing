@@ -18,7 +18,9 @@
  *      NEMIS wording updated to KEMIS (KEMIS replaced NEMIS in January 2026).
  *   7. (v5) The KEMIS card links to the new /kemis-registration-readiness page, which is also added to the
  *      footer Product list and the nav's Features highlight.
- *   8. Footer social icons: WhatsApp points at wa.me/254711606968. X and LinkedIn are removed unless
+ *   8. (v6) The HR & Payroll card describes the module as it is and links to the new /school-payroll-software
+ *      page, which is also added to the footer Product list and the nav's Features highlight.
+ *   9. Footer social icons: WhatsApp points at wa.me/254711606968. X and LinkedIn are removed unless
  *      you pass real profile URLs (--x, --linkedin).
  *
  * Usage (run from the repo root):
@@ -122,6 +124,12 @@ if (txt.index.includes(kemisNew)) results.push('  already   KEMIS Readiness card
 else if (txt.index.includes(kemisOld)) edit('index', 'KEMIS Readiness card', kemisOld, kemisNew);
 else edit('index', 'KEMIS Readiness card', frNew, frNew + '\n  ' + kemisNew);
 
+// 2c. HR & Payroll card: describe the module as it is and link to its page
+const hrNew = "{ title: 'HR & Payroll', text: 'Salary setup, monthly payroll with PAYE, SHA, NSSF, Housing Levy and HELB, payslips, leave and staff records.', href: '/school-payroll-software' },";
+editAny('index', 'HR & Payroll card',
+  ["{ title: 'HR & Payroll', text: 'Contracts, pay runs, SHA/NSSF/PAYE, payslips and leave.', href: null },"],
+  hrNew, "href: '/school-payroll-software' }");
+
 // 3. Unsourced claims
 edit('index', 'Trust strip: hours claim', '<span class="trust-item">SAVE 20+ HRS/WEEK</span>', '<span class="trust-item">FREE UP TO 200 STUDENTS</span>', 'FREE UP TO 200 STUDENTS');
 edit('index', 'Trust strip: setup time', '<span class="trust-item">LIVE IN 5 MINUTES</span>', '<span class="trust-item">SET UP IN 5\u201315 MINUTES</span>', 'SET UP IN 5\u201315 MINUTES');
@@ -169,13 +177,18 @@ edit('footer', 'Footer: KEMIS link',
   '<li><a href="/school-financial-reports">Financial Reports</a></li>',
   '<li><a href="/school-financial-reports">Financial Reports</a></li>\n          <li><a href="/kemis-registration-readiness">KEMIS Readiness</a></li>',
   'href="/kemis-registration-readiness"');
+edit('footer', 'Footer: HR & Payroll link',
+  '<li><a href="/kemis-registration-readiness">KEMIS Readiness</a></li>',
+  '<li><a href="/kemis-registration-readiness">KEMIS Readiness</a></li>\n          <li><a href="/school-payroll-software">HR &amp; Payroll</a></li>',
+  'href="/school-payroll-software"');
 editAny('nav', 'Nav: highlight Features on the new pages',
   [
     "match: ['/cbe-school-management', '/mpesa-school-fees', '/parent-portal', '/school-attendance'] }",
     "match: ['/cbe-school-management', '/mpesa-school-fees', '/parent-portal', '/school-attendance', '/school-timetable-software', '/school-financial-reports'] }",
+    "match: ['/cbe-school-management', '/mpesa-school-fees', '/parent-portal', '/school-attendance', '/school-timetable-software', '/school-financial-reports', '/kemis-registration-readiness'] }",
   ],
-  "match: ['/cbe-school-management', '/mpesa-school-fees', '/parent-portal', '/school-attendance', '/school-timetable-software', '/school-financial-reports', '/kemis-registration-readiness'] }",
-  "'/school-financial-reports', '/kemis-registration-readiness'] }");
+  "match: ['/cbe-school-management', '/mpesa-school-fees', '/parent-portal', '/school-attendance', '/school-timetable-software', '/school-financial-reports', '/kemis-registration-readiness', '/school-payroll-software'] }",
+  "'/kemis-registration-readiness', '/school-payroll-software'] }");
 edit('analytics', 'Analytics: track views of the tour section',
   "const sections = ['#hero', '#features', '#portals', '#pricing', '#wa', '#register', '#testimonials', '#faq'];",
   "const sections = ['#hero', '#features', '#ep-tour', '#portals', '#pricing', '#wa', '#register', '#testimonials', '#faq'];",

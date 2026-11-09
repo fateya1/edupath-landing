@@ -452,6 +452,100 @@
 @media(max-width:640px){.epk-app{padding:12px}.epk-xs{display:none!important}}
 </style>
 
+<style>
+#ep-hr{--t:#0D9488;--tdd:#134E4A;--mut:#4B6B67;--ind:#4F46E5}
+#ep-hr *{box-sizing:border-box}
+#ep-hr [hidden]{display:none!important}
+.eph-wrap{max-width:1120px;margin:0 auto;display:grid;gap:36px;grid-template-columns:1fr;align-items:center}
+@media(min-width:1000px){.eph-wrap{grid-template-columns:4fr 8fr;gap:44px}}
+.eph-copy h3{font-size:clamp(1.4rem,2.6vw,1.9rem);line-height:1.15;margin:0 0 14px;color:var(--tdd);letter-spacing:-.01em}
+.eph-copy p{margin:0 0 18px;line-height:1.6;color:var(--mut);max-width:46ch}
+.eph-pts{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:10px}
+.eph-pts li{display:flex;gap:10px;line-height:1.45;font-size:.95rem}
+.eph-pts li::before{content:"\2713";flex:none;width:20px;height:20px;border-radius:50%;background:var(--t);color:#fff;font-size:.72rem;display:grid;place-items:center;margin-top:1px}
+.eph-app{position:relative;overflow:hidden;background:#fff;border:1px solid #DDE7E4;border-radius:16px;padding:16px;box-shadow:0 12px 32px rgba(19,78,74,.10)}
+.eph-h{font-size:1.15rem;font-weight:800;color:#111;margin:0}
+.eph-sub{margin:2px 0 12px;font-size:.72rem;color:#6B7A99}
+.eph-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.eph-tab{font-size:.72rem;font-weight:600;padding:7px 12px;border-radius:9px;background:#F1F2FB;color:#2B2F52;transition:background .25s,color .25s,transform .15s}
+.eph-tab.on{background:var(--ind);color:#fff}
+.press{transform:scale(.95)}
+.eph-views{min-height:430px}
+.eph-v{display:none}
+.eph-v.show{display:block;animation:ephIn .35s ease-out}
+.eph-k4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px}
+.eph-k3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.eph-kc{text-align:center;border:1px solid #EEF0F4;border-radius:10px;padding:10px 6px;background:#fff}
+.eph-kc b{display:block;font-size:1.4rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.eph-kc span{font-size:.62rem;color:#8A94A6}
+.eph-mc{border:1px solid #EEF0F4;border-radius:10px;padding:9px 11px;background:#fff}
+.eph-mc span{display:block;font-size:.62rem;color:#8A94A6}
+.eph-mc b{display:block;font-size:.9rem;margin:2px 0;font-variant-numeric:tabular-nums;white-space:nowrap}
+.eph-mc small{font-size:.58rem;color:#8A94A6}
+.eph-st{font-size:.9rem;font-weight:700;color:#111;margin:4px 0 6px}
+.eph-r{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1px solid #EEF0F4;border-radius:10px;padding:8px 11px;margin-bottom:6px;font-size:.74rem;color:#111;animation:ephIn .35s ease-out}
+.eph-r b{font-size:.78rem}.eph-r i{font-style:normal;color:#8A94A6;margin:0 6px}
+.eph-r>span{color:#16A34A;font-weight:700;white-space:nowrap}
+.eph-chip{display:inline-block;font-style:normal;font-size:.6rem;font-weight:700;padding:2px 8px;border-radius:99px}
+.eph-chip.SUBMITTED{background:#DBEAFE;color:#1D4ED8}.eph-chip.APPROVED{background:#DCFCE7;color:#15803D}.eph-chip.PAID{background:#CCFBF1;color:#0F766E}.eph-chip.PENDING{background:#FEF3C7;color:#B45309}
+.eph-bar{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+.eph-inp{flex:1;min-width:120px;min-height:30px;padding:6px 9px;border:1px solid #C7D2FE;border-radius:8px;font-size:.72rem;background:#fff;display:flex;align-items:center;color:#111}
+.eph-inp:empty::before{content:attr(data-ph);color:#9AA3B2}
+.eph-inp.typing::after{content:"";width:1px;height:1em;background:#111;margin-left:1px;animation:ephBlink 1s steps(1) infinite}
+.eph-cnt{font-size:.68rem;color:#8A94A6}
+.eph-sel{font-size:.7rem;border:1px solid #E1E4F2;border-radius:8px;padding:6px 10px;background:#fff;color:#111}
+.eph-b{display:inline-block;font-size:.68rem;font-weight:600;padding:7px 11px;border-radius:8px;border:1px solid #E1E4F2;background:#fff;color:#2B2F52;white-space:nowrap;transition:transform .15s,background .3s}
+.eph-b.ind{background:var(--ind);color:#fff;border-color:var(--ind)}
+.eph-b.rv{background:#EEF0FF;border-color:#C7D2FE;color:#4338CA}
+.eph-b.mu{opacity:.5;background:#FFF7ED;border-color:#FED7AA;color:#B45309}
+.eph-b.cs{background:#FFFBEB;border-color:#FDE68A;color:#B45309}
+.eph-b.ex{background:#EFF6FF;border-color:#BFDBFE;color:#1D4ED8}
+.eph-b.done{background:#DCFCE7;border-color:#86D9A5;color:#15803D}
+.eph-sc{overflow-x:auto;overflow-y:hidden}
+.eph-t{width:100%;min-width:520px;border-collapse:collapse;font-size:.7rem;color:#111}
+.eph-t th{text-align:left;padding:7px 6px;color:#8A94A6;font-size:.58rem;letter-spacing:.06em;font-weight:700;text-transform:uppercase}
+.eph-t td{padding:8px 6px;border-top:1px solid #EEF0F4;vertical-align:middle}
+.eph-t td small{display:block;color:#8A94A6;font-size:.58rem;text-transform:uppercase}
+.eph-t td.r,.eph-t th.r{text-align:right}
+.eph-t tr.hid{display:none}
+.eph-gr{color:#14B8A6;font-weight:600}.eph-gg{color:#16A34A;font-weight:700}.eph-ns{color:#D97706;font-weight:600;transition:background .3s;border-radius:4px;padding:0 3px}
+.eph-ns.hl{background:#FEF3C7}
+.eph-role{display:inline-block;font-size:.58rem;font-weight:700;color:#4338CA;background:#EEF0FF;border-radius:5px;padding:2px 7px}
+.eph-box{border:1px solid #EEF0F4;border-radius:12px;padding:12px;margin-bottom:10px}
+.eph-bt{display:block;font-size:.9rem;color:#111;margin-bottom:8px}
+.eph-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
+.eph-row label{display:block;font-size:.6rem;color:#8A94A6;margin-bottom:3px}
+.eph-row .eph-inp{flex:none;min-width:96px}
+.eph-box small.n{display:block;margin-top:8px;font-size:.62rem;color:#8A94A6}
+.eph-pr{border:1px solid #EEF0F4;border-radius:10px;padding:9px 11px;margin-bottom:7px;font-size:.72rem;color:#111;animation:ephIn .35s ease-out}
+.eph-pr .top{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:6px}
+.eph-pr .top span{font-size:.66rem;color:#6B7280}.eph-pr .top span b{color:#16A34A}
+.eph-pr .bs{display:flex;gap:6px;flex-wrap:wrap}
+.eph-lv{border:1px solid #EEF0F4;border-radius:10px;padding:9px 12px;margin-bottom:7px;font-size:.72rem;color:#111;animation:ephIn .35s ease-out}
+.eph-lv b{font-size:.8rem;margin-right:6px}
+.eph-lv small{display:block;color:#8A94A6;font-size:.64rem;margin-top:3px}
+.eph-cur{position:absolute;left:0;top:0;z-index:9;pointer-events:none;transition:transform .6s cubic-bezier(.4,0,.2,1),opacity .4s;opacity:0}
+.eph-cur.vis{opacity:1}
+.eph-cur svg{display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
+.eph-cur i{position:absolute;left:-8px;top:-8px;width:20px;height:20px;border-radius:50%;border:2px solid var(--ind);opacity:0}
+.eph-cur.click i{animation:ephRip .45s ease-out}
+.eph-note{margin:10px 0 0;font-size:.78rem;color:var(--mut)}
+.eph-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@keyframes ephIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@keyframes ephRip{from{transform:scale(.3);opacity:.9}to{transform:scale(1.6);opacity:0}}
+@keyframes ephBlink{50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.eph-v.show,.eph-r,.eph-pr,.eph-lv{animation:none}.eph-cur{display:none}}
+@media(max-width:640px){
+.eph-app{padding:12px}
+.eph-k4{grid-template-columns:1fr 1fr}.eph-k3{grid-template-columns:1fr}
+.eph-sc{overflow:visible}.eph-t{min-width:0}
+.eph-m{display:none!important}
+.eph-xs{display:none!important}
+.eph-views{min-height:380px}
+.eph-tab{padding:6px 9px;font-size:.66rem}
+}
+</style>
+
 <section id="ep-tour" aria-labelledby="ept-title">
   <div class="ept-in">
     <div class="ept-hd">
@@ -464,6 +558,7 @@
         <button class="ept-tab" role="tab" type="button" id="ept-t-fees" aria-selected="false" aria-controls="ep-fees" tabindex="-1">Fees</button>
         <button class="ept-tab" role="tab" type="button" id="ept-t-fin" aria-selected="false" aria-controls="ep-fin" tabindex="-1">Reports</button>
         <button class="ept-tab" role="tab" type="button" id="ept-t-kemis" aria-selected="false" aria-controls="ep-kemis" tabindex="-1">KEMIS</button>
+        <button class="ept-tab" role="tab" type="button" id="ept-t-hr" aria-selected="false" aria-controls="ep-hr" tabindex="-1">Payroll<span class="ept-pill">Enterprise</span></button>
       </div>
       <div class="ept-ctl"><button type="button" id="ept-pause" aria-pressed="false">Pause</button><button type="button" id="ept-replay">Replay</button></div>
     </div>
@@ -735,6 +830,59 @@
       </div>
       <div class="epk-sr" id="epk-sr" role="status"></div>
       <p class="epk-note">An illustration using a sample school. The completeness results are sample data.</p></template></div>
+      <div class="ept-pane" id="ep-hr" role="tabpanel" aria-labelledby="ept-t-hr" hidden><div class="eph-wrap"><div class="eph-copy">
+        <h3 id="eph-title">Run payroll and HR in the same system.</h3>
+        <p>Set up salaries, process monthly payroll with statutory deductions, track leave and keep staff records, alongside the rest of your school.</p>
+        <ul class="eph-pts">
+          <li>Set each person's basic pay and allowances once, with the bank they are paid through.</li>
+          <li>Process a month in one click: Edupath calculates PAYE, SHA, NSSF, Housing Levy and HELB for all staff.</li>
+          <li>Review, approve and mark each run as paid, and export statutory CSVs for your remittances.</li>
+          <li>Record leave requests and keep every staff member's role, department and employee number in one list.</li>
+        </ul>
+        <p class="ept-plan">Included in <b>Enterprise</b>. <a href="#pricing" data-link="compare_plans">Compare plans</a> <a href="/school-payroll-software" data-link="learn_more_payroll">Learn more</a></p>
+      </div><div class="ept-slot" id="ept-slot-hr"></div></div><template id="tpl-hr"><div class="eph-app" id="eph-app" role="img" aria-label="Animated tour of HR and payroll: the overview counts up, salaries are searched, a monthly payroll is processed, reviewed and exported, then leave and staff records are shown">
+        <div aria-hidden="true">
+          <p class="eph-h">HR &amp; Payroll</p><p class="eph-sub">Staff salaries, payroll processing and leave management</p>
+          <div class="eph-tabs"><span class="eph-tab on" data-v="ov">Overview</span><span class="eph-tab" data-v="sal">Salary Setup</span><span class="eph-tab" data-v="pay">Payroll</span><span class="eph-tab" data-v="stat">Statutory</span><span class="eph-tab" data-v="leave">Leave</span><span class="eph-tab" data-v="staff">Staff</span></div>
+          <div class="eph-views">
+            <div class="eph-v show" id="eph-v-ov">
+              <div class="eph-k4"><div class="eph-kc"><b style="color:#7C5CE0" data-n="36">0</b><span>Staff on Payroll</span></div><div class="eph-kc"><b style="color:#14B8A6" data-n="59">0</b><span>Total Staff</span></div><div class="eph-kc"><b style="color:#F59E0B" data-n="0" id="eph-lp">0</b><span>Leave Pending</span></div><div class="eph-kc"><b style="color:#16A34A" data-n="9" id="eph-runs">0</b><span>Payroll Runs</span></div></div>
+              <div class="eph-k3"><div class="eph-mc"><span>Monthly Gross Bill</span><b style="color:#14B8A6" data-n="1575500" data-d="2">KES 0.00</b><small>All allowances included</small></div><div class="eph-mc"><span>Total Basic Salaries</span><b style="color:#06B6D4" data-n="1230000" data-d="2">KES 0.00</b><small>Before allowances</small></div><div class="eph-mc"><span>Total HELB Deductions</span><b style="color:#F59E0B" data-n="39000" data-d="2">KES 0.00</b><small>Monthly remittance</small></div></div>
+              <p class="eph-st">Recent Payroll Runs</p>
+              <div id="eph-rl"><div class="eph-r" id="eph-onew" hidden><div><b>November 2026</b><i>36 staff</i><em class="eph-chip APPROVED">APPROVED</em></div><span>KES 1,188,137.10 net</span></div><div class="eph-r"><div><b>October 2026</b><i>36 staff</i><em class="eph-chip SUBMITTED">SUBMITTED</em></div><span>KES 1,188,137.10 net</span></div><div class="eph-r"><div><b>September 2026</b><i>36 staff</i><em class="eph-chip SUBMITTED">SUBMITTED</em></div><span>KES 1,188,137.10 net</span></div><div class="eph-r eph-xs"><div><b>August 2026</b><i>36 staff</i><em class="eph-chip APPROVED">APPROVED</em></div><span>KES 1,188,137.10 net</span></div></div>
+            </div>
+            <div class="eph-v" id="eph-v-sal">
+              <div class="eph-bar"><div class="eph-inp" id="eph-q" data-ph="Search staff"></div><span class="eph-cnt" id="eph-cnt">36/36</span><span class="eph-b ind">+ Add Salary</span></div>
+              <div class="eph-sc"><table class="eph-t" id="eph-st"><thead><tr><th>Staff</th><th class="r">Basic</th><th class="r eph-m">Allowances</th><th class="r">Gross</th><th class="eph-m">Bank</th><th></th></tr></thead><tbody id="eph-sb"><tr data-s="agnes mwema admin"><td>Agnes Mwema<small>ADMIN</small></td><td class="r">KES 15,000.00</td><td class="r eph-gr eph-m">KES 4,000.00</td><td class="r eph-gg">KES 19,000.00</td><td class="eph-m">KCB Bank</td><td><span class="eph-b rv" style="padding:4px 9px">Edit</span></td></tr><tr data-s="akinyi atieno teacher"><td>Akinyi Atieno<small>TEACHER</small></td><td class="r">KES 36,000.00</td><td class="r eph-gr eph-m">KES 10,000.00</td><td class="r eph-gg">KES 46,000.00</td><td class="eph-m">KCB Bank</td><td><span class="eph-b rv" style="padding:4px 9px">Edit</span></td></tr><tr data-s="amina hassan admin"><td>Amina Hassan<small>ADMIN</small></td><td class="r">KES 38,000.00</td><td class="r eph-gr eph-m">KES 10,500.00</td><td class="r eph-gg">KES 48,500.00</td><td class="eph-m">KCB Bank</td><td><span class="eph-b rv" style="padding:4px 9px">Edit</span></td></tr><tr data-s="beatrice ndungu teacher"><td>Beatrice Ndungu<small>TEACHER</small></td><td class="r">KES 36,000.00</td><td class="r eph-gr eph-m">KES 10,500.00</td><td class="r eph-gg">KES 46,500.00</td><td class="eph-m">Standard Chartered</td><td><span class="eph-b rv" style="padding:4px 9px">Edit</span></td></tr><tr data-s="beatrice adhiambo secretary"><td>Beatrice Adhiambo<small>SECRETARY</small></td><td class="r">KES 28,000.00</td><td class="r eph-gr eph-m">KES 8,500.00</td><td class="r eph-gg">KES 36,500.00</td><td class="eph-m">Family Bank</td><td><span class="eph-b rv" style="padding:4px 9px">Edit</span></td></tr><tr data-s="benjamin wafula admin"><td>Benjamin Wafula<small>ADMIN</small></td><td class="r">KES 14,000.00</td><td class="r eph-gr eph-m">KES 3,500.00</td><td class="r eph-gg">KES 17,500.00</td><td class="eph-m">KCB Bank</td><td><span class="eph-b rv" style="padding:4px 9px">Edit</span></td></tr><tr data-s="collins wafula accountant"><td>Collins Wafula<small>ACCOUNTANT</small></td><td class="r">KES 42,000.00</td><td class="r eph-gr eph-m">KES 13,000.00</td><td class="r eph-gg">KES 55,000.00</td><td class="eph-m">Equity Bank</td><td><span class="eph-b rv" style="padding:4px 9px">Edit</span></td></tr></tbody></table></div>
+            </div>
+            <div class="eph-v" id="eph-v-pay">
+              <div class="eph-box"><b class="eph-bt">Process Monthly Payroll</b>
+                <div class="eph-row"><div><label>Month</label><div class="eph-inp">November</div></div><div><label>Year</label><div class="eph-inp">2026</div></div><span class="eph-b ind" id="eph-proc" style="padding:9px 14px;font-size:.72rem">Process Payroll</span></div>
+                <small class="n">Calculates PAYE, SHA, NSSF, Housing Levy and HELB for all staff</small></div>
+              <div class="eph-box"><b class="eph-bt">Payroll History</b>
+                <div class="eph-pr" id="eph-pnew" hidden><div class="top"><div><b>November 2026</b> <i style="font-style:normal;color:#8A94A6">36 staff</i> <em class="eph-chip SUBMITTED" id="eph-pchip">SUBMITTED</em></div><span>Gross: KES 1,575,000.00 &nbsp; Net: <b>KES 1,188,137.10</b></span></div>
+                  <div class="bs" id="eph-bs1"><span class="eph-b">View Payslips</span><span class="eph-b rv" id="eph-rev">Mark Reviewed</span><span class="eph-b mu eph-m">Unlock &amp; Reprocess</span><span class="eph-b cs">Statutory CSV</span></div>
+                  <div class="bs" id="eph-bs2" hidden><span class="eph-b">View Payslips</span><span class="eph-b" style="opacity:.5">Mark as Paid</span><span class="eph-b mu eph-m">Unlock &amp; Reprocess</span><span class="eph-b ex eph-m">Export CSV</span><span class="eph-b cs" id="eph-stcsv">Statutory CSV</span></div></div>
+                <div class="eph-pr"><div class="top"><div><b>October 2026</b> <i style="font-style:normal;color:#8A94A6">36 staff</i> <em class="eph-chip SUBMITTED">SUBMITTED</em></div><span>Gross: KES 1,575,000.00 &nbsp; Net: <b>KES 1,188,137.10</b></span></div><div class="bs"><span class="eph-b">View Payslips</span><span class="eph-b rv">Mark Reviewed</span><span class="eph-b mu eph-m">Unlock &amp; Reprocess</span><span class="eph-b cs">Statutory CSV</span></div></div><div class="eph-pr eph-xs"><div class="top"><div><b>September 2026</b> <i style="font-style:normal;color:#8A94A6">36 staff</i> <em class="eph-chip SUBMITTED">SUBMITTED</em></div><span>Gross: KES 1,575,000.00 &nbsp; Net: <b>KES 1,188,137.10</b></span></div><div class="bs"><span class="eph-b">View Payslips</span><span class="eph-b rv">Mark Reviewed</span><span class="eph-b mu eph-m">Unlock &amp; Reprocess</span><span class="eph-b cs">Statutory CSV</span></div></div><div class="eph-pr eph-xs"><div class="top"><div><b>August 2026</b> <i style="font-style:normal;color:#8A94A6">36 staff</i> <em class="eph-chip APPROVED">APPROVED</em></div><span>Gross: KES 1,575,000.00 &nbsp; Net: <b>KES 1,188,137.10</b></span></div><div class="bs"><span class="eph-b">View Payslips</span><span class="eph-b" style="opacity:.5">Mark as Paid</span><span class="eph-b mu eph-m">Unlock &amp; Reprocess</span><span class="eph-b ex eph-m">Export CSV</span><span class="eph-b cs">Statutory CSV</span></div></div>
+              </div>
+            </div>
+            <div class="eph-v" id="eph-v-stat"><div class="eph-box"><b class="eph-bt">Statutory</b>
+              <div class="eph-r" id="eph-snew" hidden><div><b>November 2026</b><i>36 staff</i><em class="eph-chip APPROVED">APPROVED</em></div><span class="eph-b" style="color:#2B2F52;font-weight:600">View Payslips</span></div><div class="eph-r"><div><b>October 2026</b><i>36 staff</i><em class="eph-chip SUBMITTED">SUBMITTED</em></div><span class="eph-b" style="color:#2B2F52;font-weight:600">View Payslips</span></div><div class="eph-r"><div><b>September 2026</b><i>36 staff</i><em class="eph-chip SUBMITTED">SUBMITTED</em></div><span class="eph-b" style="color:#2B2F52;font-weight:600">View Payslips</span></div><div class="eph-r"><div><b>August 2026</b><i>36 staff</i><em class="eph-chip APPROVED">APPROVED</em></div><span class="eph-b" style="color:#2B2F52;font-weight:600">View Payslips</span></div><div class="eph-r"><div><b>July 2026</b><i>36 staff</i><em class="eph-chip APPROVED">APPROVED</em></div><span class="eph-b" style="color:#2B2F52;font-weight:600">View Payslips</span></div><div class="eph-r eph-xs"><div><b>June 2026</b><i>36 staff</i><em class="eph-chip PAID">PAID</em></div><span class="eph-b" style="color:#2B2F52;font-weight:600">View Payslips</span></div><div class="eph-r eph-xs"><div><b>May 2026</b><i>36 staff</i><em class="eph-chip APPROVED">APPROVED</em></div><span class="eph-b" style="color:#2B2F52;font-weight:600">View Payslips</span></div></div></div>
+            <div class="eph-v" id="eph-v-leave">
+              <div class="eph-bar"><span class="eph-cnt" id="eph-lc" style="flex:1;font-size:.74rem">8 leave requests</span><span class="eph-b ind" id="eph-newreq">+ New Request</span></div>
+              <div class="eph-lv" id="eph-lnew" hidden><b>Akinyi Atieno</b><em class="eph-chip PENDING">PENDING</em> <em class="eph-chip" style="background:#EEF0FF;color:#4338CA">ANNUAL</em><small>11/23/2026 to 11/25/2026 (3 days)</small><small style="margin-top:1px">Annual leave</small></div>
+              <div class="eph-lv"><b>Beatrice Ndungu</b><em class="eph-chip APPROVED">APPROVED</em> <em class="eph-chip" style="background:#EEF0FF;color:#4338CA">ANNUAL</em><small>3/30/2026 to 4/1/2026 (3 days)</small><small style="margin-top:1px">Annual leave</small></div><div class="eph-lv"><b>Hassan Omar</b><em class="eph-chip APPROVED">APPROVED</em> <em class="eph-chip" style="background:#EEF0FF;color:#4338CA">SICK</em><small>4/14/2026 to 4/15/2026 (2 days)</small><small style="margin-top:1px">Sick leave</small></div><div class="eph-lv"><b>Njeri Mwangi</b><em class="eph-chip APPROVED">APPROVED</em> <em class="eph-chip" style="background:#EEF0FF;color:#4338CA">ANNUAL</em><small>2/16/2026 to 2/20/2026 (5 days)</small><small style="margin-top:1px">Annual leave</small></div><div class="eph-lv eph-xs"><b>Otieno Odhiambo</b><em class="eph-chip APPROVED">APPROVED</em> <em class="eph-chip" style="background:#EEF0FF;color:#4338CA">ANNUAL</em><small>3/23/2026 to 3/25/2026 (3 days)</small><small style="margin-top:1px">Personal leave</small></div>
+            </div>
+            <div class="eph-v" id="eph-v-staff">
+              <div class="eph-bar"><div class="eph-inp" data-ph="Search staff"></div><span class="eph-sel eph-m">All Departments</span><span class="eph-cnt">59/59</span><span class="eph-b ind" id="eph-addstaff">+ Add Staff</span></div>
+              <div class="eph-sc"><table class="eph-t"><thead><tr><th>Name</th><th>Role</th><th class="eph-m">Department</th><th class="eph-m">Emp No.</th><th class="r">Basic Salary</th></tr></thead><tbody><tr><td>Agnes Mwema</td><td><span class="eph-role">ADMIN</span></td><td class="eph-m">Support</td><td class="eph-m">SUP002</td><td class="r"><span class="eph-gg">KES 15,000</span></td></tr><tr><td>Akinyi Atieno</td><td><span class="eph-role">TEACHER</span></td><td class="eph-m">-</td><td class="eph-m">-</td><td class="r"><span class="eph-gg">KES 36,000</span></td></tr><tr><td>Amina Hassan</td><td><span class="eph-role">ADMIN</span></td><td class="eph-m">Health</td><td class="eph-m">HLT001</td><td class="r"><span class="eph-gg">KES 38,000</span></td></tr><tr><td>Asha Faraj</td><td><span class="eph-role">DOS</span></td><td class="eph-m">-</td><td class="eph-m">-</td><td class="r"><span class="eph-ns" id="eph-ns">Not set</span></td></tr><tr><td>Beatrice Adhiambo</td><td><span class="eph-role">SECRETARY</span></td><td class="eph-m">Administration</td><td class="eph-m">ADM004</td><td class="r"><span class="eph-gg">KES 28,000</span></td></tr><tr><td>Beatrice Ndungu</td><td><span class="eph-role">TEACHER</span></td><td class="eph-m">-</td><td class="eph-m">-</td><td class="r"><span class="eph-gg">KES 36,000</span></td></tr><tr><td>Ben Mwangi</td><td><span class="eph-role">LIBRARIAN</span></td><td class="eph-m">-</td><td class="eph-m">-</td><td class="r"><span class="eph-ns">Not set</span></td></tr></tbody></table></div>
+            </div>
+          </div>
+        </div>
+        <div class="eph-cur" id="eph-cur"><i></i><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.8L9 19z" fill="#111" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="eph-sr" id="eph-sr" role="status"></div>
+      <p class="eph-note">An illustration using a sample school and sample figures.</p></template></div>
     </div>
     <div class="ept-cta">
       <p>Like what you see?</p>
@@ -1268,9 +1416,107 @@
 <script>
 (function(){
   function init(){
+  var root=document.getElementById('ep-hr'); if(!root) return;
+  var $=function(i){return document.getElementById(i);};
+  var app=$('eph-app'), cur=$('eph-cur'), sr=$('eph-sr');
+  var tabs={}; [].forEach.call(root.querySelectorAll('.eph-tab'),function(t){tabs[t.getAttribute('data-v')]=t;});
+  var token=0, instant=false, paused=false, gates=[];
+  function release(){var g=gates.splice(0); g.forEach(function(f){f();});}
+  function wait(ms,my){return new Promise(function(res,rej){setTimeout(function(){if(my!==token) return rej('x'); if(!paused) return res(); gates.push(function(){my===token?res():rej('x');});},ms);});}
+  function fmt(n,d){var s=(+n).toFixed(d||0).split('.'); s[0]=s[0].replace(/\B(?=(\d{3})+(?!\d))/g,','); return s.join('.');}
+  function anim(e,to,dur,d){
+    var pre=d?'KES ':''; if(instant||!dur){e.textContent=pre+fmt(to,d);return;}
+    var t0=null,my=token;
+    requestAnimationFrame(function f(ts){
+      if(my!==token) return; if(t0===null) t0=ts;
+      var k=Math.min(1,(ts-t0)/dur), v=1-Math.pow(1-k,3);
+      e.textContent=pre+fmt(to*v,d); if(k<1) requestAnimationFrame(f);
+    });
+  }
+  function countUp(){[].forEach.call($('eph-v-ov').querySelectorAll('[data-n]'),function(e){anim(e,+e.getAttribute('data-n'),1300,+e.getAttribute('data-d')||0);});}
+  function moveTo(e,my,dx){
+    var a=app.getBoundingClientRect(), r=e.getBoundingClientRect();
+    var x=r.left-a.left+Math.min(r.width*0.5,r.width-8)+(dx||0), y=r.top-a.top+r.height*0.5;
+    cur.style.transform='translate('+x+'px,'+y+'px)'; return wait(560,my);
+  }
+  function click(e,my){
+    cur.classList.remove('click'); void cur.offsetWidth; cur.classList.add('click'); e.classList.add('press');
+    setTimeout(function(){e.classList.remove('press'); cur.classList.remove('click');},400); return wait(220,my);
+  }
+  function setView(v){
+    for(var k in tabs) tabs[k].classList.toggle('on',k===v);
+    [].forEach.call(root.querySelectorAll('.eph-v'),function(x){x.classList.remove('show');});
+    $('eph-v-'+v).classList.add('show');
+  }
+  var rows=[].slice.call(document.querySelectorAll('#eph-sb tr'));
+  function filt(q){q=q.toLowerCase(); var n=0; rows.forEach(function(r){var hide=q&&r.getAttribute('data-s').indexOf(q)<0; r.classList.toggle('hid',!!hide); if(!hide) n++;}); $('eph-cnt').textContent=(q?n:36)+'/36';}
+  function resetAll(){
+    [].forEach.call($('eph-v-ov').querySelectorAll('[data-n]'),function(e){e.textContent=e.hasAttribute('data-d')?'KES 0.00':'0';});
+    $('eph-runs').setAttribute('data-n','9'); $('eph-lp').setAttribute('data-n','0');
+    ['eph-onew','eph-pnew','eph-snew','eph-lnew','eph-bs2'].forEach(function(i){$(i).hidden=true;});
+    $('eph-bs1').hidden=false; var c=$('eph-pchip'); c.className='eph-chip SUBMITTED'; c.textContent='SUBMITTED';
+    var q=$('eph-q'); q.textContent=''; q.classList.remove('typing'); filt('');
+    $('eph-proc').textContent='Process Payroll'; var s=$('eph-stcsv'); s.textContent='Statutory CSV'; s.classList.remove('done');
+    $('eph-lc').textContent='8 leave requests'; $('eph-ns').classList.remove('hl');
+    setView('ov');
+  }
+  function showAll(){
+    countUp(); $('eph-runs').setAttribute('data-n','10'); $('eph-runs').textContent='10'; $('eph-lp').textContent='1';
+    ['eph-onew','eph-pnew','eph-snew','eph-lnew'].forEach(function(i){$(i).hidden=false;});
+    $('eph-bs1').hidden=true; $('eph-bs2').hidden=false; var c=$('eph-pchip'); c.className='eph-chip APPROVED'; c.textContent='APPROVED';
+    $('eph-lc').textContent='9 leave requests';
+  }
+  async function goTab(v,my){await moveTo(tabs[v],my); await click(tabs[v],my); setView(v); await wait(350,my);}
+  async function tour(my){
+    cur.style.transition='none'; cur.style.transform='translate('+Math.round(app.clientWidth*0.55)+'px,'+Math.round(app.clientHeight*0.28)+'px)';
+    void cur.offsetWidth; cur.style.transition=''; cur.classList.add('vis'); await wait(500,my);
+    countUp(); await wait(1700,my);
+    await goTab('sal',my);
+    var q=$('eph-q'), txt='Wafula'; await moveTo(q,my); await click(q,my); q.classList.add('typing');
+    for(var i=1;i<=txt.length;i++){q.textContent=txt.slice(0,i); filt(q.textContent); await wait(90,my);}
+    q.classList.remove('typing'); await wait(300,my);
+    var ed=[].filter.call(document.querySelectorAll('#eph-sb tr:not(.hid) .eph-b'),function(x){return x.textContent==='Edit';})[0]; if(ed){await moveTo(ed,my); await wait(500,my);}
+    await goTab('pay',my);
+    var pr=$('eph-proc'); await moveTo(pr,my); await click(pr,my); pr.textContent='Processing\u2026'; await wait(800,my); pr.textContent='Process Payroll';
+    $('eph-pnew').hidden=false; await wait(800,my);
+    var rv=$('eph-rev'); await moveTo(rv,my); await click(rv,my); var ch=$('eph-pchip'); ch.className='eph-chip APPROVED'; ch.textContent='APPROVED'; $('eph-bs1').hidden=true; $('eph-bs2').hidden=false; await wait(600,my);
+    var sc=$('eph-stcsv'); await moveTo(sc,my); await click(sc,my); sc.textContent='Downloaded \u2713'; sc.classList.add('done'); await wait(800,my);
+    await goTab('stat',my); $('eph-snew').hidden=false; await wait(1300,my);
+    await goTab('leave',my);
+    var nr=$('eph-newreq'); await moveTo(nr,my); await click(nr,my); $('eph-lnew').hidden=false; $('eph-lc').textContent='9 leave requests'; await wait(1100,my);
+    await goTab('staff',my);
+    var ns=$('eph-ns'); await moveTo(ns,my); ns.classList.add('hl'); await wait(1000,my);
+    await goTab('ov',my);
+    $('eph-onew').hidden=false; var rn=$('eph-runs'); rn.setAttribute('data-n','10'); rn.textContent='10'; $('eph-lp').textContent='1'; await wait(1200,my);
+  }
+  function finish(){
+    cur.classList.remove('vis'); sr.textContent='Tour finished. A monthly payroll was processed, reviewed and exported, and a leave request was recorded.';
+    if(window.EPTours&&window.EPTours.onDone) window.EPTours.onDone('hr');
+  }
+  function run(inst){
+    token++; var my=token; instant=inst; resetAll(); sr.textContent='';
+    if(inst){showAll(); finish(); return;}
+    tour(my).then(finish,function(e){if(e!=='x') finish();});
+  }
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  resetAll();
+  window.EPTours=window.EPTours||{};
+  window.EPTours.hr={
+    start:function(){run(reduce);},
+    stop:function(){token++; paused=false; release(); cur.classList.remove('vis');},
+    pause:function(){paused=true;}, resume:function(){paused=false; release();}
+  };
+  }
+  (window.EPBoot=window.EPBoot||{}).hr=init;
+})();
+</script>
+
+<script>
+(function(){
+  function init(){
     var root=document.getElementById('ep-tour'); if(!root) return;
     var $=function(i){return document.getElementById(i);};
-    var K=['solve','fees','fin','kemis'], P={solve:$('ep-solve'),fees:$('ep-fees'),fin:$('ep-fin'),kemis:$('ep-kemis')}, tabs={};
+    var K=['solve','fees','fin','kemis','hr'], P={solve:$('ep-solve'),fees:$('ep-fees'),fin:$('ep-fin'),kemis:$('ep-kemis'),hr:$('ep-hr')}, tabs={};
     K.forEach(function(k){tabs[k]=$('ept-t-'+k);});
     var pb=$('ept-pause'), rb=$('ept-replay'), T=window.EPTours=window.EPTours||{};
     var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1282,7 +1528,7 @@
       var tpl=$('tpl-'+k), slot=$('ept-slot-'+k); if(!tpl||!slot||!BOOT[k]) return;
       slot.appendChild(tpl.content.cloneNode(true)); mounted[k]=true; BOOT[k]();
     }
-    var NM={solve:'timetables',fees:'fees',fin:'reports',kemis:'kemis'};
+    var NM={solve:'timetables',fees:'fees',fin:'reports',kemis:'kemis',hr:'payroll'};
     function track(n,p){try{if(typeof gtag==='function') gtag('event',n,Object.assign({page_path:location.pathname},p||{}));}catch(e){}}
     root.addEventListener('click',function(e){
       var a=e.target&&e.target.closest?e.target.closest('a[data-cta],a[data-link]'):null; if(!a) return;
@@ -1324,7 +1570,7 @@
       else if(v&&held){held=false; if(!paused) T[cur].resume();}
     }
     function begin(){if(started) return; started=true; chain=!reduce; select('solve',true,'autoplay');}
-    var H={'#tour-timetables':'solve','#tour-fees':'fees','#tour-reports':'fin','#tour-kemis':'kemis'};
+    var H={'#tour-timetables':'solve','#tour-fees':'fees','#tour-reports':'fin','#tour-kemis':'kemis','#tour-payroll':'hr'};
     function openHash(h,scroll){
       var k=H[h]; if(!k) return false;
       started=true; chain=false; select(k,false,'link');

@@ -1,0 +1,152 @@
+---
+import FeaturePage from '../layouts/FeaturePage.astro';
+
+const faqs = [
+  ['Which plan includes HR & Payroll?', 'The HR & Payroll module is part of the Enterprise plan, which also includes everything in Pro. See the pricing section for what each plan includes.'],
+  ['Which statutory deductions does it calculate?', 'When you process a month, Edupath calculates PAYE, SHA, NSSF, Housing Levy and HELB for all staff on payroll.'],
+  ['What happens if I need to correct a payroll run?', 'Use Unlock & Reprocess on that month\'s run to reopen it and process it again. Each run keeps a status as it moves from submitted to approved to paid, so you can always see where it stands.'],
+  ['Can I export payroll for remittances?', 'Yes. Each run has a Statutory CSV for the deductions, and approved runs can also be exported as a payroll CSV. You can open the payslips for any month from the same screen.'],
+  ['Does every staff member have to be on payroll?', 'No. The overview separates staff on payroll from total staff, and the staff list shows "Not set" next to anyone whose salary has not been set up yet.'],
+  ['Can I manage staff leave in the same place?', 'Yes. Record leave requests such as annual, sick and personal leave, with the dates, the number of days and the approval status.'],
+];
+
+const jsonLd = JSON.stringify([
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'School Payroll and HR Software Kenya',
+    description: 'Salary setup, monthly payroll with PAYE, SHA, NSSF, Housing Levy and HELB, payslips, leave and staff records for Kenyan schools.',
+    url: 'https://www.edupath.co.ke/school-payroll-software',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
+  },
+]);
+---
+
+<FeaturePage
+  title="School Payroll & HR Software Kenya | Edupath SMS"
+  description="School payroll for Kenya: salary setup, monthly payroll with PAYE, SHA, NSSF, Housing Levy and HELB, payslips, leave and staff records. Enterprise plan."
+  path="/school-payroll-software"
+  ogTitle="School Payroll & HR Software Kenya | Edupath SMS"
+  ogDescription="Set up salaries, process monthly payroll with statutory deductions, export statutory CSVs, track leave and keep staff records in one place."
+  jsonLd={jsonLd}
+  badge="HR & Payroll · Enterprise plan"
+  heading={"Run <span>school payroll</span> without the spreadsheets"}
+  lead="Set up salaries once, process a month with PAYE, SHA, NSSF, Housing Levy and HELB calculated for you, then review, approve and export. Leave and staff records sit in the same system."
+  active="/school-payroll-software"
+  ctaHeading="Bring payroll into one system."
+  ctaText="Talk to us about the Enterprise plan, or start on the free plan and see the rest of Edupath first."
+  ctaLabel="Create Free Account →"
+>
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">How It Works</div>
+      <h2>From salary setup to statutory export in five steps.</h2>
+      <div class="fs-steps">
+        <div class="fs-step">
+          <div class="fs-step-num">1</div>
+          <div>
+            <h3>Set up staff and salaries</h3>
+            <p>Keep each staff member's role, department and employee number in one list, then set their basic pay, allowances and bank. Gross pay is worked out for you.</p>
+          </div>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-num">2</div>
+          <div>
+            <h3>Process the month</h3>
+            <p>Choose the month and year and press Process Payroll. Edupath calculates PAYE, SHA, NSSF, Housing Levy and HELB for all staff on payroll.</p>
+          </div>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-num">3</div>
+          <div>
+            <h3>Review and approve</h3>
+            <p>Check the run, mark it reviewed, and follow it from submitted to approved to paid. If something needs correcting, unlock and reprocess that month.</p>
+          </div>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-num">4</div>
+          <div>
+            <h3>Open payslips and export</h3>
+            <p>View payslips for the month, export the payroll as CSV, and download the statutory CSV for your remittances.</p>
+          </div>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-num">5</div>
+          <div>
+            <h3>Track leave</h3>
+            <p>Record annual, sick and personal leave requests with their dates and approval status, alongside the rest of your HR records.</p>
+          </div>
+        </div>
+      </div>
+      <p style="margin-top:var(--space-xl)"><a class="btn btn--secondary" href="/#tour-payroll">Watch the payroll tour</a></p>
+    </div>
+  </section>
+
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">Features</div>
+      <h2>Everything for paying and managing your staff.</h2>
+      <div class="fs-grid">
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(60% 0.118 184.704 / 0.15)">💼</div>
+          <h3>Salary setup</h3>
+          <p>Basic pay, allowances, gross pay and the bank for each staff member, with search across the whole list.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(62.7% 0.194 149.214 / 0.12)">🧮</div>
+          <h3>Monthly payroll</h3>
+          <p>Pick a month and process it in one step for every staff member on payroll.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(76.9% 0.188 70.08 / 0.18)">🏛️</div>
+          <h3>Statutory deductions</h3>
+          <p>PAYE, SHA, NSSF, Housing Levy and HELB, with a statutory CSV for each month.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(60% 0.118 184.704 / 0.15)">🧾</div>
+          <h3>Payslips</h3>
+          <p>View payslips for any month's run straight from the payroll history.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(62.7% 0.194 149.214 / 0.12)">✅</div>
+          <h3>Run status and history</h3>
+          <p>Every month keeps its status, from submitted to approved to paid, with gross and net pay beside it.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(63.7% 0.237 25.331 / 0.12)">🔓</div>
+          <h3>Unlock and reprocess</h3>
+          <p>Reopen a month, correct the records, and process it again when something changes.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(76.9% 0.188 70.08 / 0.18)">🌴</div>
+          <h3>Leave management</h3>
+          <p>Annual, sick and personal leave requests with dates, days and approval status.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(60% 0.118 184.704 / 0.15)">📊</div>
+          <h3>HR overview</h3>
+          <p>Staff on payroll, total staff, leave pending and payroll runs, plus the monthly gross bill, total basic salaries and HELB deductions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">FAQ</div>
+      <h2>Payroll and HR questions</h2>
+      <div class="fs-faq">
+        {faqs.map(([q, a]) => (
+          <div class="fs-faq-item">
+            <h3>{q}</h3>
+            <p>{a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</FeaturePage>
