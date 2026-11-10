@@ -20,7 +20,9 @@
  *      footer Product list and the nav's Features highlight.
  *   8. (v6) The HR & Payroll card describes the module as it is and links to the new /school-payroll-software
  *      page, which is also added to the footer Product list and the nav's Features highlight.
- *   9. Footer social icons: WhatsApp points at wa.me/254711606968. X and LinkedIn are removed unless
+ *   9. (v7) A Procurement card linking to the new /school-procurement-software page, which is also added to the
+ *      footer Product list and the nav's Features highlight.
+ *  10. Footer social icons: WhatsApp points at wa.me/254711606968. X and LinkedIn are removed unless
  *      you pass real profile URLs (--x, --linkedin).
  *
  * Usage (run from the repo root):
@@ -130,6 +132,11 @@ editAny('index', 'HR & Payroll card',
   ["{ title: 'HR & Payroll', text: 'Contracts, pay runs, SHA/NSSF/PAYE, payslips and leave.', href: null },"],
   hrNew, "href: '/school-payroll-software' }");
 
+// 2d. Procurement card, right after HR & Payroll
+const procNew = "{ title: 'Procurement', text: 'Requisitions, purchase orders, receiving, supplier invoices, vote-head budgets and capitation in one place.', href: '/school-procurement-software' },";
+if (txt.index.includes("title: 'Procurement'")) results.push('  already   Procurement card');
+else edit('index', 'Procurement card', hrNew, hrNew + '\n  ' + procNew);
+
 // 3. Unsourced claims
 edit('index', 'Trust strip: hours claim', '<span class="trust-item">SAVE 20+ HRS/WEEK</span>', '<span class="trust-item">FREE UP TO 200 STUDENTS</span>', 'FREE UP TO 200 STUDENTS');
 edit('index', 'Trust strip: setup time', '<span class="trust-item">LIVE IN 5 MINUTES</span>', '<span class="trust-item">SET UP IN 5\u201315 MINUTES</span>', 'SET UP IN 5\u201315 MINUTES');
@@ -181,14 +188,19 @@ edit('footer', 'Footer: HR & Payroll link',
   '<li><a href="/kemis-registration-readiness">KEMIS Readiness</a></li>',
   '<li><a href="/kemis-registration-readiness">KEMIS Readiness</a></li>\n          <li><a href="/school-payroll-software">HR &amp; Payroll</a></li>',
   'href="/school-payroll-software"');
+edit('footer', 'Footer: Procurement link',
+  '<li><a href="/school-payroll-software">HR &amp; Payroll</a></li>',
+  '<li><a href="/school-payroll-software">HR &amp; Payroll</a></li>\n          <li><a href="/school-procurement-software">Procurement</a></li>',
+  'href="/school-procurement-software"');
 editAny('nav', 'Nav: highlight Features on the new pages',
   [
     "match: ['/cbe-school-management', '/mpesa-school-fees', '/parent-portal', '/school-attendance'] }",
     "match: ['/cbe-school-management', '/mpesa-school-fees', '/parent-portal', '/school-attendance', '/school-timetable-software', '/school-financial-reports'] }",
     "match: ['/cbe-school-management', '/mpesa-school-fees', '/parent-portal', '/school-attendance', '/school-timetable-software', '/school-financial-reports', '/kemis-registration-readiness'] }",
+    "match: ['/cbe-school-management', '/mpesa-school-fees', '/parent-portal', '/school-attendance', '/school-timetable-software', '/school-financial-reports', '/kemis-registration-readiness', '/school-payroll-software'] }",
   ],
-  "match: ['/cbe-school-management', '/mpesa-school-fees', '/parent-portal', '/school-attendance', '/school-timetable-software', '/school-financial-reports', '/kemis-registration-readiness', '/school-payroll-software'] }",
-  "'/kemis-registration-readiness', '/school-payroll-software'] }");
+  "match: ['/cbe-school-management', '/mpesa-school-fees', '/parent-portal', '/school-attendance', '/school-timetable-software', '/school-financial-reports', '/kemis-registration-readiness', '/school-payroll-software', '/school-procurement-software'] }",
+  "'/school-payroll-software', '/school-procurement-software'] }");
 edit('analytics', 'Analytics: track views of the tour section',
   "const sections = ['#hero', '#features', '#portals', '#pricing', '#wa', '#register', '#testimonials', '#faq'];",
   "const sections = ['#hero', '#features', '#ep-tour', '#portals', '#pricing', '#wa', '#register', '#testimonials', '#faq'];",

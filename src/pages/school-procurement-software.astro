@@ -1,0 +1,164 @@
+---
+import FeaturePage from '../layouts/FeaturePage.astro';
+
+const faqs = [
+  ['What are vote heads?', 'Vote heads are the budget lines that school money is allocated to, such as tuition, medical and insurance, activity, and local travel and transport. In Edupath each vote head has a code, a name and a bank account, and it shows how much has been received, committed and paid, and how much is still available.'],
+  ['How do I record capitation money?', 'Open Capitation and choose the source, for example Ministry capitation, then the term and tranche. Add the bank reference and the circular reference, and enter the amount received for each vote head as shown in the circular.'],
+  ['What happens if I buy in a category that has no budget?', 'Purchases in categories without a budget are not checked. Set a budget for each category and financial year, and purchases in those categories are checked against it.'],
+  ['How are supplier invoices checked?', 'Invoices are linked to their purchase orders. Invoices that match show Matched, and an invoice that differs is flagged with Variance and waits for someone to review it before it is approved and paid.'],
+  ['Can I see which deliveries are late?', 'Yes. The Receiving screen lists every order awaiting delivery, marks late ones as Overdue, and lets you receive the goods with one click when they arrive.'],
+  ['Can I see how much I spend with each supplier?', 'Yes. Spend Overview shows total spend, the number of suppliers, how many orders are draft, approved, received or rejected, and a ranked list of your top suppliers by spend with the number of orders for each.'],
+];
+
+const jsonLd = JSON.stringify([
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'School Procurement Software Kenya',
+    description: 'Requisitions, purchase orders, receiving, supplier invoices, vote-head budgets and capitation for Kenyan schools.',
+    url: 'https://www.edupath.co.ke/school-procurement-software',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
+  },
+]);
+---
+
+<FeaturePage
+  title="School Procurement Software Kenya | Edupath SMS"
+  description="School procurement for Kenya: requisitions, purchase orders, receiving, invoices, vote-head budgets, capitation and spend reports in one system."
+  path="/school-procurement-software"
+  ogTitle="School Procurement Software Kenya | Edupath SMS"
+  ogDescription="Raise requisitions, issue purchase orders, receive goods, review invoices and keep every vote head in view, with capitation recorded in the same place."
+  jsonLd={jsonLd}
+  badge="Procurement"
+  heading={"School <span>procurement</span> with approvals and vote heads"}
+  lead="Raise requisitions, issue purchase orders, receive goods and review supplier invoices. Every vote head shows what has been received, committed, paid and what is left, and capitation is recorded against the same vote heads."
+  active="/school-procurement-software"
+  ctaHeading="Know what you can spend before you buy."
+  ctaText="Create a free account and see how Edupath brings procurement, vote heads and the rest of your school into one system."
+  ctaLabel="Create Free Account →"
+>
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">How It Works</div>
+      <h2>From requisition to paid invoice in six steps.</h2>
+      <div class="fs-steps">
+        <div class="fs-step">
+          <div class="fs-step-num">1</div>
+          <div>
+            <h3>Raise a requisition</h3>
+            <p>Record what is needed, the category it belongs to, who is asking, when it is needed and how much it will cost.</p>
+          </div>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-num">2</div>
+          <div>
+            <h3>Get it approved</h3>
+            <p>Requisitions move from awaiting approval to approved, with a filter for the ones waiting on you.</p>
+          </div>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-num">3</div>
+          <div>
+            <h3>Issue a purchase order</h3>
+            <p>Raise a purchase order to a supplier with its delivery date, and follow it from approved to received.</p>
+          </div>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-num">4</div>
+          <div>
+            <h3>Receive the goods</h3>
+            <p>See every delivery you are waiting for, spot the overdue ones, and receive goods against the order when they arrive.</p>
+          </div>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-num">5</div>
+          <div>
+            <h3>Review the invoice</h3>
+            <p>Record the supplier's invoice against its order. Matching invoices show Matched, and differences are flagged for review before payment.</p>
+          </div>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-num">6</div>
+          <div>
+            <h3>Watch your vote heads</h3>
+            <p>See received, committed, paid and available money for every vote head, and how much of each budget has been used.</p>
+          </div>
+        </div>
+      </div>
+      <p style="margin-top:var(--space-xl)"><a class="btn btn--secondary" href="/#tour-procurement">Watch the procurement tour</a></p>
+    </div>
+  </section>
+
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">Features</div>
+      <h2>Everything between a request and a receipt.</h2>
+      <div class="fs-grid">
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(60% 0.118 184.704 / 0.15)">📝</div>
+          <h3>Requisitions</h3>
+          <p>Requests with a priority, a needed-by date and an approval status, filtered by draft, awaiting approval, approved, rejected, order created or cancelled.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(62.7% 0.194 149.214 / 0.12)">📦</div>
+          <h3>Purchase orders</h3>
+          <p>Orders to suppliers with their items, delivery dates and amounts, filtered by draft, approved, received or rejected.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(63.7% 0.237 25.331 / 0.12)">🚚</div>
+          <h3>Receiving</h3>
+          <p>Every delivery you are waiting for, with overdue orders marked and a Receive goods button on each.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(76.9% 0.188 70.08 / 0.18)">🧾</div>
+          <h3>Supplier invoices</h3>
+          <p>Invoices recorded against purchase orders, with matched and variance flags, and filters for awaiting approval, paid, rejected and void.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(60% 0.118 184.704 / 0.15)">💰</div>
+          <h3>Budgets</h3>
+          <p>Set an allocated amount for each category and financial year. Purchases in categories without a budget are not checked.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(62.7% 0.194 149.214 / 0.12)">🏦</div>
+          <h3>Vote heads</h3>
+          <p>A code, a name and a bank account for each vote head, with received, committed, paid and available amounts and a bar showing how much is used.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(76.9% 0.188 70.08 / 0.18)">🏛️</div>
+          <h3>Capitation</h3>
+          <p>Record money received by source, term and tranche, with the bank reference, the circular reference and the amount for each vote head.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(60% 0.118 184.704 / 0.15)">🤝</div>
+          <h3>Suppliers</h3>
+          <p>Your supplier list with category, contact person, phone number and a rating for each.</p>
+        </div>
+        <div class="fs-card">
+          <div class="fs-card-icon" style="background:oklch(63.7% 0.237 25.331 / 0.12)">📊</div>
+          <h3>Spend overview</h3>
+          <p>Total spend, orders by status, and your top suppliers ranked by spend with their number of orders.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fs-section">
+    <div class="fs-section-inner">
+      <div class="fs-section-label">FAQ</div>
+      <h2>Procurement questions</h2>
+      <div class="fs-faq">
+        {faqs.map(([q, a]) => (
+          <div class="fs-faq-item">
+            <h3>{q}</h3>
+            <p>{a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</FeaturePage>

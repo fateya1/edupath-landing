@@ -546,6 +546,92 @@
 }
 </style>
 
+<style>
+#ep-proc{--t:#0D9488;--tdd:#134E4A;--mut:#4B6B67;--pu:#7C3AED}
+#ep-proc *{box-sizing:border-box}
+#ep-proc [hidden]{display:none!important}
+.epp-wrap{max-width:1120px;margin:0 auto;display:grid;gap:36px;grid-template-columns:1fr;align-items:center}
+@media(min-width:1000px){.epp-wrap{grid-template-columns:4fr 8fr;gap:44px}}
+.epp-copy h3{font-size:clamp(1.4rem,2.6vw,1.9rem);line-height:1.15;margin:0 0 14px;color:var(--tdd);letter-spacing:-.01em}
+.epp-copy p{margin:0 0 18px;line-height:1.6;color:var(--mut);max-width:46ch}
+.epp-pts{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:10px}
+.epp-pts li{display:flex;gap:10px;line-height:1.45;font-size:.95rem}
+.epp-pts li::before{content:"\2713";flex:none;width:20px;height:20px;border-radius:50%;background:var(--t);color:#fff;font-size:.72rem;display:grid;place-items:center;margin-top:1px}
+.epp-app{position:relative;overflow:hidden;background:#fff;border:1px solid #DDE7E4;border-radius:16px;padding:16px;box-shadow:0 12px 32px rgba(19,78,74,.10)}
+.epp-h{font-size:1.15rem;font-weight:800;color:#111;margin:0}
+.epp-sub{margin:2px 0 8px;font-size:.72rem;color:#6B7A99}
+.epp-tabs{display:flex;flex-wrap:wrap;border-bottom:1px solid #E6EAF0;margin-bottom:12px}
+.epp-tab{font-size:.68rem;font-weight:600;padding:8px 9px;color:#475569;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .25s,border-color .25s,transform .15s;white-space:nowrap}
+.epp-tab.on{color:var(--pu);border-color:var(--pu)}
+.press{transform:scale(.95)}
+.epp-views{min-height:430px}
+.epp-v{display:none}
+.epp-v.show{display:block;animation:eppIn .35s ease-out}
+.epp-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;align-items:center}
+.epp-fl{font-size:.64rem;font-weight:600;padding:5px 10px;border-radius:99px;border:1px solid #E1E4F2;background:#fff;color:#111}
+.epp-fl.on{background:#8B5CF6;color:#fff;border-color:#8B5CF6}
+.epp-new{font-size:.68rem;font-weight:700;padding:7px 12px;border-radius:8px;background:var(--pu);color:#fff;display:inline-block;margin-bottom:10px}
+.epp-c{border:1px solid #EEF0F4;border-radius:12px;padding:10px 13px;margin-bottom:8px;background:#fff;transition:opacity .4s,transform .4s,box-shadow .3s}
+.epp-c.out{opacity:0;transform:translateX(12px)}
+.epp-c .top{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.epp-c .id{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.58rem;color:#6B7280}
+.epp-c b{display:block;font-size:.8rem;color:#111;margin:2px 0}
+.epp-c small{display:block;font-size:.62rem;color:#6B7280}
+.epp-c .bot{display:flex;justify-content:space-between;align-items:center;margin-top:7px}
+.epp-c .bot strong{font-size:.9rem;color:#111}
+.epp-chip{display:inline-block;font-style:normal;font-size:.58rem;font-weight:700;padding:2px 8px;border-radius:99px;margin-left:4px}
+.epp-chip.ok{background:#DCFCE7;color:#15803D}.epp-chip.wn{background:#FEF3C7;color:#B45309}.epp-chip.ov{background:#FEE2E2;color:#DC2626}.epp-chip.nm{background:#EFF6FF;color:#2563EB}.epp-chip.tg{background:#FEF3C7;color:#92400E}
+.epp-b{display:inline-block;font-size:.66rem;font-weight:700;padding:6px 11px;border-radius:8px;border:1px solid #C4B5FD;background:#fff;color:#6D28D9;white-space:nowrap;transition:transform .15s,background .3s}
+.epp-b.bl{background:#3B82F6;border-color:#3B82F6;color:#fff}
+.epp-b.pu{background:var(--pu);border-color:var(--pu);color:#fff}
+.epp-b.done{background:#15803D;border-color:#15803D;color:#fff}
+.epp-sec{font-size:.8rem;font-weight:700;color:#111;margin:0 0 8px}
+.epp-sc{overflow-x:auto;overflow-y:hidden}
+.epp-t{width:100%;min-width:560px;border-collapse:collapse;font-size:.64rem;color:#111}
+.epp-t th{text-align:left;padding:6px 5px;font-weight:600;color:#475569}
+.epp-t td{padding:7px 5px;border-top:1px solid #F1F2F6;vertical-align:middle}
+.epp-t td b{font-size:.68rem}.epp-t td small{display:block;color:#8A94A6;font-size:.56rem;text-transform:uppercase}
+.epp-bar{height:7px;background:#E5E7EB;border-radius:4px;overflow:hidden;min-width:70px}
+.epp-bar i{display:block;height:100%;width:0;background:#22C55E;border-radius:4px;transition:width .9s ease-out}
+.epp-bar i.hot{background:#F59E0B}
+.epp-form{display:grid;grid-template-columns:repeat(3,1fr);gap:8px 10px}
+.epp-form label{display:block;font-size:.58rem;font-weight:600;color:#475569;margin-bottom:3px}
+.epp-inp{min-height:28px;padding:5px 8px;border:1px solid #E1E4F2;border-radius:7px;font-size:.66rem;background:#fff;display:flex;align-items:center;color:#111}
+.epp-inp.typing::after{content:"";width:1px;height:1em;background:#111;margin-left:1px;animation:eppBlink 1s steps(1) infinite}
+.epp-tot{display:flex;gap:12px;align-items:center;margin-top:10px;font-size:.72rem;font-weight:700;color:#111}
+.epp-ok{margin-top:8px;font-size:.7rem;font-weight:600;color:#15803D;background:#ECFDF3;border:1px solid #A7E3BF;border-radius:8px;padding:7px 10px;animation:eppIn .35s ease-out}
+.epp-k6{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:10px}
+.epp-kc{border:1px solid #EEF0F4;border-left:4px solid var(--kc);border-radius:10px;padding:8px 9px;background:#fff}
+.epp-kc span{display:block;font-size:.58rem;color:#6B7280}
+.epp-kc b{display:block;font-size:1rem;color:var(--kc);font-variant-numeric:tabular-nums;margin-top:3px}
+.epp-box{border:1px solid #EEF0F4;border-radius:12px;padding:12px}
+.epp-sp{display:flex;justify-content:space-between;font-size:.7rem;font-weight:600;color:#111;margin:8px 0 4px}
+.epp-sp span{font-weight:500;color:#475569}
+.epp-sb{height:7px;background:#E5E7EB;border-radius:4px;overflow:hidden}
+.epp-sb i{display:block;height:100%;width:0;background:#8B5CF6;border-radius:4px;transition:width 1s ease-out}
+.epp-cur{position:absolute;left:0;top:0;z-index:9;pointer-events:none;transition:transform .6s cubic-bezier(.4,0,.2,1),opacity .4s;opacity:0}
+.epp-cur.vis{opacity:1}
+.epp-cur svg{display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
+.epp-cur i{position:absolute;left:-8px;top:-8px;width:20px;height:20px;border-radius:50%;border:2px solid var(--pu);opacity:0}
+.epp-cur.click i{animation:eppRip .45s ease-out}
+.epp-note{margin:10px 0 0;font-size:.78rem;color:var(--mut)}
+.epp-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@keyframes eppIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@keyframes eppRip{from{transform:scale(.3);opacity:.9}to{transform:scale(1.6);opacity:0}}
+@keyframes eppBlink{50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.epp-v.show,.epp-ok{animation:none}.epp-cur{display:none}.epp-bar i,.epp-sb i{transition:none}}
+@media(max-width:640px){
+.epp-app{padding:12px}
+.epp-sc{overflow:visible}.epp-t{min-width:0}
+.epp-m{display:none!important}
+.epp-xs{display:none!important}
+.epp-form{grid-template-columns:1fr 1fr}
+.epp-k6{grid-template-columns:1fr 1fr 1fr}
+.epp-views{min-height:380px}
+.epp-tab{padding:7px 7px;font-size:.62rem}
+}
+</style>
+
 <section id="ep-tour" aria-labelledby="ept-title">
   <div class="ept-in">
     <div class="ept-hd">
@@ -559,6 +645,7 @@
         <button class="ept-tab" role="tab" type="button" id="ept-t-fin" aria-selected="false" aria-controls="ep-fin" tabindex="-1">Reports</button>
         <button class="ept-tab" role="tab" type="button" id="ept-t-kemis" aria-selected="false" aria-controls="ep-kemis" tabindex="-1">KEMIS</button>
         <button class="ept-tab" role="tab" type="button" id="ept-t-hr" aria-selected="false" aria-controls="ep-hr" tabindex="-1">Payroll<span class="ept-pill">Enterprise</span></button>
+        <button class="ept-tab" role="tab" type="button" id="ept-t-proc" aria-selected="false" aria-controls="ep-proc" tabindex="-1">Procurement</button>
       </div>
       <div class="ept-ctl"><button type="button" id="ept-pause" aria-pressed="false">Pause</button><button type="button" id="ept-replay">Replay</button></div>
     </div>
@@ -883,6 +970,66 @@
       </div>
       <div class="eph-sr" id="eph-sr" role="status"></div>
       <p class="eph-note">An illustration using a sample school and sample figures.</p></template></div>
+      <div class="ept-pane" id="ep-proc" role="tabpanel" aria-labelledby="ept-t-proc" hidden><div class="epp-wrap"><div class="epp-copy">
+        <h3 id="epp-title">Buy with approvals, budgets and vote heads.</h3>
+        <p>From the first requisition to the supplier invoice, every purchase is tracked, and your vote heads show what is left to spend.</p>
+        <ul class="epp-pts">
+          <li>Raise requisitions, get them approved, and turn them into purchase orders for your suppliers.</li>
+          <li>Receive goods against each order, with late deliveries flagged as overdue.</li>
+          <li>Review supplier invoices against their orders before they are paid.</li>
+          <li>See received, committed, paid and available money for every vote head, and record capitation as it arrives.</li>
+        </ul>
+        <p class="ept-plan"><a href="/school-procurement-software" data-link="learn_more_procurement">Learn more</a></p>
+      </div><div class="ept-slot" id="ept-slot-proc"></div></div><template id="tpl-proc"><div class="epp-app" id="epp-app" role="img" aria-label="Animated tour of procurement: a requisition is approved, goods are received, an invoice is reviewed, vote heads show what is available, capitation money is recorded and spend is summarised">
+        <div aria-hidden="true">
+          <p class="epp-h">Procurement</p><p class="epp-sub">Purchase orders &amp; supplier management</p>
+          <div class="epp-tabs"><span class="epp-tab on" data-v="rq">Requisitions</span><span class="epp-tab" data-v="po">Purchase Orders</span><span class="epp-tab" data-v="rc">Receiving</span><span class="epp-tab" data-v="iv">Invoices</span><span class="epp-tab epp-xs" data-v="bu">Budgets</span><span class="epp-tab" data-v="vh">Vote heads</span><span class="epp-tab" data-v="cp">Capitation</span><span class="epp-tab epp-xs" data-v="su">Suppliers</span><span class="epp-tab" data-v="sp">Spend Overview</span></div>
+          <div class="epp-views">
+            <div class="epp-v show" id="epp-v-rq">
+              <div class="epp-chips"><span class="epp-fl epp-m">Awaiting my approval (0)</span><span class="epp-fl on">All (1)</span><span class="epp-fl epp-m">Draft (0)</span><span class="epp-fl">Awaiting approval (<b id="epp-ca" style="font-weight:600">1</b>)</span><span class="epp-fl">Approved (<b id="epp-cap" style="font-weight:600">0</b>)</span><span class="epp-fl epp-m">Rejected (0)</span><span class="epp-fl epp-m">PO created (0)</span><span class="epp-fl epp-m">Cancelled (0)</span></div>
+              <span class="epp-new">+ New requisition</span>
+              <div class="epp-c"><div class="top"><span class="id">REQ-2026-0001</span><span><em class="epp-chip nm">NORMAL</em><em class="epp-chip wn" id="epp-rqchip">Awaiting approval</em></span></div><b>TUITION &middot; Maths</b><small>Requested by Akinyi Atieno &middot; Needed by 05/01/2027</small><div style="margin-top:6px"><em class="epp-chip tg">Bursar</em></div><div class="bot"><strong>KES 1,500</strong><span class="epp-b" id="epp-det">Details</span></div></div>
+            </div>
+            <div class="epp-v" id="epp-v-po">
+              <div class="epp-chips"><span class="epp-fl on">ALL</span><span class="epp-fl">DRAFT (0)</span><span class="epp-fl">APPROVED (<b id="epp-pap" style="font-weight:600">4</b>)</span><span class="epp-fl">RECEIVED (<b id="epp-prc" style="font-weight:600">51</b>)</span><span class="epp-fl epp-m">REJECTED (0)</span><span class="epp-new" style="margin:0 0 0 auto">+ New Purchase Order</span></div>
+              <div class="epp-c" id="epp-po1"><div class="top"><span class="id">PO-2026-D13</span><span><em class="epp-chip ok">Approved</em></span></div><b>ABC Supplies Ltd</b><small>2 items &middot; Ordered by demo-seed &middot; Delivery: 19/10/2026</small><div class="bot"><strong>KES 95000</strong><span class="epp-b bl">Mark Received</span></div></div><div class="epp-c"><div class="top"><span class="id">PO-2026-D09</span><span><em class="epp-chip ok">Approved</em></span></div><b>ABC Supplies Ltd</b><small>2 items &middot; Ordered by demo-seed &middot; Delivery: 12/10/2026</small><div class="bot"><strong>KES 780000</strong><span class="epp-b bl">Mark Received</span></div></div><div class="epp-c epp-xs"><div class="top"><span class="id">PO-2026-D06</span><span><em class="epp-chip ok">Approved</em></span></div><b>Greenview Stationers</b><small>2 items &middot; Ordered by demo-seed &middot; Delivery: 04/10/2026</small><div class="bot"><strong>KES 118000</strong><span class="epp-b bl">Mark Received</span></div></div>
+            </div>
+            <div class="epp-v" id="epp-v-rc">
+              <p class="epp-sec" id="epp-ad">Awaiting delivery (4)</p>
+              <div class="epp-c" id="epp-rc1"><div class="top"><span class="id">PO-2026-D13</span><span><em class="epp-chip ov">Overdue</em></span></div><b>ABC Supplies Ltd</b><small>Delivery: 19/10/2026 &middot; Ordered by &mdash;</small><div class="bot"><strong>KES 95,000</strong><span class="epp-b bl" id="epp-rg">Receive goods</span></div></div><div class="epp-c"><div class="top"><span class="id">PO-2026-D09</span><span><em class="epp-chip ov">Overdue</em></span></div><b>ABC Supplies Ltd</b><small>Delivery: 12/10/2026 &middot; Ordered by &mdash;</small><div class="bot"><strong>KES 780,000</strong><span class="epp-b bl">Receive goods</span></div></div><div class="epp-c epp-xs"><div class="top"><span class="id">PO-2026-D06</span><span><em class="epp-chip ov">Overdue</em></span></div><b>Greenview Stationers</b><small>Delivery: 04/10/2026 &middot; Ordered by &mdash;</small><div class="bot"><strong>KES 118,000</strong><span class="epp-b bl">Receive goods</span></div></div>
+            </div>
+            <div class="epp-v" id="epp-v-iv">
+              <div class="epp-chips"><span class="epp-fl on">All (10)</span><span class="epp-fl">Awaiting approval (<b id="epp-ia" style="font-weight:600">1</b>)</span><span class="epp-fl epp-m">Approved, unpaid (<b id="epp-iu" style="font-weight:600">0</b>)</span><span class="epp-fl">Paid (9)</span><span class="epp-new" style="margin:0 0 0 auto">+ Record invoice</span></div>
+              <div class="epp-c"><div class="top"><span class="id">INV-2026-D14 &middot; supplier ref DEMO-SI-014</span><span><em class="epp-chip wn" id="epp-ivar">Variance</em><em class="epp-chip wn" id="epp-ichip">Awaiting approval</em></span></div><b>Greenview Stationers &middot; PO-2026-D14</b><small>Invoice date 16/07/2026 &middot; Due 15/08/2026 &middot; Recorded by &mdash;</small><div class="bot"><strong>KES 37,200</strong><span class="epp-b" id="epp-irev">Review</span></div></div><div class="epp-c"><div class="top"><span class="id">INV-2026-D02 &middot; supplier ref DEMO-SI-002</span><span><em class="epp-chip ok">Matched</em><em class="epp-chip ok">Paid</em></span></div><b>Greenview Stationers &middot; PO-2026-D02</b><small>Invoice date 22/06/2026 &middot; Due 22/07/2026 &middot; Recorded by &mdash;</small><div class="bot"><strong>KES 96,000</strong><span class="epp-b">Review</span></div></div><div class="epp-c epp-xs"><div class="top"><span class="id">INV-2026-D05 &middot; supplier ref DEMO-SI-005</span><span><em class="epp-chip ok">Matched</em><em class="epp-chip ok">Paid</em></span></div><b>ABC Supplies Ltd &middot; PO-2026-D05</b><small>Invoice date 04/06/2026 &middot; Due 04/07/2026 &middot; Recorded by &mdash;</small><div class="bot"><strong>KES 132,000</strong><span class="epp-b">Review</span></div></div>
+            </div>
+            <div class="epp-v" id="epp-v-vh">
+              <div class="epp-sc"><table class="epp-t"><thead><tr><th>Vote head</th><th class="epp-m">Account</th><th class="epp-m">Received</th><th class="epp-m">Committed</th><th class="epp-m">Paid</th><th>Available</th><th>Used</th><th class="epp-m"></th></tr></thead><tbody id="epp-vb"><tr><td><b>Tuition (teaching, learning materials and exams)</b><small>TUITION</small></td><td class="epp-m">Tuition</td><td class="epp-m">KES 994,560</td><td class="epp-m">KES 566,000</td><td class="epp-m">KES 508,000</td><td><b>KES 428,560</b></td><td><div class="epp-bar"><i data-w="57"></i></div></td><td class="epp-m"><span class="epp-b">Edit</span></td></tr><tr><td><b>Medical and insurance</b><small>MEDICAL</small></td><td class="epp-m">Operations</td><td class="epp-m">KES 480,000</td><td class="epp-m">KES 310,000</td><td class="epp-m">KES 310,000</td><td><b>KES 170,000</b></td><td><div class="epp-bar"><i data-w="65"></i></div></td><td class="epp-m"><span class="epp-b">Edit</span></td></tr><tr><td><b>Activity</b><small>ACTIVITY</small></td><td class="epp-m">Operations</td><td class="epp-m">KES 360,000</td><td class="epp-m">KES 186,000</td><td class="epp-m">KES 186,000</td><td><b>KES 174,000</b></td><td><div class="epp-bar"><i data-w="52"></i></div></td><td class="epp-m"><span class="epp-b">Edit</span></td></tr><tr><td><b>SMASSE</b><small>SMASSE</small></td><td class="epp-m">Operations</td><td class="epp-m">KES 48,000</td><td class="epp-m">KES 36,000</td><td class="epp-m">KES 0</td><td><b>KES 12,000</b></td><td><div class="epp-bar"><i data-w="75"></i></div></td><td class="epp-m"><span class="epp-b">Edit</span></td></tr><tr><td><b>Local travel and transport</b><small>LTT</small></td><td class="epp-m">Operations</td><td class="epp-m">KES 360,000</td><td class="epp-m">KES 342,000</td><td class="epp-m">KES 342,000</td><td><b>KES 18,000</b></td><td><div class="epp-bar"><i data-w="95" class="hot" id="epp-hot"></i></div></td><td class="epp-m"><span class="epp-b">Edit</span></td></tr><tr class="epp-xs"><td><b>Administration costs</b><small>ADMIN</small></td><td class="epp-m">Operations</td><td class="epp-m">KES 720,000</td><td class="epp-m">KES 339,000</td><td class="epp-m">KES 244,000</td><td><b>KES 381,000</b></td><td><div class="epp-bar"><i data-w="47"></i></div></td><td class="epp-m"><span class="epp-b">Edit</span></td></tr><tr class="epp-xs"><td><b>Electricity, water and conservancy</b><small>EWC</small></td><td class="epp-m">Operations</td><td class="epp-m">KES 576,000</td><td class="epp-m">KES 398,000</td><td class="epp-m">KES 280,000</td><td><b>KES 178,000</b></td><td><div class="epp-bar"><i data-w="69"></i></div></td><td class="epp-m"><span class="epp-b">Edit</span></td></tr></tbody></table></div>
+            </div>
+            <div class="epp-v" id="epp-v-cp"><div class="epp-box">
+              <p class="epp-sec">Record money received</p>
+              <div class="epp-form">
+                <div><label>Date received</label><div class="epp-inp">11/09/2026</div></div><div><label>Source</label><div class="epp-inp">Ministry capitation</div></div><div><label>Term</label><div class="epp-inp">Term 3</div></div>
+                <div><label>Tranche</label><div class="epp-inp" id="epp-tr"></div></div><div class="epp-m"><label>Bank reference</label><div class="epp-inp"></div></div><div class="epp-m"><label>Ministry circular ref</label><div class="epp-inp"></div></div>
+              </div>
+              <p style="font-size:.58rem;color:#6B7280;margin:10px 0 6px">Amount received for each vote head, as shown in the circular (leave blank for none):</p>
+              <div class="epp-form">
+                <div><label>Tuition (teaching, learning materials and exams)</label><div class="epp-inp" id="epp-tu"></div></div><div><label>Medical and insurance</label><div class="epp-inp"></div></div><div><label>Activity</label><div class="epp-inp"></div></div>
+              </div>
+              <div class="epp-tot"><span class="epp-b pu" id="epp-rr">Record receipt</span><span>Total: <span id="epp-tot">KES 0</span></span></div>
+              <div class="epp-ok" id="epp-ok" hidden>Receipt recorded against the vote heads.</div>
+            </div></div>
+            <div class="epp-v" id="epp-v-sp">
+              <div class="epp-k6"><div class="epp-kc" style="--kc:#16A34A"><span>Total Spend</span><b data-n="9070955" data-d="1">KES 0</b></div><div class="epp-kc" style="--kc:#2563EB"><span>Suppliers</span><b data-n="2">0</b></div><div class="epp-kc" style="--kc:#475569"><span>Draft</span><b data-n="0">0</b></div><div class="epp-kc" style="--kc:#2563EB"><span>Approved</span><b data-n="4" id="epp-kap">0</b></div><div class="epp-kc" style="--kc:#16A34A"><span>Received</span><b data-n="51" id="epp-krc">0</b></div><div class="epp-kc" style="--kc:#EF4444"><span>Rejected</span><b data-n="0">0</b></div></div>
+              <div class="epp-box"><p class="epp-sec">Top Suppliers by Spend</p>
+                <div class="epp-sp"><div>1. ABC Supplies Ltd</div><span>KES 7,868,455 &middot; 47 orders</span></div><div class="epp-sb"><i data-w="100"></i></div>
+                <div class="epp-sp"><div>2. Greenview Stationers</div><span>KES 1,202,000 &middot; 7 orders</span></div><div class="epp-sb"><i data-w="15"></i></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="epp-cur" id="epp-cur"><i></i><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.8L9 19z" fill="#111" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="epp-sr" id="epp-sr" role="status"></div>
+      <p class="epp-note">An illustration using a sample school and sample figures.</p></template></div>
     </div>
     <div class="ept-cta">
       <p>Like what you see?</p>
@@ -1514,21 +1661,129 @@
 <script>
 (function(){
   function init(){
+  var root=document.getElementById('ep-proc'); if(!root) return;
+  var $=function(i){return document.getElementById(i);};
+  var app=$('epp-app'), cur=$('epp-cur'), sr=$('epp-sr');
+  var tabs={}; [].forEach.call(root.querySelectorAll('.epp-tab'),function(t){tabs[t.getAttribute('data-v')]=t;});
+  var token=0, instant=false, paused=false, gates=[];
+  function release(){var g=gates.splice(0); g.forEach(function(f){f();});}
+  function wait(ms,my){return new Promise(function(res,rej){setTimeout(function(){if(my!==token) return rej('x'); if(!paused) return res(); gates.push(function(){my===token?res():rej('x');});},ms);});}
+  function fmt(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+  function anim(e,to,dur,money){
+    var pre=money?'KES ':''; if(instant||!dur){e.textContent=pre+fmt(to);return;}
+    var t0=null,my=token;
+    requestAnimationFrame(function f(ts){
+      if(my!==token) return; if(t0===null) t0=ts;
+      var k=Math.min(1,(ts-t0)/dur), v=1-Math.pow(1-k,3);
+      e.textContent=pre+fmt(to*v); if(k<1) requestAnimationFrame(f);
+    });
+  }
+  function moveTo(e,my,dx){
+    var a=app.getBoundingClientRect(), r=e.getBoundingClientRect();
+    var x=r.left-a.left+Math.min(r.width*0.5,r.width-8)+(dx||0), y=r.top-a.top+r.height*0.5;
+    cur.style.transform='translate('+x+'px,'+y+'px)'; return wait(560,my);
+  }
+  function click(e,my){
+    cur.classList.remove('click'); void cur.offsetWidth; cur.classList.add('click'); e.classList.add('press');
+    setTimeout(function(){e.classList.remove('press'); cur.classList.remove('click');},400); return wait(220,my);
+  }
+  function setView(v){
+    for(var k in tabs) tabs[k].classList.toggle('on',k===v);
+    [].forEach.call(root.querySelectorAll('.epp-v'),function(x){x.classList.remove('show');});
+    $('epp-v-'+v).classList.add('show');
+  }
+  function bars(sel,on,gap){
+    [].forEach.call(root.querySelectorAll(sel),function(b,i){setTimeout(function(){b.style.width=on?b.getAttribute('data-w')+'%':'0';},on&&!instant?i*gap:0);});
+  }
+  async function type(e,text,my){e.classList.add('typing'); for(var i=1;i<=text.length;i++){e.textContent=text.slice(0,i); await wait(60,my);} e.classList.remove('typing');}
+  function resetAll(){
+    var c=$('epp-rqchip'); c.className='epp-chip wn'; c.textContent='Awaiting approval'; $('epp-ca').textContent='1'; $('epp-cap').textContent='0';
+    $('epp-pap').textContent='4'; $('epp-prc').textContent='51';
+    $('epp-rc1').classList.remove('out'); $('epp-rc1').hidden=false; $('epp-ad').textContent='Awaiting delivery (4)'; var g=$('epp-rg'); g.textContent='Receive goods'; g.classList.remove('done');
+    var ic=$('epp-ichip'); ic.className='epp-chip wn'; ic.textContent='Awaiting approval'; $('epp-ivar').hidden=false; $('epp-ia').textContent='1'; $('epp-iu').textContent='0';
+    bars('#epp-vb .epp-bar i',false); bars('.epp-sb i',false);
+    $('epp-tr').textContent=''; $('epp-tu').textContent=''; $('epp-tot').textContent='KES 0'; $('epp-ok').hidden=true;
+    [].forEach.call($('epp-v-sp').querySelectorAll('[data-n]'),function(e){e.textContent=e.hasAttribute('data-d')?'KES 0':'0';});
+    $('epp-kap').setAttribute('data-n','4'); $('epp-krc').setAttribute('data-n','51');
+    setView('rq');
+  }
+  function showAll(){
+    var c=$('epp-rqchip'); c.className='epp-chip ok'; c.textContent='Approved'; $('epp-ca').textContent='0'; $('epp-cap').textContent='1';
+    $('epp-pap').textContent='3'; $('epp-prc').textContent='52'; $('epp-rc1').hidden=true; $('epp-ad').textContent='Awaiting delivery (3)';
+    var ic=$('epp-ichip'); ic.className='epp-chip ok'; ic.textContent='Approved'; $('epp-ia').textContent='0'; $('epp-iu').textContent='1';
+    bars('#epp-vb .epp-bar i',true,0); bars('.epp-sb i',true,0);
+    $('epp-kap').setAttribute('data-n','3'); $('epp-krc').setAttribute('data-n','52');
+    [].forEach.call($('epp-v-sp').querySelectorAll('[data-n]'),function(e){anim(e,+e.getAttribute('data-n'),0,e.hasAttribute('data-d'));});
+    $('epp-tu').textContent='994560'; $('epp-tot').textContent='KES 994,560'; $('epp-ok').hidden=false;
+  }
+  async function goTab(v,my){await moveTo(tabs[v],my); await click(tabs[v],my); setView(v); await wait(350,my);}
+  async function tour(my){
+    cur.style.transition='none'; cur.style.transform='translate('+Math.round(app.clientWidth*0.6)+'px,'+Math.round(app.clientHeight*0.3)+'px)';
+    void cur.offsetWidth; cur.style.transition=''; cur.classList.add('vis'); await wait(600,my);
+    var d=$('epp-det'); await moveTo(d,my); await click(d,my);
+    var c=$('epp-rqchip'); c.className='epp-chip ok'; c.textContent='Approved'; $('epp-ca').textContent='0'; $('epp-cap').textContent='1'; await wait(1100,my);
+    await goTab('po',my); await moveTo($('epp-po1').querySelector('strong'),my); await wait(900,my);
+    await goTab('rc',my);
+    var rg=$('epp-rg'); await moveTo(rg,my); await click(rg,my); rg.textContent='Received \u2713'; rg.classList.add('done'); await wait(500,my);
+    $('epp-rc1').classList.add('out'); await wait(500,my); $('epp-rc1').hidden=true; $('epp-ad').textContent='Awaiting delivery (3)'; $('epp-pap').textContent='3'; $('epp-prc').textContent='52'; await wait(600,my);
+    await goTab('iv',my);
+    var rv=$('epp-irev'); await moveTo(rv,my); await click(rv,my); var ic=$('epp-ichip'); ic.className='epp-chip ok'; ic.textContent='Approved'; $('epp-ivar').hidden=true; $('epp-ia').textContent='0'; $('epp-iu').textContent='1'; await wait(1000,my);
+    await goTab('vh',my); bars('#epp-vb .epp-bar i',true,140); await wait(1200,my);
+    await moveTo($('epp-hot'),my); await wait(1300,my);
+    await goTab('cp',my);
+    var tr=$('epp-tr'); await moveTo(tr,my); await click(tr,my); await type(tr,'2',my);
+    var tu=$('epp-tu'); await moveTo(tu,my); await click(tu,my); await type(tu,'994560',my); $('epp-tot').textContent='KES 994,560'; await wait(300,my);
+    var rr=$('epp-rr'); await moveTo(rr,my); await click(rr,my); $('epp-ok').hidden=false; await wait(1200,my);
+    await goTab('sp',my);
+    $('epp-kap').setAttribute('data-n','3'); $('epp-krc').setAttribute('data-n','52');
+    [].forEach.call($('epp-v-sp').querySelectorAll('[data-n]'),function(e){anim(e,+e.getAttribute('data-n'),1300,e.hasAttribute('data-d'));});
+    bars('.epp-sb i',true,300); await wait(2000,my);
+    await goTab('rq',my); await wait(900,my);
+  }
+  function finish(){
+    cur.classList.remove('vis'); sr.textContent='Tour finished. A requisition was approved, goods received, an invoice reviewed, capitation recorded and spend summarised.';
+    if(window.EPTours&&window.EPTours.onDone) window.EPTours.onDone('proc');
+  }
+  function run(inst){
+    token++; var my=token; instant=inst; resetAll(); sr.textContent='';
+    if(inst){showAll(); finish(); return;}
+    tour(my).then(finish,function(e){if(e!=='x') finish();});
+  }
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  resetAll();
+  window.EPTours=window.EPTours||{};
+  window.EPTours.proc={
+    start:function(){run(reduce);},
+    stop:function(){token++; paused=false; release(); cur.classList.remove('vis');},
+    pause:function(){paused=true;}, resume:function(){paused=false; release();}
+  };
+  }
+  (window.EPBoot=window.EPBoot||{}).proc=init;
+})();
+</script>
+
+<script>
+(function(){
+  function init(){
     var root=document.getElementById('ep-tour'); if(!root) return;
     var $=function(i){return document.getElementById(i);};
-    var K=['solve','fees','fin','kemis','hr'], P={solve:$('ep-solve'),fees:$('ep-fees'),fin:$('ep-fin'),kemis:$('ep-kemis'),hr:$('ep-hr')}, tabs={};
+    var K=['solve','fees','fin','kemis','hr','proc'], P={solve:$('ep-solve'),fees:$('ep-fees'),fin:$('ep-fin'),kemis:$('ep-kemis'),hr:$('ep-hr'),proc:$('ep-proc')}, tabs={};
     K.forEach(function(k){tabs[k]=$('ept-t-'+k);});
     var pb=$('ept-pause'), rb=$('ept-replay'), T=window.EPTours=window.EPTours||{};
     var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var cur=null, paused=false, chain=false, held=false, started=false, timer=0;
     var CHAIN=['solve','fees','fin'];            // tours that autoplay one after another; tabs added later do not
     var BOOT=window.EPBoot=window.EPBoot||{}, mounted={};
-    function ensure(k){                           // build a tour's panel the first time it is needed
+    function unmount(k){                          // drop a tour's panel when the visitor moves on; it is rebuilt if they come back
+      var slot=$('ept-slot-'+k); if(!slot||!mounted[k]) return;
+      slot.innerHTML=''; mounted[k]=false; delete T[k];
+    }
+    function ensure(k){                           // build a tour's panel when it is needed
       if(mounted[k]) return;
       var tpl=$('tpl-'+k), slot=$('ept-slot-'+k); if(!tpl||!slot||!BOOT[k]) return;
       slot.appendChild(tpl.content.cloneNode(true)); mounted[k]=true; BOOT[k]();
     }
-    var NM={solve:'timetables',fees:'fees',fin:'reports',kemis:'kemis',hr:'payroll'};
+    var NM={solve:'timetables',fees:'fees',fin:'reports',kemis:'kemis',hr:'payroll',proc:'procurement'};
     function track(n,p){try{if(typeof gtag==='function') gtag('event',n,Object.assign({page_path:location.pathname},p||{}));}catch(e){}}
     root.addEventListener('click',function(e){
       var a=e.target&&e.target.closest?e.target.closest('a[data-cta],a[data-link]'):null; if(!a) return;
@@ -1540,6 +1795,7 @@
     function select(k,viaChain,why){
       clearTimeout(timer);
       if(cur&&T[cur]) T[cur].stop();
+      if(cur&&cur!==k) unmount(cur);
       K.forEach(function(x){if(x!==k) P[x].hidden=true;});
       K.forEach(function(x){var on=x===k; tabs[x].setAttribute('aria-selected',on?'true':'false'); tabs[x].tabIndex=on?0:-1;});
       P[k].hidden=false; ensure(k); cur=k; paused=false; held=false; label(); if(!viaChain) chain=false;
@@ -1570,7 +1826,7 @@
       else if(v&&held){held=false; if(!paused) T[cur].resume();}
     }
     function begin(){if(started) return; started=true; chain=!reduce; select('solve',true,'autoplay');}
-    var H={'#tour-timetables':'solve','#tour-fees':'fees','#tour-reports':'fin','#tour-kemis':'kemis','#tour-payroll':'hr'};
+    var H={'#tour-timetables':'solve','#tour-fees':'fees','#tour-reports':'fin','#tour-kemis':'kemis','#tour-payroll':'hr','#tour-procurement':'proc'};
     function openHash(h,scroll){
       var k=H[h]; if(!k) return false;
       started=true; chain=false; select(k,false,'link');
@@ -1587,7 +1843,7 @@
     window.addEventListener('hashchange',function(){openHash(location.hash,true);});
     openHash(location.hash,true);
     if('IntersectionObserver' in window){
-      new IntersectionObserver(function(es){ if(es[0].isIntersecting) ensure('solve'); },{rootMargin:'800px 0px'}).observe(root);
+      new IntersectionObserver(function(es){ if(es[0].isIntersecting&&(!cur||cur==='solve')) ensure('solve'); },{rootMargin:'800px 0px'}).observe(root);
       new IntersectionObserver(function(es){
         var on=es[0].intersectionRatio>=0.15;
         if(on&&!started) begin(); else vis(on);
