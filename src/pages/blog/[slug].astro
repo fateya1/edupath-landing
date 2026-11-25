@@ -23,7 +23,7 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { title, description, tag, dateDisplay, readTime, body } = post.data;
-const path = `/blog/${post.id}/`;
+const path = `/blog/${post.id}`;
 
 const jsonLd = JSON.stringify({
   '@context': 'https://schema.org',
@@ -45,9 +45,9 @@ const jsonLd = JSON.stringify({
 >
   <Nav active="/blog" />
 
-  <main class="article-wrap">
+  <main id="main" class="article-wrap">
     <article class="article">
-      <a class="back-link" href="/blog/">← All articles</a>
+      <a class="back-link" href="/blog">← All articles</a>
       <span class="article-tag">{tag}</span>
       <h1 class="article-title">{title}</h1>
       <div class="article-meta">

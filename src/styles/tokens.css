@@ -24,8 +24,8 @@
   --color-negative:     oklch(63.7% 0.237 25.331);  /* error       #EF4444 */
 
   /* Typography */
-  --font-display: "Fraunces", ui-serif, Georgia, serif;
-  --font-body: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces Variable", "Fraunces", ui-serif, Georgia, serif;
+  --font-body: "Plus Jakarta Sans Variable", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 
   /* Type scale — 1.25 major-third from 16px */
   --text-xs:    0.75rem;   /* 12px */

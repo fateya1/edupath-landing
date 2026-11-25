@@ -22,7 +22,11 @@
  *      page, which is also added to the footer Product list and the nav's Features highlight.
  *   9. (v7) A Procurement card linking to the new /school-procurement-software page, which is also added to the
  *      footer Product list and the nav's Features highlight.
- *  10. Footer social icons: WhatsApp points at wa.me/254711606968. X and LinkedIn are removed unless
+ *  10. (v8) Site fixes: timetable, fees and procurement on every plan (pricing cards); structured data that
+ *      lists your real plans; self-hosted fonts; a skip link; a share-image size; Google signals off and the
+ *      privacy page naming Google Analytics; security headers and long caching in vercel.json; and one URL
+ *      rule everywhere (no trailing slash, matching Vercel) for canonicals, blog links and the sitemap.
+ *  11. Footer social icons: WhatsApp points at wa.me/254711606968. X and LinkedIn are removed unless
  *      you pass real profile URLs (--x, --linkedin).
  *
  * Usage (run from the repo root):
@@ -69,6 +73,16 @@ const files = {
   footer: path.join(opt.root, 'src/components/Footer.astro'),
   nav: path.join(opt.root, 'src/components/Nav.astro'),
   attendance: path.join(opt.root, 'src/pages/school-attendance.astro'),
+  layout: path.join(opt.root, 'src/layouts/Layout.astro'),
+  tokens: path.join(opt.root, 'src/styles/tokens.css'),
+  base: path.join(opt.root, 'src/styles/base.css'),
+  ga4: path.join(opt.root, 'src/components/GA4.astro'),
+  privacy: path.join(opt.root, 'public/privacy.html'),
+  astroconfig: path.join(opt.root, 'astro.config.mjs'),
+  postcard: path.join(opt.root, 'src/components/PostCard.astro'),
+  slug: path.join(opt.root, 'src/pages/blog/[slug].astro'),
+  blogindex: path.join(opt.root, 'src/pages/blog/index.astro'),
+  vercel: path.join(opt.root, 'vercel.json'),
   analytics: path.join(opt.root, 'analytics.js'),
 };
 for (const f of Object.values(files)) if (!fs.existsSync(f)) die(`Not found: ${f}\nRun this from the repo root, or pass --root <dir>.`);
@@ -224,6 +238,126 @@ for (const [name, key, title] of [['X', 'x', 'X \\(Twitter\\)'], ['LinkedIn', 'l
     txt.footer = txt.footer.replace(re, '');
     results.push(`  applied   Footer: ${name} icon removed (no URL given; pass --${key} <url> to keep it)`);
   } else results.push(`  already   Footer: ${name} icon`);
+}
+
+// ---------- v8: site fixes ----------
+edit("index", "Plans: Free includes timetable, fees and procurement",
+  "line: 'Admissions, attendance and parent portal.', features: ['Up to 200 students', 'Unlimited teachers', 'Admissions & attendance', 'Parent portal'], cta: 'Get Started Free', href: '/#register', featured: false },",
+  "line: 'Admissions, attendance, timetables, fees and procurement.', features: ['Up to 200 students', 'Unlimited teachers', 'Admissions & attendance', 'Parent portal', 'Timetable builder', 'Fee management & reports', 'Procurement'], cta: 'Get Started Free', href: '/#register', featured: false },",
+  "'Timetable builder', 'Fee management & reports', 'Procurement'");
+edit("index", "Plans: fee management is no longer Starter-only",
+  "'Custom branding', 'Full fee management', 'Library & assets'",
+  "'Custom branding', 'Library & assets'",
+  "'Custom branding', 'Library & assets']");
+edit("index", "Plans: timetable is no longer Pro-only",
+  "'Advanced analytics', 'Full timetable management', 'Hostel & transport modules'",
+  "'Advanced analytics', 'Hostel & transport modules'",
+  "'Advanced analytics', 'Hostel & transport modules'");
+edit("index", "Homepage structured data: Organization and SoftwareApplication (no fake search box)",
+  "const jsonLd = JSON.stringify({\n  '@context': 'https://schema.org',\n  '@type': 'WebSite',\n  name: 'Edupath SMS',\n  url: 'https://www.edupath.co.ke',\n  potentialAction: {\n    '@type': 'SearchAction',\n    target: 'https://www.edupath.co.ke/?q={search_term_string}',\n    'query-input': 'required name=search_term_string',\n  },\n});",
+  "// Structured data for search engines. Plan prices come from `plans`, so they cannot drift.\nfunction buildJsonLd() {\n  const site = 'https://www.edupath.co.ke';\n  return JSON.stringify({\n    '@context': 'https://schema.org',\n    '@graph': [\n      {\n        '@type': 'Organization',\n        '@id': `${site}/#org`,\n        name: 'Edupath SMS',\n        url: site,\n        contactPoint: { '@type': 'ContactPoint', contactType: 'customer support', email: 'admin@edupath.co.ke', telephone: '+254711606968', areaServed: 'KE' },\n      },\n      { '@type': 'WebSite', '@id': `${site}/#website`, name: 'Edupath SMS', url: site, publisher: { '@id': `${site}/#org` } },\n      {\n        '@type': 'SoftwareApplication',\n        name: 'Edupath SMS',\n        applicationCategory: 'BusinessApplication',\n        operatingSystem: 'Web',\n        url: site,\n        description: 'All-in-one school management system for Kenyan schools: admissions, CBE report cards, timetables, fees and M-Pesa, accounts and payroll.',\n        publisher: { '@id': `${site}/#org` },\n        offers: plans\n          .filter((p) => /\\d/.test(String(p.price)))\n          .map((p) => ({ '@type': 'Offer', name: p.name, price: Number(String(p.price).replace(/[^0-9]/g, '')), priceCurrency: 'KES', description: `${p.target}. Billed per term.` })),\n      },\n    ],\n  });\n}",
+  "function buildJsonLd()");
+edit("index", "Homepage structured data: use it",
+  "jsonLd={`[${jsonLd},${faqJsonLd}]`}",
+  "jsonLd={`[${buildJsonLd()},${faqJsonLd}]`}",
+  "buildJsonLd()},${faqJsonLd}");
+edit("layout", "Layout: self-hosted font imports",
+  "import GA4 from '../components/GA4.astro';",
+  "import GA4 from '../components/GA4.astro';\nimport '@fontsource-variable/fraunces/opsz.css';\nimport '@fontsource-variable/plus-jakarta-sans/index.css';\nimport frauncesLatin from '@fontsource-variable/fraunces/files/fraunces-latin-opsz-normal.woff2?url';\nimport jakartaLatin from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url';",
+  "import '@fontsource-variable/fraunces/opsz.css';");
+edit("layout", "Layout: preload the two main fonts instead of calling Google Fonts",
+  "<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\" />\n  <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin />\n  <link href=\"https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap\" rel=\"stylesheet\" />",
+  "<link rel=\"preload\" as=\"font\" type=\"font/woff2\" href={frauncesLatin} crossorigin />\n  <link rel=\"preload\" as=\"font\" type=\"font/woff2\" href={jakartaLatin} crossorigin />",
+  "href={frauncesLatin} crossorigin");
+edit("layout", "Layout: share image size, description and site name",
+  "<meta property=\"og:image\" content={ogImage} />",
+  "<meta property=\"og:image\" content={ogImage} />\n  <meta property=\"og:image:width\" content=\"1200\" />\n  <meta property=\"og:image:height\" content=\"630\" />\n  <meta property=\"og:image:alt\" content=\"Edupath SMS: the paperless way to run your school\" />\n  <meta property=\"og:site_name\" content=\"Edupath SMS\" />",
+  "og:image:width");
+edit("layout", "Layout: skip to main content link",
+  "<body class={bodyClass}>\n",
+  "<body class={bodyClass}>\n  <a class=\"skip-link\" href=\"#main\">Skip to main content</a>\n",
+  "class=\"skip-link\"");
+edit("layout", "Layout: canonical without a trailing slash",
+  "const canonical = path.startsWith('http') ? path : `${site}${path}`;",
+  "const canonical = (path.startsWith('http') ? path : `${site}${path}`).replace(/([^/:])\\/$/, '$1');",
+  "replace(/([^/:])\\/$/, '$1')");
+edit("tokens", "Tokens: display font family",
+  "--font-display: \"Fraunces\", ui-serif",
+  "--font-display: \"Fraunces Variable\", \"Fraunces\", ui-serif",
+  "\"Fraunces Variable\"");
+edit("tokens", "Tokens: body font family",
+  "--font-body: \"Plus Jakarta Sans\", ui-sans-serif",
+  "--font-body: \"Plus Jakarta Sans Variable\", \"Plus Jakarta Sans\", ui-sans-serif",
+  "\"Plus Jakarta Sans Variable\"");
+edit("base", "Base CSS: skip link styling",
+  "*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }",
+  "*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }\n\n.skip-link { position: absolute; left: 12px; top: -64px; z-index: 1000; background: var(--color-ink); color: #fff; padding: 10px 16px; border-radius: 8px; font-weight: 600; text-decoration: none; transition: top .15s; }\n.skip-link:focus { top: 12px; }",
+  ".skip-link {");
+edit("ga4", "GA4: switch off Google signals and drop the inert IP setting",
+  "    'allow_google_signals': true,\n    'allow_ad_personalization_signals': false,\n    'anonymize_ip': true",
+  "    'allow_google_signals': false,\n    'allow_ad_personalization_signals': false",
+  "'allow_google_signals': false");
+edit("privacy", "Privacy: name Google Analytics",
+  "and basic usage analytics. Edupath does not use third-party advertising cookies or trackers.",
+  "and basic usage analytics. On the www.edupath.co.ke marketing site, usage analytics are provided by Google Analytics 4, which uses cookies to record pages viewed, buttons clicked, and approximate location and device information. We do not use this data for advertising: Google signals and ad personalization are switched off, and Edupath does not use third-party advertising cookies or trackers. You can block or delete cookies in your browser settings, or install Google's Analytics opt-out browser add-on.",
+  "Google Analytics 4, which uses cookies");
+edit("astroconfig", "Astro config: trailingSlash never (matches Vercel; slash-free sitemap)",
+  "trailingSlash: 'ignore',",
+  "trailingSlash: 'never',",
+  "trailingSlash: 'never',");
+edit("postcard", "Blog cards link without a trailing slash",
+  "const href = `/blog/${post.id}/`;",
+  "const href = `/blog/${post.id}`;",
+  "const href = `/blog/${post.id}`;");
+edit("slug", "Blog posts declare a slash-free canonical",
+  "const path = `/blog/${post.id}/`;",
+  "const path = `/blog/${post.id}`;",
+  "const path = `/blog/${post.id}`;");
+edit("blogindex", "Blog index declares a slash-free canonical",
+  "path=\"/blog/\"",
+  "path=\"/blog\"",
+  "path=\"/blog\"");
+
+edit('slug', 'Blog posts: main landmark (target of the skip link)',
+  '<main class="article-wrap">',
+  '<main id="main" class="article-wrap">',
+  '<main id="main" class="article-wrap">');
+edit('slug', 'Blog posts: slash-free link back to the blog',
+  '<a class="back-link" href="/blog/">',
+  '<a class="back-link" href="/blog">',
+  '<a class="back-link" href="/blog">');
+edit('blogindex', 'Blog index: main landmark (target of the skip link)',
+  '<main class="blog-wrap">',
+  '<main id="main" class="blog-wrap">',
+  '<main id="main" class="blog-wrap">');
+
+// vercel.json: security headers and long caching for fingerprinted assets (existing entries are kept)
+{
+  const want = [
+    { source: '/(.*)', headers: [
+      { key: 'X-Content-Type-Options', value: 'nosniff' },
+      { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+      { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+      { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+    ] },
+    { source: '/_astro/(.*)', headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] },
+    { source: '/tours.js', headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] },
+    { source: '/og-image.png', headers: [{ key: 'Cache-Control', value: 'public, max-age=86400' }] },
+  ];
+  let cfg = null;
+  try { cfg = JSON.parse(txt.vercel); } catch { missing.push('vercel.json: not valid JSON'); }
+  if (cfg) {
+    cfg.headers = Array.isArray(cfg.headers) ? cfg.headers : [];
+    let added = 0;
+    for (const w of want) {
+      const e = cfg.headers.find((h) => h.source === w.source);
+      if (!e) { cfg.headers.push({ source: w.source, headers: w.headers.map((h) => ({ ...h })) }); added += w.headers.length; continue; }
+      e.headers = Array.isArray(e.headers) ? e.headers : [];
+      for (const h of w.headers) if (!e.headers.some((x) => String(x.key).toLowerCase() === h.key.toLowerCase())) { e.headers.push({ ...h }); added++; }
+    }
+    if (added) { txt.vercel = JSON.stringify(cfg, null, 2) + '\n'; results.push(`  applied   vercel.json: ${added} header(s) added`); }
+    else results.push('  already   vercel.json headers');
+  }
 }
 
 if (missing.length) {

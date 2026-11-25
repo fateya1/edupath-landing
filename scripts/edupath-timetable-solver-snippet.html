@@ -632,7 +632,7 @@
 }
 </style>
 
-<section id="ep-tour" aria-labelledby="ept-title">
+<section id="ep-tour" aria-labelledby="ept-title" data-tours="">
   <div class="ept-in">
     <div class="ept-hd">
       <h2 id="ept-title">See it in action.</h2>
@@ -640,7 +640,7 @@
     </div>
     <div class="ept-bar">
       <div class="ept-tabs" role="tablist" aria-label="Product tours">
-        <button class="ept-tab" role="tab" type="button" id="ept-t-solve" aria-selected="true" aria-controls="ep-solve">Timetables<span class="ept-pill">Pro</span></button>
+        <button class="ept-tab" role="tab" type="button" id="ept-t-solve" aria-selected="true" aria-controls="ep-solve">Timetables</button>
         <button class="ept-tab" role="tab" type="button" id="ept-t-fees" aria-selected="false" aria-controls="ep-fees" tabindex="-1">Fees</button>
         <button class="ept-tab" role="tab" type="button" id="ept-t-fin" aria-selected="false" aria-controls="ep-fin" tabindex="-1">Reports</button>
         <button class="ept-tab" role="tab" type="button" id="ept-t-kemis" aria-selected="false" aria-controls="ep-kemis" tabindex="-1">KEMIS</button>
@@ -661,7 +661,7 @@
         <li>Teachers and classes are never double-booked, and double lessons never span a break.</li>
         <li>Move lessons, cover absent teachers, repair problems, and restore earlier versions.</li>
       </ul>
-        <p class="ept-plan">Included in <b>Pro</b> and Enterprise. <a href="#pricing" data-link="compare_plans">Compare plans</a> <a href="/school-timetable-software" data-link="learn_more_timetables">Learn more</a></p>
+        <p class="ept-plan">Included in <b>all plans</b>. <a href="/school-timetable-software" data-link="learn_more_timetables">Learn more</a></p>
     </div>
     <div class="ept-slot" id="ept-slot-solve"></div>
   </div>
@@ -979,7 +979,7 @@
           <li>Review supplier invoices against their orders before they are paid.</li>
           <li>See received, committed, paid and available money for every vote head, and record capitation as it arrives.</li>
         </ul>
-        <p class="ept-plan"><a href="/school-procurement-software" data-link="learn_more_procurement">Learn more</a></p>
+        <p class="ept-plan">Included in <b>all plans</b>. <a href="/school-procurement-software" data-link="learn_more_procurement">Learn more</a></p>
       </div><div class="ept-slot" id="ept-slot-proc"></div></div><template id="tpl-proc"><div class="epp-app" id="epp-app" role="img" aria-label="Animated tour of procurement: a requisition is approved, goods are received, an invoice is reviewed, vote heads show what is available, capitation money is recorded and spend is summarised">
         <div aria-hidden="true">
           <p class="epp-h">Procurement</p><p class="epp-sub">Purchase orders &amp; supplier management</p>
@@ -1778,10 +1778,24 @@
       var slot=$('ept-slot-'+k); if(!slot||!mounted[k]) return;
       slot.innerHTML=''; mounted[k]=false; delete T[k];
     }
+    var loading=null;
+    function loadTours(){                         // the panels and tour scripts live in a separate file, fetched on demand
+      if(window.EPPanels) return Promise.resolve();
+      var src=root.getAttribute('data-tours'); if(!src) return Promise.reject();
+      if(loading) return loading;
+      loading=new Promise(function(res,rej){
+        var sc=document.createElement('script'); sc.src=src; sc.async=true; sc.onload=res;
+        sc.onerror=function(){loading=null; rej();}; document.head.appendChild(sc);
+      });
+      return loading;
+    }
     function ensure(k){                           // build a tour's panel when it is needed
-      if(mounted[k]) return;
-      var tpl=$('tpl-'+k), slot=$('ept-slot-'+k); if(!tpl||!slot||!BOOT[k]) return;
-      slot.appendChild(tpl.content.cloneNode(true)); mounted[k]=true; BOOT[k]();
+      if(mounted[k]) return Promise.resolve();
+      return loadTours().then(function(){
+        if(mounted[k]||(cur&&cur!==k)) return;
+        var slot=$('ept-slot-'+k), html=window.EPPanels&&window.EPPanels[k]; if(!slot||!html||!BOOT[k]) return;
+        slot.innerHTML=html; mounted[k]=true; BOOT[k]();
+      });
     }
     var NM={solve:'timetables',fees:'fees',fin:'reports',kemis:'kemis',hr:'payroll',proc:'procurement'};
     function track(n,p){try{if(typeof gtag==='function') gtag('event',n,Object.assign({page_path:location.pathname},p||{}));}catch(e){}}
@@ -1793,14 +1807,15 @@
     if(reduce) pb.hidden=true;
     function label(){pb.textContent=paused?'Resume':'Pause'; pb.setAttribute('aria-pressed',paused?'true':'false');}
     function select(k,viaChain,why){
+      started=true;                               // any selection means autoplay must not take over later
       clearTimeout(timer);
       if(cur&&T[cur]) T[cur].stop();
-      if(cur&&cur!==k) unmount(cur);
+      K.forEach(function(x){if(x!==k) unmount(x);});   // also drops a tour that was pre-built before anything was selected
       K.forEach(function(x){if(x!==k) P[x].hidden=true;});
       K.forEach(function(x){var on=x===k; tabs[x].setAttribute('aria-selected',on?'true':'false'); tabs[x].tabIndex=on?0:-1;});
-      P[k].hidden=false; ensure(k); cur=k; paused=false; held=false; label(); if(!viaChain) chain=false;
+      P[k].hidden=false; cur=k; paused=false; held=false; label(); if(!viaChain) chain=false;
       track('tour_started',{tour:NM[k],trigger:why||(viaChain?'autoplay':'tab')});
-      if(T[k]) T[k].start();
+      ensure(k).then(function(){ if(cur===k&&T[k]) T[k].start(); },function(){});
     }
     T.onDone=function(k){
       if(!reduce&&k===cur) track('tour_completed',{tour:NM[k]});
@@ -1843,7 +1858,7 @@
     window.addEventListener('hashchange',function(){openHash(location.hash,true);});
     openHash(location.hash,true);
     if('IntersectionObserver' in window){
-      new IntersectionObserver(function(es){ if(es[0].isIntersecting&&(!cur||cur==='solve')) ensure('solve'); },{rootMargin:'800px 0px'}).observe(root);
+      new IntersectionObserver(function(es){ if(es[0].isIntersecting&&(!cur||cur==='solve')) ensure('solve').catch(function(){}); },{rootMargin:'800px 0px'}).observe(root);
       new IntersectionObserver(function(es){
         var on=es[0].intersectionRatio>=0.15;
         if(on&&!started) begin(); else vis(on);

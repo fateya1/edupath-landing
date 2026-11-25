@@ -2,7 +2,7 @@
 import FeaturePage from '../layouts/FeaturePage.astro';
 
 const faqs = [
-  ['Which plans include the timetable builder?', 'Full timetable management is part of the Pro plan and everything above it. See the pricing section for what each plan includes.'],
+  ['Which plans include the timetable builder?', 'The timetable builder is included in every plan, including the free one.'],
   ['What if our rules cannot all be met?', 'Run the feasibility check first. It compares what each class and teacher needs against the time they are available, and flags anything that cannot fit. When you generate, preferences are balanced against each other, and any that cannot be met are reported after the search.'],
   ['Can we still edit the timetable by hand?', 'Yes. On the timetable grid you can click any cell to add or edit a lesson, and click x to clear it. The move-lessons board also lets you drag a lesson, or click it and then click a green cell, which is a move with no clashes.'],
   ['Can we import an existing timetable?', 'Yes. Timetables can be imported from Excel through the Migration Hub, and every import is saved as a version you can restore.'],
@@ -28,17 +28,17 @@ const jsonLd = JSON.stringify([
 
 <FeaturePage
   title="School Timetable Software Kenya | Edupath SMS"
-  description="Generate clash-free school timetables in Kenya. Bell schedule, rooms, availability, feasibility check, teacher cover and repair. Included in the Pro plan."
+  description="Generate clash-free school timetables in Kenya. Bell schedule, rooms, availability, feasibility check, teacher cover and repair. Included in every plan."
   path="/school-timetable-software"
   ogTitle="School Timetable Software Kenya | Edupath SMS"
   ogDescription="Set your bell schedule, rooms and teacher availability, check feasibility, then generate a clash-free timetable. Move lessons, cover absences and print."
   jsonLd={jsonLd}
-  badge="Timetable Builder · Pro plan"
+  badge="Timetable Builder · All plans"
   heading={"Generate clash-free <span>school timetables</span>"}
   lead="Tell Edupath your bell schedule, rooms, teacher availability and what each class needs. It builds the week and checks every rule, then lets you adjust, cover absences and repair problems."
   active="/school-timetable-software"
   ctaHeading="See your timetable build itself."
-  ctaText="Try the live demo, or start on the free plan and move to Pro when you need the timetable builder."
+  ctaText="The timetable builder is included in every plan. Try the live demo, or start on the free plan."
   ctaLabel="Create Free Account →"
 >
   <section class="fs-section">
